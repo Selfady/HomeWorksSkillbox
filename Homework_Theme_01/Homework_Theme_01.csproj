@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7E750FDC-9493-44FF-8FFC-38465F664BE2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HomeWork_02</RootNamespace>
-    <AssemblyName>HomeWork_02</AssemblyName>
+    <RootNamespace>Homework_Theme_01</RootNamespace>
+    <AssemblyName>Homework_Theme_01</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
