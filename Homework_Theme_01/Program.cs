@@ -1,19 +1,240 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Homework_Theme_01
 {
+    //I want it dry
+    //I want it dry
+    //I want it dry
+    //And I wanna cry!
+
     class Program
     {
         static void Main(string[] args)
         {
-            // Установил codepage в UTF8 чтобы избавиться от русскеой корявицы в своей консоли
-            Console.OutputEncoding = Encoding.UTF8;
+            // Установил codepage в Unicode чтобы избавиться от русской корявицы в своей консоли
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.InputEncoding = Encoding.Unicode;
 
-            
+            //Initial dialog
+            Console.WriteLine("Добро пожаловать в программу Задание 1 Homework_Theme_01");
+
+            int amountOfWorkers = 3;
+
+            //A loop to enter all users
+            int i = 1;
+            while (i <= amountOfWorkers)
+            {
+                //Ask to enter Name for the user
+                Console.WriteLine("Введите Имя пользователя №" + i);
+                //Reading user input and getting rid of extra whitespaces
+                string userName = Console.ReadLine().Trim();
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + userName);
+                //name pattern that starts from russian capital letter
+                string namePattern = "^[А-Я][а-яА-Я]*$";
+                //CHeck if name corresponds to russian word that starts with a capital letter
+                while (!Regex.IsMatch(userName, namePattern))
+                {
+                    Console.WriteLine("Имя это русское слово с заглавной буквы.");
+                    Console.WriteLine("Введите Имя пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    userName = Console.ReadLine().Trim();
+                    Console.WriteLine("Вы ввели: " + userName);
+                }
+
+                //Ask to enter age for the user
+                Console.WriteLine("Введите Возраст пользователя №" + i);
+                
+                //Reading user input and getting rid of extra whitespaces
+                ushort userAge = default;
+                try
+                {
+                    userAge = ushort.Parse(Console.ReadLine());
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + userAge);
+                //CHeck if name corresponds to russian word that starts with a capital letter
+                while (!((userAge > 0) && (userAge < 130)))
+                {
+                    Console.WriteLine("Под возрастом мы понимаем количество полных лет, \nварианты меньше 1 или больше 130 не подходят");
+                    Console.WriteLine("Введите Возраст пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    try
+                    {
+                        userAge = ushort.Parse(Console.ReadLine());
+                    }
+                    catch (OverflowException)
+                    {
+                    }
+                    catch (FormatException)
+                    {
+                    }
+                    Console.WriteLine("Вы ввели: " + userAge);
+                }
+
+                //Ask to enter the height for the user
+                Console.WriteLine("Введите Рост пользователя №" + i);
+
+                //Reading user input and getting rid of extra whitespaces
+                ushort userHeight = default;
+                try
+                {
+                    userHeight = ushort.Parse(Console.ReadLine());
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + userHeight);
+                while (!((userHeight > 67) && (userHeight < 251)))
+                {
+                    Console.WriteLine("Рост мы ожидаем в сантиметрах, \nварианты меньше 67 или больше 251 не подходят \nих не одобряют Хагендра Тапа Магар и Роберт Першинг Уодлоу");
+                    Console.WriteLine("Введите Рост пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    try
+                    {
+                        userHeight = ushort.Parse(Console.ReadLine());
+                    }
+                    catch (OverflowException)
+                    {
+                    }
+                    catch (FormatException)
+                    {
+                    }
+                    Console.WriteLine("Вы ввели: " + userHeight);
+                }
+
+                //Ask to enter the Russian Language Score for the user
+                Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                //Reading user input and getting rid of extra whitespaces
+                byte russianLanguageScore = default;
+                try
+                {
+                    russianLanguageScore = byte.Parse(Console.ReadLine());
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + russianLanguageScore);
+                
+                //Check if name corresponds to russian word that starts with a capital letter
+                while (!((russianLanguageScore > 2) && (russianLanguageScore <= 100)))
+                {
+                    Console.WriteLine("Мы ожидаем либо запись в аттестате от 3 до 5, либо оценку по ЕГЭ, не превышающую 100 баллов");
+                    Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    try
+                    {
+                        russianLanguageScore = byte.Parse(Console.ReadLine());
+                    }
+                    catch (OverflowException)
+                    {
+                    }
+                    catch (FormatException)
+                    {
+                    }
+
+                    Console.WriteLine("Вы ввели: " + russianLanguageScore);
+                }
+
+                //Ask to enter the History Language Score for the user
+                Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                //Reading user input and getting rid of extra whitespaces
+                byte historyLanguageScore = default;
+                try
+                {
+                    historyLanguageScore = byte.Parse(Console.ReadLine());
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + historyLanguageScore);
+
+                //Check if name corresponds to russian word that starts with a capital letter
+                while (!((historyLanguageScore > 2) && (historyLanguageScore <= 100)))
+                {
+                    Console.WriteLine("Мы ожидаем либо запись в аттестате от 3 до 5, либо оценку по ЕГЭ, не превышающую 100 баллов");
+                    Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    try
+                    {
+                        historyLanguageScore = byte.Parse(Console.ReadLine());
+                    }
+                    catch (OverflowException)
+                    {
+                    }
+                    catch (FormatException)
+                    {
+                    }
+
+                    Console.WriteLine("Вы ввели: " + historyLanguageScore);
+                }
+
+                //Ask to enter the Mathematics Language Score for the user
+                Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                //Reading user input and getting rid of extra whitespaces
+                byte mathematicsLanguageScore = default;
+                try
+                {
+                    mathematicsLanguageScore = byte.Parse(Console.ReadLine());
+                }
+                catch (OverflowException)
+                {
+                }
+                catch (FormatException)
+                {
+                }
+                //Output to show the user data they entered
+                Console.WriteLine("Вы ввели: " + mathematicsLanguageScore);
+
+                //Check if name corresponds to russian word that starts with a capital letter
+                while (!((mathematicsLanguageScore > 2) && (mathematicsLanguageScore <= 100)))
+                {
+                    Console.WriteLine("Мы ожидаем либо запись в аттестате от 3 до 5, либо оценку по ЕГЭ, не превышающую 100 баллов");
+                    Console.WriteLine("Введите балл по русскому языку пользователя №" + i);
+                    //Reading user input and getting rid of extra whitespaces
+                    try
+                    {
+                        mathematicsLanguageScore = byte.Parse(Console.ReadLine());
+                    }
+                    catch (OverflowException)
+                    {
+                    }
+                    catch (FormatException)
+                    {
+                    }
+
+                    Console.WriteLine("Вы ввели: " + mathematicsLanguageScore);
+                }
+
+
+
+                i++;
+            }
+        
+
+
+    Console.ReadLine();
+
 
             #region Задание 1
 
@@ -43,11 +264,11 @@ namespace Homework_Theme_01
                 Должен быть организован ввод данных с клавиатуры.
             */
 
-            
+
 
             #endregion
-            
-            
+
+
 
 
 

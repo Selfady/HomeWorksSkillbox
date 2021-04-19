@@ -13,7 +13,7 @@
         /// <summary>
         /// The age of the worker
         /// </summary>
-        public byte Age { get; set; }
+        public ushort Age { get; set; }
 
         /// <summary>
         /// The height of the worker
@@ -26,7 +26,7 @@
         /// <param name="Name">user name</param>
         /// <param name="Age">user age</param>
         /// <param name="Height">user height</param>
-        public User(string Name, byte Age, ushort Height)
+        public User(string Name, ushort Age, ushort Height)
         {
             this.Name = Name; // Сохранить переданное значение имени
             this.Age = Age;   // Сохранить переданное значение фамилии
