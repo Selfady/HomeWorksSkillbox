@@ -4,32 +4,44 @@ using System.Text.RegularExpressions;
 
 namespace Homework_Theme_01
 {
-    //I want it dry
-    //I want it dry
-    //I want it dry
-    //And I wanna cry!
+    /*
+    I want it dry
+    I want it dry
+    I want it dry
+    And I wanna cry!
+    */
 
     class Program
     {
         static void Main(string[] args)
         {
-            // Установил codepage в Unicode чтобы избавиться от русской корявицы в своей консоли
+            //Установил codepage в Unicode чтобы избавиться от русской корявицы в своей консоли
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
 
-            //Initial dialog
-            Console.WriteLine("Добро пожаловать в программу Задание 1 Homework_Theme_01");
+            //bufferWidth will store the initial console width
+            int bufferWidth = Console.BufferWidth;
+            
+            //Initial dialog string
+            string initialDialog = "Добро пожаловать в программу 'Задания 1-5 раздела Homework_Theme_01'";
+            //Calculating the position of cursor to make sure the whole initial dialog will be shown at the center of the console
+            //TODO: Somehow recalculate the position of the flight to make sure the text is always in the middle
+            Console.SetCursorPosition(((bufferWidth - (initialDialog.Length)) / 2), 0);
+            //Output for the initial dialog
+            Console.WriteLine(initialDialog);
 
+            //amountOfWorkers is a variable to set the amount of application users
             int amountOfWorkers = 3;
 
-            //A loop to enter all users
+            //A loop to enter data for every user
             int i = 1;
             while (i <= amountOfWorkers)
             {
                 //Ask to enter Name for the user
                 Console.WriteLine("Введите Имя пользователя №" + i);
                 //Reading user input and getting rid of extra whitespaces
-                string userName = Console.ReadLine().Trim();
+                string userName = string.Empty;
+                userName = Console.ReadLine().Trim();
                 //Output to show the user data they entered
                 Console.WriteLine("Вы ввели: " + userName);
                 //name pattern that starts from russian capital letter
