@@ -1,9 +1,12 @@
-﻿namespace Homework_Theme_01
+﻿using System;
+using System.CodeDom;
+
+namespace Homework_Theme_01
 {
     /// <summary>
     /// Класс, описывающий имодель баллов пользователя
     /// </summary>
-    class Score
+    public class Attestat
     {
         /// <summary>
         /// Russian language score
@@ -26,7 +29,7 @@
         /// <param name="RussianLanguage">Russian Language score</param>
         /// <param name="History">History score</param>
         /// <param name="Mathematics">Mathematics score</param>
-        public Score(byte RussianLanguage, byte History, byte Mathematics)
+        public Attestat(byte RussianLanguage, byte History, byte Mathematics)
         {
             this.RussianLanguage = RussianLanguage; // Saves set RussianLanguage score
             this.History = History; // Saves set History score
@@ -40,7 +43,8 @@
         public override string ToString()
         {
             return
-                $"Баллы по русскому языку {RussianLanguage} Баллы по истории {History} Баллы по математике {Mathematics}";
+                //returns interpolated string
+                $"{RussianLanguage,7} {History,7} {Mathematics,10}";
         }
     }
 }
