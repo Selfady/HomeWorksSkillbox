@@ -29,6 +29,7 @@ namespace Homework_Theme_01
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
 
+
             //bufferWidth will store the initial console width
             int bufferWidth = Console.BufferWidth;
 
@@ -53,7 +54,9 @@ namespace Homework_Theme_01
             foreach (var u in company.Users)
             {
                 //Форматированный вывод информации
-                Console.WriteLine("Средний бал пользователя {0} равен: {1}",u.Name, u.AverageScore());
+                string output = $"Средний бал пользователя {u.Name} равен: {u.AverageScore()}";
+                Console.SetCursorPosition((Console.WindowWidth - output.Length) / 2, Console.CursorTop);
+                Console.WriteLine(output);
 
             }
             
