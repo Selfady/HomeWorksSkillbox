@@ -158,15 +158,13 @@ namespace Homework_Theme_03
             {
                 Console.WriteLine("Играем по обычным правилам.");
                 minGameNumber = 12;
-                maxGameNumber = 120;
+                maxGameNumber = 14;
 
                 //Generating gameNumber
                 gameNumber = GenerateNumberInRange(minGameNumber, maxGameNumber);
 
                 minUserTry = 1;
                 maxUserTry = 4;
-                Console.WriteLine($"GameNumber = {gameNumber}" +
-                                  $"\nUserTry от {minUserTry} до {maxUserTry}");
             }
             else
             {
@@ -240,14 +238,6 @@ namespace Homework_Theme_03
 
                 Console.WriteLine("Играем по своим правилам.");
 
-                //Generating gameNumber
-                gameNumber = GenerateNumberInRange(minGameNumber, maxGameNumber);
-                
-                Console.WriteLine($"GameNumber = {gameNumber}" +
-                                  $"\nUserTry от {minUserTry} до {maxUserTry}");
-
-
-
                 #endregion Custom minUserTry and maxUserTry
             }
 
@@ -255,7 +245,139 @@ namespace Homework_Theme_03
 
             #region The Game
 
-            
+            // a flag to allow player play again if the want
+            byte rematch = default;
+
+            do
+            {
+                //Generating gameNumber
+                gameNumber = GenerateNumberInRange(minGameNumber, maxGameNumber);
+
+                //Diplaying short version of the rules
+                Console.WriteLine($"GameNumber = {gameNumber}" +
+                                  $"\nUserTry от {minUserTry} до {maxUserTry}");
+
+                //Pointer at the player in the list
+                int i = 0;
+
+                long currentGameNumber = gameNumber;
+                long currentUserTry = default;
+
+                while (currentGameNumber != 0)
+                {
+                    //Reset the poinet to the first element of the list after last player's turn
+                    if (i >= Players.Count)
+                        i = 0;
+
+                    //Return usr input to 0 to ask for the value and validate it again
+                    currentUserTry = default;
+
+                    Console.WriteLine("Ходит Игрок {0}",Players[i]);
+                    
+                    //a flag to show error message for the user if data was entered at least once
+                    dataEntered = false;
+
+                    //Getting the value from the user
+                    while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                    {
+                        if (dataEntered)
+                            Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
+                        long.TryParse(Console.ReadLine(), out currentUserTry);
+                        dataEntered = true;
+                    }
+
+                    //Analyze if we can continue the game with the user value
+                    currentGameNumber -= currentUserTry;
+                    Console.WriteLine("GameNumber нынче: {0}", currentGameNumber);
+
+                    #region Last Turn?
+
+                    //Check if the game ends this turn
+                    if (currentGameNumber == 0)
+                    {
+                        Console.WriteLine("Победил игрок {0}", Players[i]);
+                        Console.WriteLine("Хотите рематч?" +
+                                          "\n 1 - да" +
+                                          "\n 2 - нет");
+
+                        //a flag to show error message for the user if data was entered at least once
+                        dataEntered = false;
+
+                        //Validating user input till he enters from 1 for yes or 2 for no
+                        while (!IntWithinRange(rematch, 1, 2))
+                        {
+                            if (dataEntered)
+                                Console.WriteLine($"ВВедите 1 или 2.");
+                            byte.TryParse(Console.ReadLine(), out rematch);
+                            dataEntered = true;
+                        }
+                    }
+                    //Check if user made a mistake last turn
+                    else if (currentGameNumber < 0)
+                    {
+                        //We return currentGameNumber to the valur before User input
+                        currentGameNumber += currentUserTry;
+
+                        //We nullify his choice
+                        currentUserTry = default;
+
+                        //Inform the user about his mistake
+                        Console.WriteLine($"Игрок {Players[i]} допустил ошибку в самый ответственный момент" +
+                                          "\nУ него есть 1 попытка чтобы исправиться, иначе ход перейдет к следующему игроку");
+
+                        //Get the new value from the user
+                        while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                        {
+                            Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
+                            long.TryParse(Console.ReadLine(), out currentUserTry);;
+                        }
+                        currentGameNumber -= currentUserTry;
+
+                        ////Check if user made a mistake during last chance
+                        if (currentGameNumber < 0)
+                        {
+                            Console.WriteLine($"Игрок {Players[i]} снова допустил ошибку ход переходит к следующему игроку");
+
+                            //We return currentGameNumber to the valur before User input
+                            currentGameNumber += currentUserTry;
+
+                            //Increment Pointer on a player in the Players list
+                            i++;
+
+                            //Mostly debug message ot make sure user input was neglected
+                            Console.WriteLine("GameNumber всё еще: {0}", currentGameNumber);
+                            continue;
+                        }
+                        else if (currentGameNumber == 0)
+                        {
+                            Console.WriteLine("Победил игрок {0}", Players[i]);
+                            Console.WriteLine("Хотите рематч?" +
+                                              "\n 1 - да" +
+                                              "\n 2 - нет");
+
+                            //a flag to show error message for the user if data was entered at least once
+                            dataEntered = false;
+
+                            //Validating user input till he enters from 1 for yes or 2 for no
+                            while (!IntWithinRange(rematch, 1, 2))
+                            {
+                                if (dataEntered)
+                                    Console.WriteLine($"ВВедите 1 или 2");
+                                byte.TryParse(Console.ReadLine(), out rematch);
+                                dataEntered = true;
+                            }
+                        }
+                        else
+                        {
+                            currentGameNumber -= currentUserTry;
+                        }
+                    }
+                    #endregion Last Turn?
+                    
+                    i++;
+                }
+            } while (rematch != 2);
+
 
             #endregion
 
