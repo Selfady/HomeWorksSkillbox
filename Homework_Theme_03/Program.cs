@@ -281,29 +281,30 @@ namespace Homework_Theme_03
                     //a flag to show error message for the user if data was entered at least once
                     dataEntered = false;
 
-                    #region Computer
+                    //Getting the value from the user
                     //If it is Single Player Mode and it is the turn of computer we have to make it generate values
                     if ((numberOfPlayers == 1) && (i == 1))
                     {
                         if (difficultySinglePlayer == 1)
                         {
                             currentUserTry = Computer(1, currentGameNumber, minUserTry, maxUserTry);
+                            Console.WriteLine("Компьютер вводит {0}", currentUserTry);
                         }
                         else
                         {
                             currentUserTry = Computer(2, currentGameNumber, minUserTry, maxUserTry);
+                            Console.WriteLine("Компьютер вводит {0}", currentUserTry);
                         }
                     }
-
-                    #endregion Computer
-
-                    //Getting the value from the user
-                    while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                    else
                     {
-                        if (dataEntered)
-                            Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
-                        long.TryParse(Console.ReadLine(), out currentUserTry);
-                        dataEntered = true;
+                        while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                        {
+                            if (dataEntered)
+                                Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
+                            long.TryParse(Console.ReadLine(), out currentUserTry);
+                            dataEntered = true;
+                        }
                     }
 
                     //Analyze if we can continue the game with the user value
@@ -346,11 +347,29 @@ namespace Homework_Theme_03
                                           "\nУ него есть 1 попытка чтобы исправиться, иначе ход перейдет к следующему игроку");
 
                         //Get the new value from the user
-                        while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                        if ((numberOfPlayers == 1) && (i == 1))
                         {
-                            Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
-                            long.TryParse(Console.ReadLine(), out currentUserTry);;
+                            if (difficultySinglePlayer == 1)
+                            {
+                                currentUserTry = Computer(1, currentGameNumber, minUserTry, maxUserTry);
+                                Console.WriteLine("Компьютер вводит {0}", currentUserTry);
+                            }
+                            else
+                            {
+                                currentUserTry = Computer(2, currentGameNumber, minUserTry, maxUserTry);
+                                Console.WriteLine("Компьютер вводит {0}", currentUserTry);
+                            }
                         }
+                        else
+                        {
+                            while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
+                            {
+                                Console.WriteLine($"ВВедите чисто от {minUserTry} до {maxUserTry}");
+                                long.TryParse(Console.ReadLine(), out currentUserTry);
+                                ;
+                            }
+                        }
+
                         currentGameNumber -= currentUserTry;
 
                         ////Check if user made a mistake during last chance
@@ -449,15 +468,14 @@ namespace Homework_Theme_03
             else
             {
                 //Сложный алгоритм выбора значений для ввода
-                if (!(currentGameNumber <= maxUserTry))
+                if (currentGameNumber <= maxUserTry)
                 {
-                    return GenerateNumberInRange(minUserTry, maxUserTry);
+                    return Convert.ToInt32(currentGameNumber);
                 }
                 else
                 {
-                    if (!(currentGameNumber <= 2 * maxUserTry))
+                    if ((currentGameNumber <= 2 * maxUserTry) && (currentGameNumber > maxUserTry))
                     {
-                        //Impossible to win algorithm
                         return minUserTry;
                     }
                     else
@@ -466,6 +484,7 @@ namespace Homework_Theme_03
                     }
                 }
             }
+
         }
 
 
