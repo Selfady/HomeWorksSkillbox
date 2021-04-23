@@ -34,6 +34,12 @@ namespace Homework_Theme_03
             Rules = "bla";
             GameMode = default;
 
+            for (int i = 1; i <= numberOfPlayers; i++)
+            {
+                this.Players.Add(
+                    new Player(""));
+            }
+
             switch (numberOfPlayers)
             {
                 case 1:
@@ -49,21 +55,13 @@ namespace Homework_Theme_03
                     break;
             }
 
+            
+
             if (numberOfPlayers == 1)
             {
 
                 
             }
-            
-            {
-                
-            }
-            {
-                GameMode = "Manual";
-            }
-
         }
-
-
     }
 }

@@ -14,15 +14,13 @@ namespace Homework_Theme_03
         /// </summary>
         public string PlayerName { get; set; }
 
-        ///// <summary>
-        ///// Flag if the player is a bot(Computer)
-        ///// </summary>
-        //public bool Computer { get; set; }
-
-        public Player(string playerName/*, bool computer*/)
+        /// <summary>
+        /// Constructor to set the values the player object
+        /// </summary>
+        /// <param name="playerName">The name of the player</param>
+        public Player(string playerName)
         {
             this.PlayerName = playerName;
-            //this.Computer = computer;
         }
     }
 }
