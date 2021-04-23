@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -280,6 +281,22 @@ namespace Homework_Theme_03
                     //a flag to show error message for the user if data was entered at least once
                     dataEntered = false;
 
+                    #region Computer
+                    //If it is Single Player Mode and it is the turn of computer we have to make it generate values
+                    if ((numberOfPlayers == 1) && (i == 1))
+                    {
+                        if (difficultySinglePlayer == 1)
+                        {
+                            currentUserTry = Computer(1, currentGameNumber, minUserTry, maxUserTry);
+                        }
+                        else
+                        {
+                            currentUserTry = Computer(2, currentGameNumber, minUserTry, maxUserTry);
+                        }
+                    }
+
+                    #endregion Computer
+
                     //Getting the value from the user
                     while (!IntWithinRange(Convert.ToInt32(currentUserTry), minUserTry, maxUserTry))
                     {
@@ -402,15 +419,54 @@ namespace Homework_Theme_03
             var withinRange = value >= min && value <= max;
             return withinRange;
         }
-
+        /// <summary>
+        /// Generates integer value in given range
+        /// </summary>
+        /// <param name="min">min value included</param>
+        /// <param name="max">max value included</param>
+        /// <returns></returns>
         private static int GenerateNumberInRange(int min, int max)
         {
             Random rnd = new Random();
             return rnd.Next(min, max+1);
         }
 
-
-
+        /// <summary>
+        /// Generates currentUserTry by computer
+        /// </summary>
+        /// <param name="difficultySinglePlayer">Computer difficulty 1- esy, 2 - hard</param>
+        /// <param name="currentGameNumber">Current Game number Computer takes to calculate currentUserTry</param>
+        /// <param name="minUserTry">minUserTry Computer takes to calculate currentUserTry</param>
+        /// <param name="maxUserTry">maxUserTry Computer takes to calculate currentUserTry</param>
+        /// <returns></returns>
+        private static int Computer(int difficultySinglePlayer, long currentGameNumber, int minUserTry, int maxUserTry)
+        {
+            if (difficultySinglePlayer == 1)
+            {
+                //Простой алгоритм выбора значений для ввода
+                return GenerateNumberInRange(minUserTry, maxUserTry);
+            }
+            else
+            {
+                //Сложный алгоритм выбора значений для ввода
+                if (!(currentGameNumber <= maxUserTry))
+                {
+                    return GenerateNumberInRange(minUserTry, maxUserTry);
+                }
+                else
+                {
+                    if (!(currentGameNumber <= 2 * maxUserTry))
+                    {
+                        //Impossible to win algorithm
+                        return minUserTry;
+                    }
+                    else
+                    {
+                        return GenerateNumberInRange(minUserTry, maxUserTry);
+                    }
+                }
+            }
+        }
 
 
 
