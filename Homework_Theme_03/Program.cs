@@ -158,7 +158,7 @@ namespace Homework_Theme_03
             {
                 Console.WriteLine("Играем по обычным правилам.");
                 minGameNumber = 12;
-                maxGameNumber = 14;
+                maxGameNumber = 120;
 
                 //Generating gameNumber
                 gameNumber = GenerateNumberInRange(minGameNumber, maxGameNumber);
@@ -262,6 +262,9 @@ namespace Homework_Theme_03
 
                 long currentGameNumber = gameNumber;
                 long currentUserTry = default;
+
+                //Reset rematch flag
+                rematch = default;
 
                 while (currentGameNumber != 0)
                 {
@@ -373,7 +376,6 @@ namespace Homework_Theme_03
                         }
                     }
                     #endregion Last Turn?
-                    
                     i++;
                 }
             } while (rematch != 2);
