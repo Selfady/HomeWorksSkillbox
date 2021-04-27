@@ -147,16 +147,50 @@ namespace Homework_Theme_04
 
             #region MatrixOperations
 
+            #region Scalar Multiplication
+
             //default number for matrix scalar multiplication
-            int number = 5;
 
-            //Array[,] int = new int();
+            //A default value for everything if the user is a QA engineer
+            int defaultMatrixDimensionAndScalar = 5;
+            int rows, columns, scalar;
 
-            //Реализуйте:
-            //умножение матрицы на число,
-            //  сложение матриц, 
-            //и вычитание 
-            //умножение двух матриц.
+            rows = RequestInt("Please enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+
+            columns = RequestInt("Please enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+
+            scalar = RequestInt("Please enter the number to multiply the matrix by:", defaultMatrixDimensionAndScalar);
+
+            //Matrix initialization
+            int[,] matrix = new int[rows, columns];
+
+            Console.WriteLine($"Matrix before Scalar multiplication by {scalar}:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = rnd.Next(500);
+                    
+                    Console.Write($"{matrix[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"Matrix after Scalar multiplication by {scalar}:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = matrix[i, j] * 5;
+
+                    Console.Write($"{matrix[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            # endregion Scalar Multiplication
+
+
 
             #endregion MatrixOperations
 
@@ -179,8 +213,25 @@ namespace Homework_Theme_04
                     output += array[i,0] + " ";
                 }
             }
-
             return output;
+        }
+
+        /// <summary>
+        /// Requests int value from a user and shows initial message and a message on success/fail
+        /// </summary>
+        /// <param name="message">Console output to request int form a user</param>
+        /// <param name="valueDefault">A default value to be set if user makes a mistake</param>
+        /// <returns></returns>
+        private static int RequestInt(string message, int valueDefault)
+        {
+            Console.WriteLine(message);
+            if (!int.TryParse(Console.ReadLine(), out var parsedInt))
+            {
+                parsedInt = valueDefault;
+            }
+            Console.WriteLine("We'll go with {0}", parsedInt);
+
+            return parsedInt;
         }
     }
 }
