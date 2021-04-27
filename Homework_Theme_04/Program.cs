@@ -154,7 +154,7 @@ namespace Homework_Theme_04
             //A default value for everything if the user is a QA engineer
             const int defaultMatrixDimensionAndScalar = 5;
 
-            Console.WriteLine("\nScalar multiplication.");
+            Console.WriteLine("\nScalar multiplication:");
 
             var rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
@@ -193,7 +193,7 @@ namespace Homework_Theme_04
 
             #region Addition&Subscration
 
-            Console.WriteLine("\nMatrix addition and subtraction");
+            Console.WriteLine("\nMatrix addition and subtraction:");
 
             rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
@@ -256,7 +256,7 @@ namespace Homework_Theme_04
 
             #region Matrix multiplication
 
-            Console.WriteLine("\nMatrix multiplication.");
+            Console.WriteLine("\nMatrix multiplication:");
 
             rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
@@ -266,12 +266,12 @@ namespace Homework_Theme_04
             //Array matrixMultiplication initialization
             int[,] matrixMultiplication = new int[rows, columns];
 
-            Console.WriteLine($"\nFirst Matrix before Matrix multiplication.:");
+            Console.WriteLine($"\nFirst Matrix for multiplication.:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrixMultiplication[i, j] = rnd.Next(500);
+                    matrixMultiplication[i, j] = rnd.Next(5);
 
                     Console.Write($"{matrixMultiplication[i, j],10} ");
                 }
@@ -291,12 +291,12 @@ namespace Homework_Theme_04
             //matrix matrixMultiplication2 initialization
             int[,] matrixMultiplication2 = new int[rowsForMultiplication2, columnsForMultiplication2];
 
-            Console.WriteLine($"\nSecond Matrix before Matrix multiplication.:");
+            Console.WriteLine($"\nSecond Matrix for multiplication.:");
             for (int i = 0; i < rowsForMultiplication2; i++)
             {
                 for (int j = 0; j < columnsForMultiplication2; j++)
                 {
-                    matrixMultiplication2[i, j] = rnd.Next(500);
+                    matrixMultiplication2[i, j] = rnd.Next(5);
 
                     Console.Write($"{matrixMultiplication2[i, j],10} ");
                 }
@@ -307,15 +307,18 @@ namespace Homework_Theme_04
             int[,] matrixMultiplicationResult = new int[rows, columnsForMultiplication2];
 
             Console.WriteLine($"\nFirst Matrix x Second matrix:");
+
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columnsForMultiplication2; j++)
                 {
-                    matrixMultiplicationResult[i, j] = 1;
+                    var temp = 0;
+                    for (int k = 0; k < matrixMultiplication.GetLength(1); k++)
+                    {
+                        temp += matrixMultiplication[i, k] * matrixMultiplication2[k,j];
+                    }
 
-                    //
-
-
+                    matrixMultiplicationResult[i, j] = temp;
                     Console.Write($"{matrixMultiplicationResult[i, j],10} ");
                 }
                 Console.WriteLine();
