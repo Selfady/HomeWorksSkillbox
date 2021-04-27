@@ -14,6 +14,12 @@ namespace Homework_Theme_04
         {
             #region Finances
 
+            //I have to use unicode for input/output values
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.InputEncoding = Encoding.Unicode;
+
+            Console.WriteLine("Вы запустили пачку решений для \"Homework_Theme_04 4.8 Домашняя работа\"");
+
             // A 2D array to store the month report. Has 12 rows and 4 columns.
             int[,] report = new int[12, 4];
 
