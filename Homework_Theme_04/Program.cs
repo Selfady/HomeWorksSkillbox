@@ -98,15 +98,15 @@ namespace Homework_Theme_04
 
             #region Pascal's triangle
 
-            Console.WriteLine("Enter a number of rows for Pascal's triangle");
+            Console.WriteLine("\nEnter a number of rows for Pascal's triangle");
             var input = int.TryParse(Console.ReadLine(),out var numberOfStrings);
             if (!input)
             {
-                Console.WriteLine("You entered something strange, but i'll show you Pascal's Triangle for 10 rows");
+                Console.WriteLine("\nYou entered something strange, but i'll show you Pascal's Triangle for 10 rows");
                 numberOfStrings = 10;
             }
 
-            Console.WriteLine("Pascal's triangle");
+            Console.WriteLine("\nPascal's triangle");
 
             //В строке с номером n (нумерация начинается с 0):
             //первое и последнее числа равны 1.
@@ -138,7 +138,7 @@ namespace Homework_Theme_04
                 }
                 else
                 {
-                    Console.WriteLine("I cannot display more strings properly");
+                    Console.WriteLine("\nI cannot display more strings properly");
                     break;
                 }
             }
@@ -152,48 +152,178 @@ namespace Homework_Theme_04
             //default number for matrix scalar multiplication
 
             //A default value for everything if the user is a QA engineer
-            int defaultMatrixDimensionAndScalar = 5;
-            int rows, columns, scalar;
+            const int defaultMatrixDimensionAndScalar = 5;
 
-            rows = RequestInt("Please enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+            Console.WriteLine("\nScalar multiplication.");
 
-            columns = RequestInt("Please enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+            var rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
-            scalar = RequestInt("Please enter the number to multiply the matrix by:", defaultMatrixDimensionAndScalar);
+            var columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+
+            var scalar = RequestInt("\nPlease enter the number to multiply the matrix by:", defaultMatrixDimensionAndScalar);
 
             //Matrix initialization
-            int[,] matrix = new int[rows, columns];
+            int[,] matrixScalar = new int[rows, columns];
 
-            Console.WriteLine($"Matrix before Scalar multiplication by {scalar}:");
+            Console.WriteLine($"\nMatrix before Scalar multiplication by {scalar}:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrix[i, j] = rnd.Next(500);
+                    matrixScalar[i, j] = rnd.Next(500);
                     
-                    Console.Write($"{matrix[i, j],10} ");
+                    Console.Write($"{matrixScalar[i, j],10} ");
                 }
                 Console.WriteLine();
             }
 
-            Console.WriteLine($"Matrix after Scalar multiplication by {scalar}:");
+            Console.WriteLine($"\nMatrix after Scalar multiplication by {scalar}:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrix[i, j] = matrix[i, j] * 5;
+                    matrixScalar[i, j] = matrixScalar[i, j] * scalar;
 
-                    Console.Write($"{matrix[i, j],10} ");
+                    Console.Write($"{matrixScalar[i, j],10} ");
                 }
                 Console.WriteLine();
             }
 
-            # endregion Scalar Multiplication
+            #endregion Scalar Multiplication
+
+            #region Addition&Subscration
+
+            Console.WriteLine("\nMatrix addition and subtraction");
+
+            rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+
+            columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+
+            //Matrix initialization
+            int[,] matrixAdditionSubtraction = new int[rows, columns];
+            int[,] matrixAdditionSubtraction2 = new int[rows, columns];
+            int[,] matrixAdditionSubtractionResult = new int[rows, columns];
+
+            Console.WriteLine($"\nMatrix 1:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrixAdditionSubtraction[i, j] = rnd.Next(500);
+
+                    Console.Write($"{matrixAdditionSubtraction[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"\nMatrix 2:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrixAdditionSubtraction2[i, j] = rnd.Next(500);
+
+                    Console.Write($"{matrixAdditionSubtraction2[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"\nMatrix 1 + Matrix 2:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrixAdditionSubtractionResult[i, j] = matrixAdditionSubtraction[i,j] + matrixAdditionSubtraction2[i, j];
+
+                    Console.Write($"{matrixAdditionSubtractionResult[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"\nMatrix 1 - Matrix 2:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrixAdditionSubtractionResult[i, j] = matrixAdditionSubtraction[i, j] - matrixAdditionSubtraction2[i, j];
+
+                    Console.Write($"{matrixAdditionSubtractionResult[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            #endregion Addition&Subscration
+
+            #region Matrix multiplication
+
+            Console.WriteLine("\nMatrix multiplication.");
+
+            rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+
+            columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
 
 
+            //Array matrixMultiplication initialization
+            int[,] matrixMultiplication = new int[rows, columns];
+
+            Console.WriteLine($"\nFirst Matrix before Matrix multiplication.:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrixMultiplication[i, j] = rnd.Next(500);
+
+                    Console.Write($"{matrixMultiplication[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            var rowsForMultiplication2 = RequestInt("\nPlease enter a number of rows for the second matrix:", defaultMatrixDimensionAndScalar);
+            while (columns != rowsForMultiplication2)
+            {
+                Console.WriteLine("Multiplication of two matrices is defined if and only if the number of columns of the left matrix is the same as the number of rows of the right matrix.");
+                rowsForMultiplication2 = RequestInt("\nPlease enter a number of rows for the second matrix:", defaultMatrixDimensionAndScalar);
+            }
+            
+            var columnsForMultiplication2 = RequestInt("\nPlease enter a number of columns for the second matrix:", defaultMatrixDimensionAndScalar);
+
+
+            //matrix matrixMultiplication2 initialization
+            int[,] matrixMultiplication2 = new int[rowsForMultiplication2, columnsForMultiplication2];
+
+            Console.WriteLine($"\nSecond Matrix before Matrix multiplication.:");
+            for (int i = 0; i < rowsForMultiplication2; i++)
+            {
+                for (int j = 0; j < columnsForMultiplication2; j++)
+                {
+                    matrixMultiplication2[i, j] = rnd.Next(500);
+
+                    Console.Write($"{matrixMultiplication2[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            //Result matrix initialisation
+            int[,] matrixMultiplicationResult = new int[rows, columnsForMultiplication2];
+
+            Console.WriteLine($"\nFirst Matrix x Second matrix:");
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columnsForMultiplication2; j++)
+                {
+                    matrixMultiplicationResult[i, j] = 1;
+
+                    //
+
+
+                    Console.Write($"{matrixMultiplicationResult[i, j],10} ");
+                }
+                Console.WriteLine();
+            }
+
+            #endregion Matrix multiplication 
 
             #endregion MatrixOperations
-
 
             Console.ReadLine();
         }
@@ -228,8 +358,8 @@ namespace Homework_Theme_04
             if (!int.TryParse(Console.ReadLine(), out var parsedInt))
             {
                 parsedInt = valueDefault;
+                Console.WriteLine("We'll go with {0}", parsedInt);
             }
-            Console.WriteLine("We'll go with {0}", parsedInt);
 
             return parsedInt;
         }
