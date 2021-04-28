@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -345,9 +346,11 @@ namespace Homework_Theme_04
         private static string MonthsByProfit(int profit, int[,] array)
         {
             string output = default;
-            for (int i = 0; i < array.GetLength(0); i++)
+            int rows = array.GetLength(0);
+            int columns = array.GetLength(1);
+            for (int i = 0; i < rows; i++)
             {
-                if (profit == array[i, array.GetLength(1)-1])
+                if (profit == array[i, columns - 1])
                 {
                     output += array[i,0] + " ";
                 }
