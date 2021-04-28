@@ -153,12 +153,14 @@ namespace Homework_Theme_04
 
             #region MatrixOperations
 
-            #region Scalar Multiplication
-
             //A default value for everything if the user is a QA engineer
             const byte defaultMatrixDimensionAndScalar = 5;
             //Just to prettify the output
             const byte symbolsIn64BitSignedInteger = 20;
+            //Just to prettify the output
+            const byte symbolsIn64BitSignedDecimal = 30;
+
+            #region Scalar Multiplication
 
             Console.WriteLine("\nScalar multiplication:");
 
@@ -267,7 +269,6 @@ namespace Homework_Theme_04
 
             columns = RequestByte("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
 
-
             //Array matrixMultiplication initialization
             int[,] matrixMultiplication = new int[rows, columns];
 
@@ -276,7 +277,7 @@ namespace Homework_Theme_04
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrixMultiplication[i, j] = rnd.Next(5);
+                    matrixMultiplication[i, j] = rnd.Next(int.MaxValue);
 
                     Console.Write($"{matrixMultiplication[i, j],symbolsIn64BitSignedInteger} ");
                 }
@@ -291,8 +292,7 @@ namespace Homework_Theme_04
             }
             
             var columnsForMultiplication2 = RequestInt("\nPlease enter a number of columns for the second matrix:", defaultMatrixDimensionAndScalar);
-
-
+            
             //matrix matrixMultiplication2 initialization
             int[,] matrixMultiplication2 = new int[rowsForMultiplication2, columnsForMultiplication2];
 
@@ -301,7 +301,7 @@ namespace Homework_Theme_04
             {
                 for (int j = 0; j < columnsForMultiplication2; j++)
                 {
-                    matrixMultiplication2[i, j] = rnd.Next(5);
+                    matrixMultiplication2[i, j] = rnd.Next(int.MaxValue);
 
                     Console.Write($"{matrixMultiplication2[i, j],symbolsIn64BitSignedInteger} ");
                 }
@@ -309,22 +309,34 @@ namespace Homework_Theme_04
             }
 
             //Result matrix initialisation
-            int[,] matrixMultiplicationResult = new int[rows, columnsForMultiplication2];
+            decimal[,] matrixMultiplicationResult = new decimal[rows, columnsForMultiplication2];
 
             Console.WriteLine($"\nFirst Matrix x Second matrix:");
+
+            //According to the feedback i'd better calculate this before i enter a loop
+            var counter = matrixMultiplication.GetLength(1);
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columnsForMultiplication2; j++)
                 {
-                    var temp = 0;
-                    for (int k = 0; k < matrixMultiplication.GetLength(1); k++)
+                    decimal temp = 0;
+                    for (int k = 0; k < counter; k++)
                     {
-                        temp += matrixMultiplication[i, k] * matrixMultiplication2[k,j];
+                        try
+                        {
+                            temp += Convert.ToDecimal(matrixMultiplication[i, k]) * Convert.ToDecimal(matrixMultiplication2[k, j]);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            Console.WriteLine("А можно поменьше значения в массивах? Эта лабуда не лезет в decimal а может и в память не вместиться.");
+                            throw e;
+                        }
                     }
 
                     matrixMultiplicationResult[i, j] = temp;
-                    Console.Write($"{matrixMultiplicationResult[i, j],symbolsIn64BitSignedInteger} ");
+                    Console.Write($"{matrixMultiplicationResult[i, j],symbolsIn64BitSignedDecimal} ");
                 }
                 Console.WriteLine();
             }
