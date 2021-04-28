@@ -106,14 +106,14 @@ namespace Homework_Theme_04
             #region Pascal's triangle
 
             Console.WriteLine("\nEnter a number of rows for Pascal's triangle");
-            var input = int.TryParse(Console.ReadLine(),out var numberOfStrings);
+            var input = byte.TryParse(Console.ReadLine(),out var numberOfStrings);
             if (!input)
             {
                 Console.WriteLine("\nYou entered something strange, but i'll show you Pascal's Triangle for 10 rows");
                 numberOfStrings = 10;
             }
 
-            Console.WriteLine("\nPascal's triangle");
+            Console.WriteLine("\nPascal's triangle:");
 
             //В строке с номером n (нумерация начинается с 0):
             //первое и последнее числа равны 1.
@@ -133,7 +133,6 @@ namespace Homework_Theme_04
 
                 //Console.WriteLine(Console.WindowWidth-20);
                 //Console.WriteLine(output.Length);
-                
 
                 if ((Console.WindowWidth) >= output.Length)
                 {
@@ -156,30 +155,29 @@ namespace Homework_Theme_04
 
             #region Scalar Multiplication
 
-            //default number for matrix scalar multiplication
-
             //A default value for everything if the user is a QA engineer
-            const int defaultMatrixDimensionAndScalar = 5;
+            const byte defaultMatrixDimensionAndScalar = 5;
+            //Just to prettify the output
+            const byte symbolsIn64BitSignedInteger = 20;
 
             Console.WriteLine("\nScalar multiplication:");
 
-            var rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+            var rows = RequestByte("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
-            var columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+            var columns = RequestByte("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
 
-            var scalar = RequestInt("\nPlease enter the number to multiply the matrix by:", defaultMatrixDimensionAndScalar);
+            var scalar = RequestInt("\nPlease enter a number to multiply the matrix by:", defaultMatrixDimensionAndScalar);
 
             //Matrix initialization
-            int[,] matrixScalar = new int[rows, columns];
+            var matrixScalar = new long[rows, columns];
 
-            Console.WriteLine($"\nMatrix before Scalar multiplication by {scalar}:");
+            Console.WriteLine($"\nMatrix before Scalar multiplication:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrixScalar[i, j] = rnd.Next(500);
-                    
-                    Console.Write($"{matrixScalar[i, j],10} ");
+                    matrixScalar[i, j] = rnd.Next(int.MaxValue);
+                    Console.Write($"{matrixScalar[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -191,7 +189,7 @@ namespace Homework_Theme_04
                 {
                     matrixScalar[i, j] = matrixScalar[i, j] * scalar;
 
-                    Console.Write($"{matrixScalar[i, j],10} ");
+                    Console.Write($"{matrixScalar[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -202,23 +200,23 @@ namespace Homework_Theme_04
 
             Console.WriteLine("\nMatrix addition and subtraction:");
 
-            rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+            rows = RequestByte("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
-            columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+            columns = RequestByte("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
 
             //Matrix initialization
             int[,] matrixAdditionSubtraction = new int[rows, columns];
             int[,] matrixAdditionSubtraction2 = new int[rows, columns];
-            int[,] matrixAdditionSubtractionResult = new int[rows, columns];
+            long[,] matrixAdditionSubtractionResult = new long[rows, columns];
 
             Console.WriteLine($"\nMatrix 1:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrixAdditionSubtraction[i, j] = rnd.Next(500);
+                    matrixAdditionSubtraction[i, j] = rnd.Next(int.MaxValue);
 
-                    Console.Write($"{matrixAdditionSubtraction[i, j],10} ");
+                    Console.Write($"{matrixAdditionSubtraction[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -228,9 +226,9 @@ namespace Homework_Theme_04
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    matrixAdditionSubtraction2[i, j] = rnd.Next(500);
+                    matrixAdditionSubtraction2[i, j] = rnd.Next(int.MaxValue);
 
-                    Console.Write($"{matrixAdditionSubtraction2[i, j],10} ");
+                    Console.Write($"{matrixAdditionSubtraction2[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -242,7 +240,7 @@ namespace Homework_Theme_04
                 {
                     matrixAdditionSubtractionResult[i, j] = matrixAdditionSubtraction[i,j] + matrixAdditionSubtraction2[i, j];
 
-                    Console.Write($"{matrixAdditionSubtractionResult[i, j],10} ");
+                    Console.Write($"{matrixAdditionSubtractionResult[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -254,7 +252,7 @@ namespace Homework_Theme_04
                 {
                     matrixAdditionSubtractionResult[i, j] = matrixAdditionSubtraction[i, j] - matrixAdditionSubtraction2[i, j];
 
-                    Console.Write($"{matrixAdditionSubtractionResult[i, j],10} ");
+                    Console.Write($"{matrixAdditionSubtractionResult[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -265,22 +263,22 @@ namespace Homework_Theme_04
 
             Console.WriteLine("\nMatrix multiplication:");
 
-            rows = RequestInt("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
+            rows = RequestByte("\nPlease enter a number of rows for a matrix:", defaultMatrixDimensionAndScalar);
 
-            columns = RequestInt("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
+            columns = RequestByte("\nPlease enter a number of columns for the matrix:", defaultMatrixDimensionAndScalar);
 
 
             //Array matrixMultiplication initialization
             int[,] matrixMultiplication = new int[rows, columns];
 
-            Console.WriteLine($"\nFirst Matrix for multiplication.:");
+            Console.WriteLine($"\nFirst Matrix for multiplication:");
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
                     matrixMultiplication[i, j] = rnd.Next(5);
 
-                    Console.Write($"{matrixMultiplication[i, j],10} ");
+                    Console.Write($"{matrixMultiplication[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -298,14 +296,14 @@ namespace Homework_Theme_04
             //matrix matrixMultiplication2 initialization
             int[,] matrixMultiplication2 = new int[rowsForMultiplication2, columnsForMultiplication2];
 
-            Console.WriteLine($"\nSecond Matrix for multiplication.:");
+            Console.WriteLine($"\nSecond Matrix for multiplication:");
             for (int i = 0; i < rowsForMultiplication2; i++)
             {
                 for (int j = 0; j < columnsForMultiplication2; j++)
                 {
                     matrixMultiplication2[i, j] = rnd.Next(5);
 
-                    Console.Write($"{matrixMultiplication2[i, j],10} ");
+                    Console.Write($"{matrixMultiplication2[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -326,7 +324,7 @@ namespace Homework_Theme_04
                     }
 
                     matrixMultiplicationResult[i, j] = temp;
-                    Console.Write($"{matrixMultiplicationResult[i, j],10} ");
+                    Console.Write($"{matrixMultiplicationResult[i, j],symbolsIn64BitSignedInteger} ");
                 }
                 Console.WriteLine();
             }
@@ -374,6 +372,23 @@ namespace Homework_Theme_04
             }
 
             return parsedInt;
+        }
+        /// <summary>
+        /// Requests byte value from a user and shows initial message and a message on success/fail
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="valueDefault"></param>
+        /// <returns></returns>
+        private static byte RequestByte(string message, byte valueDefault)
+        {
+            Console.WriteLine(message);
+            if (!byte.TryParse(Console.ReadLine(), out var parsedByte))
+            {
+                parsedByte = valueDefault;
+                Console.WriteLine("We'll go with {0}", parsedByte);
+            }
+
+            return parsedByte;
         }
     }
 }
