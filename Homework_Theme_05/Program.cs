@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Homework_Theme_05
 {
     class Program
-    {
+    { 
         /// <summary>
         /// Writes a message to console, reads user input and checks its type.
         /// If the value is not in given range a message user in notified and has to enter something again.
@@ -98,7 +98,7 @@ namespace Homework_Theme_05
         }
 
         /// <summary>
-        /// Prints a matrix into the console.
+        /// Prints a header message and a matrix into the console.
         /// </summary>
         /// <param name="matrix">A matrix to print.</param>
         /// <param name="message">A header message to print.</param>
@@ -125,8 +125,8 @@ namespace Homework_Theme_05
         /// </summary>
         /// <param name="matrix">A matrix.</param>
         /// <param name="scalar">A number.</param>
-        /// <returns>MThe result of ,multiplication.</returns>
-        private static int[,] MatrixByScalar(int[,] matrix, int scalar)
+        /// <returns>The result of the multiplication.</returns>
+        private static int[,] MultiplyMatrixByScalar(int[,] matrix, int scalar)
         {
             var rows = matrix.GetLength(0);
             var columns = matrix.GetLength(1);
@@ -143,6 +143,92 @@ namespace Homework_Theme_05
             return result;
         }
 
+        /// <summary>
+        /// Returns min or max value for the given matrix
+        /// regarding of the input bool.
+        /// </summary>
+        /// <param name="matrix">Input matrix.</param>
+        /// <param name="maximum">returns max value if true and min if false.</param>
+        private static int MatrixExtremum(int[,] matrix, bool maximum)
+        {
+            var rows = matrix.GetLength(0);
+            var columns = matrix.GetLength(1);
+            var min = int.MaxValue; 
+            var max = int.MinValue;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i,j] <= min)
+                        min = matrix[i, j];
+                    if (matrix[i,j] >= max)
+                        max = matrix[i, j];
+                }
+            }
+
+            return maximum ? max : min;
+        }
+
+        private static bool ValidateMatrixOperation(int[,] matrix, int scalar)
+        {
+            //bool valid = default;
+            //var rows = matrix.GetLength(0);
+            //var columns = matrix.GetLength(1);
+
+            //var maxByScalar = MatrixExtremum(matrix, true) * (long) scalar;
+            //var minByScalar = MatrixExtremum(matrix, false) * (long) scalar;
+
+            long[] extremes = { MatrixExtremum(matrix, true) * (long)scalar, 
+                MatrixExtremum(matrix, false) * (long)scalar };
+            Array.Sort(extremes);
+            
+            if (extremes[1] > int.MaxValue)
+            {
+                Console.WriteLine($"The result matrix cannot be properly created because {extremes[1]} is above {int.MaxValue}.");
+                return false;
+            }
+
+            if (extremes[0] < int.MinValue)
+            {
+                Console.WriteLine($"The result matrix cannot be properly created because {extremes[0]} is below {int.MinValue}.");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Subroutine to demonstrate Task1_1
+        /// 1.1. Создать метод, принимающий число и матрицу, возвращающий матрицу умноженную на число
+        /// </summary>
+         internal static void Task1_1()
+        {
+            var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
+            var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
+
+            var firstMatrix = GenerateMatrix(rows, columns,-rows,columns);
+            PrintMatrix(firstMatrix, "\nThe matrix:");
+
+            var scalar = RequestInt("\nPlease enter a scalar to multiply the first matrix by.");
+
+            if (ValidateMatrixOperation(firstMatrix, scalar))
+            {
+                PrintMatrix(MultiplyMatrixByScalar(firstMatrix, scalar), "\nResult matrix multiplied by the scalar:");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("Would you like to change the input values (yes/no)?");
+                while (Console.ReadLine() == "yes")
+                {
+                    Task1_1();
+                    Console.WriteLine("Press any key to continue.");
+                    Console.ReadKey();
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             //I have to use unicode for input/output values
@@ -151,18 +237,9 @@ namespace Homework_Theme_05
 
             Console.WriteLine("Вы запустили пачку решений для \"Homework_Theme_05 5.5 Домашняя работа\".");
 
-            var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
-            var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
-            
-            var firstMatrix = GenerateMatrix(rows, columns, -rows, columns);
-            PrintMatrix(firstMatrix,"\nThe first matrix:");
+            //Task 1 part 1
+            Task1_1();
 
-            var scalar = RequestInt("\nPlease enter a scalar to multiply the first matrix by.");
-            PrintMatrix(MatrixByScalar(firstMatrix,scalar), "\nThe first matrix multiplied by the scalar:");
-
-
-
-            Console.ReadKey();
 
             //Overloaded methods to validate input parameters
             //A method for scalar multoplication
