@@ -323,7 +323,7 @@ namespace Homework_Theme_05
 
                         for (int k = 0; k < counter; k++)
                         {
-                            temp += (decimal) matrix[i, k] * (decimal) matrix2[k, j];
+                            temp += (decimal)matrix[i, k] * (decimal)matrix2[k, j];
                         }
 
                         result[i, j] = temp;
