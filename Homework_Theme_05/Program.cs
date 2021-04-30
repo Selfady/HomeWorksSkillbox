@@ -151,7 +151,7 @@ namespace Homework_Theme_05
         /// <returns>Returns a matrix that sum of two input matrices.</returns>
         private static int[,] AddMatrices(int[,] matrix1, int[,] matrix2)
         {
-            if (matrix1.GetLength(0) != matrix2.GetLength(0) || matrix1.GetLength(1) != matrix2.GetLength(1))
+            if (!ValidateMatrixSizes(matrix1, matrix2))
             {
                 throw new Exception("They are supposed to be of the same size.");
             }
@@ -195,6 +195,45 @@ namespace Homework_Theme_05
         }
 
         /// <summary>
+        /// Method to multiply two matrices.
+        /// </summary>
+        /// <param name="matrix">Left matrix.</param>
+        /// <param name="matrix2">Right matrix.</param>
+        /// <returns>Matrix with result of multiplication.</returns>
+        private static int[,] MultiplyMatrices(int[,] matrix, int[,] matrix2)
+        {
+
+            if (!ValidateMatrixSizes(matrix, matrix2, true))
+            {
+                throw new Exception("Multiplication of two matrices is defined if and only if the number of columns " +
+                                  "of the left matrix is the same as the number of rows of the right matrix.");
+            }
+
+            var rows = matrix.GetLength(0);
+            var columns = matrix2.GetLength(1);
+            var counter = matrix.GetLength(1);
+
+            var result = new int[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    var temp = 0;
+
+                    for (int k = 0; k < counter; k++)
+                    {
+                        temp += matrix[i, k] * matrix2[k, j];
+                    }
+
+                    result[i, j] = temp;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns min or max value for the given matrix
         /// regarding of the input bool.
         /// </summary>
@@ -222,6 +261,92 @@ namespace Homework_Theme_05
         }
 
         /// <summary>
+        /// A way to check if two matrices have proper dimensions for multiplication.
+        /// </summary>
+        /// <param name="matrix">The left matrix to check.</param>
+        /// <param name="matrix2">The right matrix to check.</param>
+        /// <param name="multiplication">Flag true if multiplication should be verified.</param>
+        /// <returns></returns>
+        private static bool ValidateMatrixSizes(int[,] matrix, int[,] matrix2, bool multiplication)
+        {
+            if (multiplication)
+            {
+                return matrix.GetLength(1) == matrix2.GetLength(0);
+            }
+            else
+            {
+                return matrix.GetLength(0) == matrix2.GetLength(0) && matrix.GetLength(1) == matrix2.GetLength(1);
+            }
+            
+        }
+
+        /// <summary>
+        /// A way to check if two matrices have the same dimensions.
+        /// </summary>
+        /// <param name="matrix">The first matrix.</param>
+        /// <param name="matrix2">The second matrix.</param>
+        /// <returns>true if they have similar sizes and false if not.</returns>
+        private static bool ValidateMatrixSizes(int[,] matrix, int[,] matrix2)
+        {
+            return matrix.GetLength(0) == matrix2.GetLength(0) && matrix.GetLength(1) == matrix2.GetLength(1);
+        }
+
+        /// <summary>
+        /// Makes sure a matrix can be multiplied by another one without exceeding min/max values for their data type.
+        /// </summary>
+        /// <param name="matrix">Left matrix to multiply.</param>
+        /// <param name="matrix2">Right matrix to multiply.</param>
+        /// <param name="multiplication">Flag true if multiplication should be verified.</param>
+        /// <returns></returns>
+        private static bool ValidateMatrixOperation(int[,] matrix, int[,] matrix2, bool multiplication)
+        {
+            if (multiplication)
+            {
+                if (!ValidateMatrixSizes(matrix, matrix2, true))
+                {
+                    Console.WriteLine(
+                        "Multiplication of two matrices is defined if and only if the number of columns " +
+                        "of the left matrix is the same as the number of rows of the right matrix.");
+                    return false;
+                }
+
+                var rows = matrix.GetLength(0);
+                var columns = matrix2.GetLength(1);
+                var counter = matrix.GetLength(1);
+                var result = new decimal[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        decimal temp = 0;
+
+                        for (int k = 0; k < counter; k++)
+                        {
+                            temp += (decimal) matrix[i, k] * (decimal) matrix2[k, j];
+                        }
+
+                        result[i, j] = temp;
+
+                        if (result[i, j] > int.MaxValue || result[i, j] < int.MinValue)
+                        {
+                            Console.WriteLine(
+                                $"The result matrix cannot be properly created because a result value {result[i, j]}" +
+                                $" is below {int.MinValue} or above {int.MaxValue}.");
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return ValidateMatrixOperation(matrix, matrix2);
+            }
+        }
+
+        /// <summary>
         /// Makes sure a matrix can be added to another one without exceeding max/min values for their data type.
         /// And some other restriction like their sizes.
         /// </summary>
@@ -230,7 +355,7 @@ namespace Homework_Theme_05
         /// <returns></returns>
         private static bool ValidateMatrixOperation(int[,] matrix, int[,] matrix2)
         {
-            if (matrix.GetLength(0) != matrix2.GetLength(0) || matrix.GetLength(1) != matrix2.GetLength(1))
+            if (!ValidateMatrixSizes(matrix, matrix2))
             {
                 Console.WriteLine($"The result matrix cannot be properly created because they have different sizes.");
                 return false;
@@ -290,7 +415,7 @@ namespace Homework_Theme_05
         /// </summary>
          internal static void Task1_1()
         {
-            Console.WriteLine("1.1. Создать метод, принимающий число и матрицу, возвращающий матрицу умноженную на число.");
+            Console.WriteLine("\n1.1. Создать метод, принимающий число и матрицу, возвращающий матрицу умноженную на число.");
 
             var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
             var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
@@ -303,6 +428,7 @@ namespace Homework_Theme_05
             if (ValidateMatrixOperation(firstMatrix, scalar))
             {
                 PrintMatrix(MultiplyMatrixByScalar(firstMatrix, scalar), "\nResult matrix multiplied by the scalar:");
+                Console.WriteLine("\nPress any key to continue.");
                 Console.ReadKey();
             }
             else
@@ -311,7 +437,7 @@ namespace Homework_Theme_05
                 while (Console.ReadLine() == "yes")
                 {
                     Task1_1();
-                    Console.WriteLine("Press any key to continue.");
+                    Console.WriteLine("\nPress any key to continue.");
                     Console.ReadKey();
                 }
             }
@@ -323,7 +449,7 @@ namespace Homework_Theme_05
         /// </summary>
         internal static void Task1_2()
         {
-            Console.WriteLine("1.2. Создать метод, принимающий две матрицы и возвращающий их сумму.");
+            Console.WriteLine("\n1.2. Создать метод, принимающий две матрицы и возвращающий их сумму.");
 
             var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
             var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
@@ -332,6 +458,7 @@ namespace Homework_Theme_05
             PrintMatrix(firstMatrix, "\nThe first addend matrix:");
 
             //Kinda have to sleep the thread to get another set of values from random generator
+            Thread.Sleep(10);
 
             var secondMatrix = GenerateMatrix(rows, columns, -rows, columns);
             PrintMatrix(secondMatrix, "\nThe second addend matrix:");
@@ -339,6 +466,7 @@ namespace Homework_Theme_05
             if (ValidateMatrixOperation(firstMatrix, secondMatrix))
             {
                 PrintMatrix(AddMatrices(firstMatrix, secondMatrix), "\nResult matrix after addition:");
+                Console.WriteLine("\nPress any key to continue.");
                 Console.ReadKey();
             }
             else
@@ -347,7 +475,7 @@ namespace Homework_Theme_05
                 while (Console.ReadLine() == "yes")
                 {
                     Task1_2();
-                    Console.WriteLine("Press any key to continue.");
+                    Console.WriteLine("\nPress any key to continue.");
                     Console.ReadKey();
                 }
             }
@@ -359,7 +487,7 @@ namespace Homework_Theme_05
         /// </summary>
         internal static void Task1_3()
         {
-            Console.WriteLine("1.3. Создать метод, принимающий две матрицы и возвращающий их разность.");
+            Console.WriteLine("\n1.3. Создать метод, принимающий две матрицы и возвращающий их разность.");
 
             var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
             var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
@@ -378,6 +506,7 @@ namespace Homework_Theme_05
             if (ValidateMatrixOperation(firstMatrix, nagated))
             {
                 PrintMatrix(AddMatrices(firstMatrix, nagated), "\nDifference matrix:");
+                Console.WriteLine("\nPress any key to continue.");
                 Console.ReadKey();
             }
             else
@@ -385,8 +514,56 @@ namespace Homework_Theme_05
                 Console.WriteLine("\nWould you like to change the input values (yes/no)?");
                 while (Console.ReadLine() == "yes")
                 {
-                    Task1_2();
-                    Console.WriteLine("Press any key to continue.");
+                    Task1_3();
+                    Console.WriteLine("\nPress any key to continue.");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Subroutine to demonstrate Task1_4
+        /// 1.4. Создать метод, принимающий две матрицы, возвращающий их произведение
+        /// </summary>
+        internal static void Task1_4()
+        {
+            Console.WriteLine("\n1.4. Создать метод, принимающий две матрицы, возвращающий их произведение.");
+
+            var rows = RequestByte("\nPlease enter a number of rows for a matrix.");
+            var columns = RequestByte("\nPlease enter a number of columns for the matrix.");
+
+            var firstMatrix = GenerateMatrix(rows, columns, -rows, columns);
+            PrintMatrix(firstMatrix, "\nThe left matrix:");
+
+            //Kinda have to sleep the thread to get another set of values from random generator
+            Thread.Sleep(10);
+
+            var rowsSecond = RequestByte("\nPlease enter a number of rows for the second matrix.");
+
+            while (columns != rowsSecond)
+            {
+                Console.WriteLine("Multiplication of two matrices is defined if and only if the number of columns of the left matrix is the same as the number of rows of the right matrix.");
+                rowsSecond = RequestByte("\nPlease enter a number of rows for the second matrix.");
+            }
+
+            var columnsSecond = RequestByte("\nPlease enter a number of columns for the second matrix.");
+
+            var secondMatrix = GenerateMatrix(rowsSecond, columnsSecond, -rowsSecond, columnsSecond);
+            PrintMatrix(secondMatrix, "\nThe right matrix:");
+            
+            if (ValidateMatrixOperation(firstMatrix, secondMatrix,true))
+            {
+                PrintMatrix(MultiplyMatrices(firstMatrix, secondMatrix), "\nFirst Matrix x Second matrix:");
+                Console.WriteLine("\nPress any key to continue.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("\nWould you like to change the input values (yes/no)?");
+                while (Console.ReadLine() == "yes")
+                {
+                    Task1_4();
+                    Console.WriteLine("\nPress any key to continue.");
                     Console.ReadKey();
                 }
             }
@@ -408,17 +585,9 @@ namespace Homework_Theme_05
 
             //Task 1 part 3
             Task1_3();
-            
 
             //Task 1 part 4
-            // 1.4. Создать метод, принимающий две матрицу, возвращающий их произведение
-
-
-
-
-
-
-
+            Task1_4();
 
             // Задание 2.
             // 1. Создать метод, принимающий  текст и возвращающий слово, содержащее минимальное количество букв
