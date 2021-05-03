@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dialogues.cs" />
+    <Compile Include="Progressions.cs" />
     <Compile Include="StringMagic.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Program.cs" />

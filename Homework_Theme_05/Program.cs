@@ -192,7 +192,7 @@ namespace Homework_Theme_05
         }
 
         /// <summary>
-        ///Subroutine to demonstrate Task3
+        /// Subroutine to demonstrate Task3
         /// Задание 3. Создание метода, принимающего строку и возвращающего новую строку, в которой удалены все рядом стоящие повторяющиеся символы.
         /// </summary>
         internal static void Task3()
@@ -200,6 +200,65 @@ namespace Homework_Theme_05
             Console.WriteLine("\n3. Создание метода, принимающего строку и возвращающего новую строку, в которой удалены все рядом стоящие повторяющиеся символы.");
             Console.WriteLine("\nPlease write a string of text.");
             Console.WriteLine($"\nEye friendly string is: {StringMagic.RemoveSymbolsThatRepeat(Console.ReadLine())}");
+        }
+
+        /// <summary>
+        /// Subroutine to demonstrate Task4
+        /// Задание 4. Написание метода, определяющего, является ли последовательность чисел прогрессией
+        /// Создан метод, который принимает массив чисел как параметр.
+        /// Метод определяет, являются ли числа в массиве арифметической или геометрической прогрессией или массив не содержит прогрессии.
+        /// Метод возвращает результат в виде строки или перечисления.
+        /// </summary>
+        internal static void Task4()
+        {
+            Console.WriteLine("\n3. Задание 4. Написание метода, определяющего, является ли последовательность чисел прогрессией" +
+                              "\nСоздан метод, который принимает массив чисел как параметр." +
+                              "\nМетод определяет, являются ли числа в массиве арифметической или геометрической прогрессией или массив не содержит прогрессии." +
+                              "\nМетод возвращает результат в виде строки или перечисления.");
+
+            ushort numberOfElements = 6;
+            double differenceOrCommonRatio = -3.5d;
+            double first = -5d;
+            double[] arithmetic = Progressions.GenerateArithmeticProgression(first, differenceOrCommonRatio, numberOfElements);
+            double[] geometric = Progressions.GenerateGeometricProgression(first, differenceOrCommonRatio, numberOfElements);
+
+            double[] oneElementZero = {0};
+            double[] oneElementNotZero = { 5.5 };
+            double[] twoElementsZero = { 0,0 };
+            double[] twoElementNotZero = { 5.5, 5.5 };
+            double[] threeElementsNonZero = { 0, 1, 2 };
+            double[] fourElementsNotZero = { -1, 3, -9, 27 };
+            double[] fiveRandomElements = { -1, 68, 32.784, 23423, -2521.2352 };
+
+
+            Progressions.PrintProgression(arithmetic, $"\nThe first {numberOfElements} elements of Arithmetic Progression with a1 = {first} and difference = {differenceOrCommonRatio}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(arithmetic) }");
+
+            Progressions.PrintProgression(geometric,$"\nThe first {numberOfElements} elements of Geometric Progression with a1 = {first} and common ratio = {differenceOrCommonRatio}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(geometric) }");
+
+            Progressions.PrintProgression(oneElementZero, $"\nThe first {oneElementZero.Length} element(s) of a sequence with a1 = {oneElementZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(oneElementZero) }");
+
+            Progressions.PrintProgression(oneElementNotZero, $"\nThe first {oneElementNotZero.Length} element(s) of a sequence with a1 = {oneElementNotZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(oneElementNotZero) }");
+
+            Progressions.PrintProgression(twoElementsZero, $"\nThe first {twoElementsZero.Length} element(s) of a sequence with a1 = {twoElementsZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(twoElementsZero) }");
+
+            Progressions.PrintProgression(twoElementNotZero, $"\nThe first {twoElementNotZero.Length} element(s) of a sequence with a1 = {twoElementNotZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(twoElementNotZero) }");
+
+            Progressions.PrintProgression(threeElementsNonZero, $"\nThe first {threeElementsNonZero.Length} element(s) of a sequence with a1 = {threeElementsNonZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(threeElementsNonZero) }");
+
+            Progressions.PrintProgression(fourElementsNotZero, $"\nThe first {fourElementsNotZero.Length} element(s) of a sequence with a1 = {fourElementsNotZero[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(fourElementsNotZero) }");
+
+            Progressions.PrintProgression(fiveRandomElements, $"\nThe first {fiveRandomElements.Length} element(s) of a sequence with a1 = {fiveRandomElements[0]}");
+            Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(fiveRandomElements) }");
+
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -234,24 +293,22 @@ namespace Homework_Theme_05
             //Task 3
             //Task3();
 
+            //task 4
+            Task4();
+
+
 
             Console.ReadKey();
 
           
-            
-            // Задание 3. Создать метод, принимающий текст. 
-            // Результатом работы метода должен быть новый текст, в котором
-            // удалены все кратные рядом стоящие символы, оставив по одному 
-            // Пример: ПППОООГГГООООДДДААА >>> ПОГОДА
-            // Пример: Ххххоооорррооошшшиий деееннннь >>> хороший день
-            // 
             // Задание 4. Написать метод принимающий некоторое количесво чисел, выяснить
             // является заданная последовательность элементами арифметической или геометрической прогрессии
             // 
             // Примечание
             //             http://ru.wikipedia.org/wiki/Арифметическая_прогрессия
             //             http://ru.wikipedia.org/wiki/Геометрическая_прогрессия
-            //
+            
+
             // *Задание 5
             // Вычислить, используя рекурсию, функцию Аккермана:
             // A(2, 5), A(1, 2)
