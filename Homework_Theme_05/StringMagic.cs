@@ -62,7 +62,7 @@ namespace Homework_Theme_05
         /// </summary>
         /// <param name="text">Input string.</param>
         /// <returns>All the longest words from the input string separated by whitespace.</returns>
-        public static string AllTheLongestWords(string text)
+        public static List<string> AllTheLongestWords(string text)
         {
             char[] separators = new char[] {' '};
 
@@ -90,7 +90,7 @@ namespace Homework_Theme_05
                 }
             }
 
-            return string.Join(", ",allTheLongest);
+            return allTheLongest;
         }
     }
 }

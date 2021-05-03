@@ -187,8 +187,8 @@ namespace Homework_Theme_05
         {
             Console.WriteLine("\n2.2. Создать метод, принимающий  текст и возвращающий слово(слова) с максимальным количеством букв.");
             Console.WriteLine("\nPlease write a string of text.");
-
-            Console.WriteLine($"\nAll the longest words are: {StringMagic.AllTheLongestWords(Console.ReadLine())}");
+            
+            Console.WriteLine($"\nAll the longest words are: {string.Join(", ", StringMagic.AllTheLongestWords(Console.ReadLine()))}");
         }
 
 
@@ -213,21 +213,15 @@ namespace Homework_Theme_05
             //Task1_4();
 
             //Task 2 part 1
-            Task2_1();
+            //Task2_1();
 
             //Task 2 part 2
-            Task2_2();
+            //Task2_2();
 
             Console.ReadKey();
 
-            // Задание 2.
-            // 1. Создать метод, принимающий  текст и возвращающий слово, содержащее минимальное количество букв
-            // 2.* Создать метод, принимающий  текст и возвращающий слово(слова) с максимальным количеством букв 
-            // Примечание: слова в тексте могут быть разделены символами (пробелом, точкой, запятой) 
-            // Пример: Текст: "A ББ ВВВ ГГГГ ДДДД  ДД ЕЕ ЖЖ ЗЗЗ"
-            // 1. Ответ: А
-            // 2. ГГГГ, ДДДД
-            //
+          
+            
             // Задание 3. Создать метод, принимающий текст. 
             // Результатом работы метода должен быть новый текст, в котором
             // удалены все кратные рядом стоящие символы, оставив по одному 
