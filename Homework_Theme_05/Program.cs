@@ -191,8 +191,21 @@ namespace Homework_Theme_05
             Console.WriteLine($"\nAll the longest words are: {string.Join(", ", StringMagic.AllTheLongestWords(Console.ReadLine()))}");
         }
 
+        /// <summary>
+        ///Subroutine to demonstrate Task3
+        /// Задание 3. Создание метода, принимающего строку и возвращающего новую строку, в которой удалены все рядом стоящие повторяющиеся символы.
+        /// </summary>
+        internal static void Task3()
+        {
+            Console.WriteLine("\n3. Создание метода, принимающего строку и возвращающего новую строку, в которой удалены все рядом стоящие повторяющиеся символы.");
+            Console.WriteLine("\nPlease write a string of text.");
+            Console.WriteLine($"\nEye friendly string is: {StringMagic.RemoveSymbolsThatRepeat(Console.ReadLine())}");
+        }
 
-        static void Main(string[] args)
+        /// <summary>
+        /// The program that demonstrates Homework_Theme_05
+        /// </summary>
+        private static void Main()
         {
             //I have to use unicode for input/output values
             Console.OutputEncoding = Encoding.Unicode;
@@ -217,6 +230,10 @@ namespace Homework_Theme_05
 
             //Task 2 part 2
             //Task2_2();
+
+            //Task 3
+            //Task3();
+
 
             Console.ReadKey();
 

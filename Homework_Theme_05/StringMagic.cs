@@ -58,10 +58,10 @@ namespace Homework_Theme_05
         }
 
         /// <summary>
-        /// Returns all the longest words from the input string separated by whitespace.
+        /// Returns all the longest words from the input string.
         /// </summary>
         /// <param name="text">Input string.</param>
-        /// <returns>All the longest words from the input string separated by whitespace.</returns>
+        /// <returns>All the longest words from the input string.</returns>
         public static List<string> AllTheLongestWords(string text)
         {
             char[] separators = new char[] {' '};
@@ -91,6 +91,34 @@ namespace Homework_Theme_05
             }
 
             return allTheLongest;
+        }
+
+        /// <summary>
+        /// Removes adjacent symbols that repeat from a string.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>String without identical adjacent symbols.</returns>
+        public static string RemoveSymbolsThatRepeat(string text)
+        {
+            
+            var letters = text.ToLower().ToCharArray();
+
+            if (letters.Length == 0) return text;
+
+            var current = letters[0];
+            var result = new List<char> { letters[0] };
+
+            for (int i = 1; i < letters.Length; i++)
+            {
+                if (current == letters[i])
+                {
+                    continue;
+                }
+                result.Add(letters[i]);
+                current = letters[i];
+            }
+
+            return new string(result.ToArray());
         }
     }
 }
