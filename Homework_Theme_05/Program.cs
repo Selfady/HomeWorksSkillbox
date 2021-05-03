@@ -172,11 +172,23 @@ namespace Homework_Theme_05
         /// </summary>
         internal static void Task2_1()
         {
+            Console.WriteLine("\n2.1. Создать метод, принимающий  текст и возвращающий слово, содержащее минимальное количество букв.");
             Console.WriteLine("\nPlease write a string of text.");
-            var str = Console.ReadLine();
-            Console.WriteLine(str.Split( ));
 
+            Console.WriteLine($"\nOne of the shortest words is: {StringMagic.OneOfTheShortestWords(Console.ReadLine())}");
+        }
 
+        /// <summary>
+        /// Subroutine to demonstrate Task2_2
+        /// Создать метод, принимающий  текст и возвращающий слово(слова) с максимальным количеством букв 
+        /// Примечание: слова в тексте могут быть разделены символами (пробелом, точкой, запятой)
+        /// </summary>
+        internal static void Task2_2()
+        {
+            Console.WriteLine("\n2.2. Создать метод, принимающий  текст и возвращающий слово(слова) с максимальным количеством букв.");
+            Console.WriteLine("\nPlease write a string of text.");
+
+            Console.WriteLine($"\nAll the longest words are: {StringMagic.AllTheLongestWords(Console.ReadLine())}");
         }
 
 
@@ -202,6 +214,11 @@ namespace Homework_Theme_05
 
             //Task 2 part 1
             Task2_1();
+
+            //Task 2 part 2
+            Task2_2();
+
+            Console.ReadKey();
 
             // Задание 2.
             // 1. Создать метод, принимающий  текст и возвращающий слово, содержащее минимальное количество букв
