@@ -176,6 +176,9 @@ namespace Homework_Theme_05
             Console.WriteLine("\nPlease write a string of text.");
 
             Console.WriteLine($"\nOne of the shortest words is: {StringMagic.OneOfTheShortestWords(Console.ReadLine())}");
+
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -189,6 +192,9 @@ namespace Homework_Theme_05
             Console.WriteLine("\nPlease write a string of text.");
             
             Console.WriteLine($"\nAll the longest words are: {string.Join(", ", StringMagic.AllTheLongestWords(Console.ReadLine()))}");
+
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -200,6 +206,9 @@ namespace Homework_Theme_05
             Console.WriteLine("\n3. Создание метода, принимающего строку и возвращающего новую строку, в которой удалены все рядом стоящие повторяющиеся символы.");
             Console.WriteLine("\nPlease write a string of text.");
             Console.WriteLine($"\nEye friendly string is: {StringMagic.RemoveSymbolsThatRepeat(Console.ReadLine())}");
+
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -211,7 +220,7 @@ namespace Homework_Theme_05
         /// </summary>
         internal static void Task4()
         {
-            Console.WriteLine("\n3. Задание 4. Написание метода, определяющего, является ли последовательность чисел прогрессией" +
+            Console.WriteLine("\n4. Задание 4. Написание метода, определяющего, является ли последовательность чисел прогрессией" +
                               "\nСоздан метод, который принимает массив чисел как параметр." +
                               "\nМетод определяет, являются ли числа в массиве арифметической или геометрической прогрессией или массив не содержит прогрессии." +
                               "\nМетод возвращает результат в виде строки или перечисления.");
@@ -258,7 +267,27 @@ namespace Homework_Theme_05
             Progressions.PrintProgression(fiveRandomElements, $"\nThe first {fiveRandomElements.Length} element(s) of a sequence with a1 = {fiveRandomElements[0]}");
             Console.WriteLine($"\nThis progression is { (Progressions.Sequence)Progressions.IsProgression(fiveRandomElements) }");
 
-            Console.ReadLine();
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Subroutine to demonstrate Task5
+        /// *Задание 5
+        /// Вычислить, используя рекурсию, функцию Аккермана:
+        /// A(2, 5), A(1, 2)
+        /// A(n, m) = m + 1, если n = 0,
+        ///         = A(n - 1, 1), если n <> 0, m = 0,
+        ///         = A(n - 1, A(n, m - 1)), если n> 0, m > 0.
+        /// </summary>
+        internal static void Task5()
+        {
+            Console.WriteLine("\n. Задание 5. Вычислить, используя рекурсию, функцию Аккермана: A(2, 5), A(1, 2)");
+            Console.WriteLine($"\nAckermann Function for m = 2 and n = 5 equals: {Progressions.AckermannFunction(2, 5)}");
+            Console.WriteLine($"\nAckermann Function for m = 1 and n = 2 equals: {Progressions.AckermannFunction(1, 2)}");
+
+            Console.WriteLine("\nPress any key to continue.");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -273,51 +302,33 @@ namespace Homework_Theme_05
             Console.WriteLine("Вы запустили пачку решений для \"Homework_Theme_05 5.5 Домашняя работа\".");
 
             ////Task 1 part 1
-            //Task1_1();
+            Task1_1();
 
             ////Task 1 part 2
-            //Task1_2();
+            Task1_2();
 
             ////Task 1 part 3
-            //Task1_3();
+            Task1_3();
 
             ////Task 1 part 4
-            //Task1_4();
+            Task1_4();
 
             //Task 2 part 1
-            //Task2_1();
+            Task2_1();
 
             //Task 2 part 2
-            //Task2_2();
+            Task2_2();
 
             //Task 3
-            //Task3();
+            Task3();
 
-            //task 4
+            //Task 4
             Task4();
 
-
+            //Task 5
+            Task5();
 
             Console.ReadKey();
-
-          
-            // Задание 4. Написать метод принимающий некоторое количесво чисел, выяснить
-            // является заданная последовательность элементами арифметической или геометрической прогрессии
-            // 
-            // Примечание
-            //             http://ru.wikipedia.org/wiki/Арифметическая_прогрессия
-            //             http://ru.wikipedia.org/wiki/Геометрическая_прогрессия
-            
-
-            // *Задание 5
-            // Вычислить, используя рекурсию, функцию Аккермана:
-            // A(2, 5), A(1, 2)
-            // A(n, m) = m + 1, если n = 0,
-            //         = A(n - 1, 1), если n <> 0, m = 0,
-            //         = A(n - 1, A(n, m - 1)), если n> 0, m > 0.
-            // 
-            // Весь код должен быть откоммментирован
-
         }
     }
 }

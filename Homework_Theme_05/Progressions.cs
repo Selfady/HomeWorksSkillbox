@@ -74,15 +74,22 @@ namespace Homework_Theme_05
                 Console.Write($"{progression[i],digitsWithSpace}");
             }
         }
-
+        /// <summary>
+        /// An enum to link a progression to its type.
+        /// </summary>
         public enum Sequence
         {
             Arithmetic,
             Geometric,
             ArithmeticAndGeometric,
-            Neither
+            NeitherArithmeticNorGeometric
         }
 
+        /// <summary>
+        /// Method to check if a sequence is a progression.
+        /// </summary>
+        /// <param name="progression">Progression to get check if a sequence is a progression.</param>
+        /// <returns>Type of the sequence.</returns>
         public static int IsProgression(double[] progression)
         {
             double NumberOfElements = progression.GetLength(0);
@@ -100,7 +107,7 @@ namespace Homework_Theme_05
             switch (NumberOfElements)
             {
                 case 0:
-                    return (int) Sequence.Neither;
+                    return (int) Sequence.NeitherArithmeticNorGeometric;
                 case 1:
                     return first != 0 ? (int) Sequence.ArithmeticAndGeometric : (int) Sequence.Arithmetic;
                 case 2:
@@ -164,7 +171,42 @@ namespace Homework_Theme_05
                 return (int) Sequence.Geometric;
             }
             
-            return (int) Sequence.Neither;
+            return (int) Sequence.NeitherArithmeticNorGeometric;
+        }
+
+        /// <summary>
+        /// This method returns the value of Ackermann Function for two given non negative integer numbers.
+        /// </summary>
+        /// <param name="m">First number.</param>
+        /// <param name="n">Second number.</param>
+        /// <returns>The value of Ackermann Function.</returns>
+        public static ulong AckermannFunction(ulong m, ulong n)
+        {
+            //if (!(m >= 0 && n >= 0))
+            //{
+            //    throw new Exception("input values must be non-negative integer numbers.");
+            //}
+
+            ulong result = default;
+
+            if (m > 0 && n > 0)
+            {
+                return AckermannFunction(m - 1, AckermannFunction(m, n - 1));
+            }
+
+            if (m > 0 && n == 0)
+            {
+                return AckermannFunction(m - 1, 1);
+            }
+
+            if (m == 0)
+            {
+                n++;
+                result = n;
+                return result;
+            }
+
+            return result;
         }
     }
 }
