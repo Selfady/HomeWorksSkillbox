@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Homework_Theme_06
 { 
@@ -68,23 +69,33 @@ namespace Homework_Theme_06
     
     class Program
     {
-        public static void PrintAlmostHalf(int number)
+        public static void PrintAlmostHalf(int number, StreamWriter sw)
         {
-            for (int i = number; i > number / 2; i--)
+            var group = 1;
+            while (true)
             {
-                ///Takes loner than 8 hrs to display.
-                Console.Write($"{i} ");
-            }
+                sw.Write("Group {0}: ", group);
+                for (int i = number; i > number / 2; i--)
+                {
+                    ///Takes longer than 8 hrs to display 1_000_000_000 numbers in the console.
+                    sw.Write($"{i} ");
+                }
 
-            Console.WriteLine();
-            
-            if (number / 2 != 1)
-            {
-                PrintAlmostHalf(number / 2);
-            }
-            else
-            {
-                Console.Write($"1");
+                sw.WriteLine();
+
+                if (number / 2 != 1)
+                {
+                    group++;
+                    number = number / 2;
+                    continue;
+                }
+                else
+                {
+                    group++;
+                    sw.Write($"Group {group}: 1");
+                }
+
+                break;
             }
         }
 
@@ -95,14 +106,20 @@ namespace Homework_Theme_06
 
         static void Main(string[] args)
         {
-            var n = 100;
-            Console.WriteLine("We will have {0} groups.", CalculateNumberOfGroups(n));
-            
-            var start = DateTime.Now;
-            
-            PrintAlmostHalf(n);
-            TimeSpan timeSpan = DateTime.Now.Subtract(start);
-            Console.WriteLine($"timeSpan.TotalMilliseconds = {timeSpan.TotalMilliseconds}");
+
+            var n = 1_0000;
+            //Initializing a stream to work with result.txt file.
+            using (StreamWriter sw = new StreamWriter("result.txt")) 
+            {
+                Console.WriteLine("We will have {0} groups.", CalculateNumberOfGroups(n));
+
+                var start = DateTime.Now;
+
+                PrintAlmostHalf(n, sw);
+                TimeSpan timeSpan = DateTime.Now.Subtract(start);
+                Console.WriteLine($"\nThe operation took {timeSpan.TotalMilliseconds} to complete.");
+            }
+
             Console.ReadKey();
         }
     }
