@@ -72,6 +72,7 @@ namespace Homework_Theme_06
         {
             for (int i = number; i > number / 2; i--)
             {
+                ///Takes loner than 8 hrs to display.
                 Console.Write($"{i} ");
             }
 
@@ -89,14 +90,12 @@ namespace Homework_Theme_06
 
         public static double CalculateNumberOfGroups(int number)
         {
-            var xDown = Math.Floor(Math.Log2(number));
-            
-            return xDown+1;
+            return Math.Ceiling(Math.Log2(number));
         }
 
         static void Main(string[] args)
         {
-            var n = 1_000_000_000;
+            var n = 100;
             Console.WriteLine("We will have {0} groups.", CalculateNumberOfGroups(n));
             
             var start = DateTime.Now;
@@ -107,5 +106,4 @@ namespace Homework_Theme_06
             Console.ReadKey();
         }
     }
-    
 }
