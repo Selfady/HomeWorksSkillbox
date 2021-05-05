@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
+using System.Runtime.CompilerServices;
 
 namespace Homework_Theme_06
 { 
@@ -63,21 +65,29 @@ namespace Homework_Theme_06
     /// * При выполнении текущего задания, необходимо документировать код 
     ///   Как пометками, так и xml документацией
     ///   В обязательном порядке создать несколько собственных методов
-    /// </summary>
-    /// <param name="args"></param>
-   
+    
     
     class Program
     {
+        /// <summary>
+        /// The method breaks a sequence from 1 to a given number into groups so that elements of the groups
+        /// are not multipliers of each other.
+        /// </summary>
+        /// <param name="number">Maximum number of the sequence.</param>
+        /// <param name="sw">Output stream.</param>
         public static void PrintAlmostHalf(int number, StreamWriter sw)
         {
+            if (number <= 0 || number > 2_000_000_000)
+            {
+                throw new Exception("PrintAlmostHalf algorithm is not supposed to work with numbers outside of the range from 0 to 2_000_000_000");
+            }
+
             var group = 1;
             while (true)
             {
                 sw.Write("Group {0}: ", group);
                 for (int i = number; i > number / 2; i--)
                 {
-                    ///Takes longer than 8 hrs to display 1_000_000_000 numbers in the console.
                     sw.Write($"{i} ");
                 }
 
@@ -86,7 +96,7 @@ namespace Homework_Theme_06
                 if (number / 2 != 1)
                 {
                     group++;
-                    number = number / 2;
+                    number /= 2;
                     continue;
                 }
                 else
@@ -99,25 +109,126 @@ namespace Homework_Theme_06
             }
         }
 
+        /// <summary>
+        /// Method gives the number of groups our sequence breaks into.
+        /// </summary>
+        /// <param name="number">Maximum number of the sequence.</param>
+        /// <returns>The number of groups the sequence falls onto.</returns>
         public static double CalculateNumberOfGroups(int number)
         {
             return Math.Ceiling(Math.Log2(number));
         }
 
+        /// <summary>
+        /// Method to read integer from a file by given path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static int ReadNumberFromFile(string path)
+        {
+            int n = 0;
+
+            using (var sr = new StreamReader(path))
+            {
+                string line;
+                // Read and display lines from the file until the end of the file is reached.
+                while ((line = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine("We have read \"{0}\" from the file", line);
+                    if (!Int32.TryParse(line, out n))
+                    {
+                        //We expect the file doesn't have extra symbols..
+                        Console.WriteLine("Could not read the file n = {0}", n);
+                    }
+                    else
+                    {
+                        n = Int32.Parse(line);
+                    }
+                }
+            }
+
+            return n;
+        }
+
+        /// <summary>
+        /// Entrance point for the program.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
+            //TODO: Dialog "Do you wanna save the groups on the disk?"
+            //TODO: Display only groups or save into a file.
+            //TODO: Archive the file?
 
-            var n = 1_0000;
-            //Initializing a stream to work with result.txt file.
-            using (StreamWriter sw = new StreamWriter("result.txt")) 
+            Console.WriteLine("This is a batch of solutions for \"Homework_Theme_06 6.6 Homework\"");
+            Console.WriteLine("\nEnter the path to your file with a number from 1 to 1_000_000_000.");
+            
+            var path = Console.ReadLine();
+            
+            //Make the user enter a path to his file with input parameters
+            while(!File.Exists(path))
             {
-                Console.WriteLine("We will have {0} groups.", CalculateNumberOfGroups(n));
+                Console.WriteLine("\nSuch a file doesn't exist by the given path, please enter the right path to the file.");
+                Console.WriteLine("\nIf it helps, your current directory has the following files:");
 
-                var start = DateTime.Now;
+                DirectoryInfo directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory()); 
+                foreach (var item in directoryInfo.GetFiles())
+                {
+                    Console.WriteLine($"{item.Name}");           
+                }
 
-                PrintAlmostHalf(n, sw);
-                TimeSpan timeSpan = DateTime.Now.Subtract(start);
-                Console.WriteLine($"\nThe operation took {timeSpan.TotalMilliseconds} to complete.");
+                path = Console.ReadLine();
+            }
+
+            //The number to generate sequence.
+            int n = 0;
+
+            n = ReadNumberFromFile(path);
+
+            var start = DateTime.Now;
+
+            Console.WriteLine("\nWe will have {0} groups.", CalculateNumberOfGroups(n));
+            TimeSpan timeSpan = DateTime.Now.Subtract(start);
+            Console.WriteLine($"\nThe operation took {timeSpan.TotalMilliseconds} Milliseconds to complete.");
+
+            Console.WriteLine("\nWould you like to save the groups in a file y/n?");
+            var decision = Console.ReadLine();
+
+            if (decision == "y")
+            {
+                start = DateTime.Now;
+
+                //Initializing a stream to work with result.txt file.
+                using (StreamWriter sw = new StreamWriter("result.txt"))
+                {
+                    PrintAlmostHalf(n, sw);
+                    timeSpan = DateTime.Now.Subtract(start);
+                    Console.WriteLine($"\nThe operation took {timeSpan.TotalMilliseconds} Milliseconds to complete.");
+                }
+
+                Console.WriteLine("\nWould you like to create archived version of the file y/n?");
+                decision = Console.ReadLine();
+
+                if (decision == "y")
+                {
+                    string source = "result.txt";
+                    string compressed = "result.zip";
+                    using (FileStream ss = new FileStream(source, FileMode.OpenOrCreate))
+                    {
+                        using (FileStream ts = File.Create(compressed))   // поток для записи сжатого файла
+                        {
+                            // поток архивации
+                            using (GZipStream cs = new GZipStream(ts, CompressionMode.Compress))
+                            {
+                                ss.CopyTo(cs); // копируем байты из одного потока в другой
+                                Console.WriteLine("Files {0} successfuly compressed. : Its size on the fisk was {1} bytes and now: {2}.",
+                                    source,
+                                    ss.Length,
+                                    ts.Length);
+                            }
+                        }
+                    }
+                }
             }
 
             Console.ReadKey();
