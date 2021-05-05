@@ -221,7 +221,7 @@ namespace Homework_Theme_06
                             using (GZipStream cs = new GZipStream(ts, CompressionMode.Compress))
                             {
                                 ss.CopyTo(cs); // копируем байты из одного потока в другой
-                                Console.WriteLine("Files {0} successfuly compressed. : Its size on the fisk was {1} bytes and now: {2}.",
+                                Console.WriteLine("Files {0} successfuly compressed. : Its size on the disk was {1} bytes and now: {2}.",
                                     source,
                                     ss.Length,
                                     ts.Length);
