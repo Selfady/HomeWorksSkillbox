@@ -17,12 +17,12 @@ namespace Homework_Theme_07
         private int _number;
 
         /// <summary>
-        /// Field "Edited". A flag that sHows that a note was edited after its creation.
+        /// Field "Edited". A flag that shows that a note was edited after its creation.
         /// </summary>
         private bool _edited;
 
         /// <summary>
-        /// Field "LocalDate". The date and time of the note.
+        /// Field "Date". The date and time of the note.
         /// </summary>
         private DateTime _date;
 
@@ -63,6 +63,9 @@ namespace Homework_Theme_07
             set => _edited = value;
         }
 
+        /// <summary>
+        /// Short summary for the note.
+        /// </summary>
         public string Summary
         {
             get => this._summary;
@@ -122,14 +125,33 @@ namespace Homework_Theme_07
         /// Constructor for a Note.
         /// </summary>
         /// <param name="Number">Number of the note.</param>
+        /// <param name="Summary">Short summary for the note.</param>
+        /// <param name="Date">The date and time of the note.</param>
+        /// <param name="Text">The text of the note.</param>
+        /// <param name="Author">The author of the note.</param>
+        /// <param name="Edited">A flag that shows that a note was edited after its creation.</param>
+        public Note(int Number, string Summary, DateTime Date, string Text, string Author, bool Edited)
+        {
+            this._number = Number;
+            this._summary = Summary;
+            this._date = Date;
+            this._text = Text;
+            this._author = Author;
+            this._edited = Edited;
+        }
+
+        /// <summary>
+        /// Constructor for a Note.
+        /// </summary>
+        /// <param name="Number">Number of the note.</param>
         /// <param name="Text">Text of the note.</param>
         public Note(int Number, string Text)
         {
             this._number = Number;
-            this._text = Text;
             this._summary = String.Empty;
-            this._author = WindowsIdentity.GetCurrent().Name;
             this._date = DateTime.Now;
+            this._text = Text;
+            this._author = WindowsIdentity.GetCurrent().Name;
             this._edited = false;
         }
 
