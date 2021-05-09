@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace Homework_Theme_07
 {
@@ -37,6 +39,7 @@ namespace Homework_Theme_07
             this._path = Path;
             this._lastNote = 0;
             this._notes = new List<Note>();
+            Load();
         }
 
         #endregion
@@ -64,17 +67,71 @@ namespace Homework_Theme_07
         }
 
         /// <summary>
+        /// Removes all notes with given ID
+        /// </summary>
+        /// <param name="iD">ID on the notes to be removed.</param>
+        public void RemoveAll(int iD)
+        {
+            this._notes.RemoveAll(p => p.Number == iD);
+        }
+
+        /// <summary>
+        /// Removes all notes with edited true/false
+        /// </summary>
+        /// <param name="edited">Edited flag of the note true/false.</param>
+        public void RemoveAll(bool edited)
+        {
+            this._notes.RemoveAll(p => p.Edited == edited);
+        }
+
+        /// <summary>
+        /// Removed all noted with the given date.
+        /// </summary>
+        /// <param name="date">The date and time when the note was taken.</param>
+        public void RemoveAll(DateTime date)
+        {
+            this._notes.RemoveAll(p => p.Date == date);
+        }
+
+        /// <summary>
+        /// Removes all notes with given author.
+        /// </summary>
+        /// <param name="author">The Author of the note.</param>
+        public void RemoveAllByAuthor(string author)
+        {
+            this._notes.RemoveAll(p => p.Author == author);
+        }
+
+        /// <summary>
+        /// Removes all notes with given summary.
+        /// </summary>
+        /// <param name="summary">Short summary for the note.</param>
+        public void RemoveAllBySummary(string summary)
+        {
+            this._notes.RemoveAll(p => p.Summary == summary);
+        }
+
+        /// <summary>
+        /// Removes all notes with given text..
+        /// </summary>
+        /// <param name="text">The text of the note.</param>
+        public void RemoveAllByText(string text)
+        {
+            this._notes.RemoveAll(p => p.Text == text);
+        }
+
+        /// <summary>
         /// Saves the diary to a file.
         /// </summary>
-        /// <param name="Path">Path to the file.</param>
-        public void Save(string Path)
+        /// <param name="path">Path to the file.</param>
+        public void Save(string path)
         {
             string pattern = String.Empty;
             
             foreach (var note in _notes)
             {
                 pattern = $"{note.Number},{note.Summary},{note.Date},{note.Text},{note.Author},{note.Edited}";
-                File.AppendAllText(Path, $"{pattern}\n");
+                File.AppendAllText(path, $"{pattern}\n");
             }
         }
 
