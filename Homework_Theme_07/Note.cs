@@ -14,7 +14,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// Field "Number". Sequential identifier of the note to track it.
         /// </summary>
-        private int _number;
+        private uint _number;
 
         /// <summary>
         /// Field "Edited". A flag that shows that a note was edited after its creation.
@@ -48,7 +48,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// The number of the Note. Cannot be set after the note was created.
         /// </summary>
-        public int Number 
+        public uint Number 
         { 
             get => this._number;
             set => _number = value;
@@ -130,7 +130,7 @@ namespace Homework_Theme_07
         /// <param name="Text">The text of the note.</param>
         /// <param name="Author">The author of the note.</param>
         /// <param name="Edited">A flag that shows that a note was edited after its creation.</param>
-        public Note(int Number, string Summary, DateTime Date, string Text, string Author, bool Edited)
+        public Note(uint Number, string Summary, DateTime Date, string Text, string Author, bool Edited)
         {
             this._number = Number;
             this._summary = Summary;
@@ -145,14 +145,18 @@ namespace Homework_Theme_07
         /// </summary>
         /// <param name="Number">Number of the note.</param>
         /// <param name="Text">Text of the note.</param>
-        public Note(int Number, string Text)
+        public Note(uint Number, string Text) : this(Number, String.Empty, DateTime.Now, Text, WindowsIdentity.GetCurrent().Name,false)
         {
-            this._number = Number;
-            this._summary = String.Empty;
-            this._date = DateTime.Now;
-            this._text = Text;
-            this._author = WindowsIdentity.GetCurrent().Name;
-            this._edited = false;
+        }
+
+        /// <summary>
+        /// Constructor for a Note.
+        /// </summary>
+        /// <param name="Number"></param>
+        /// <param name="Text"></param>
+        /// <param name="Summary"></param>
+        public Note(uint Number, string Text, string Summary) : this(Number,Summary, DateTime.Now, Text, WindowsIdentity.GetCurrent().Name, false)
+        {
         }
 
         #endregion Constructors

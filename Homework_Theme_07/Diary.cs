@@ -24,7 +24,16 @@ namespace Homework_Theme_07
         /// <summary>
         /// The number of the last added note.
         /// </summary>
-        private int _lastNote;
+        private uint _lastNote;
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// Accessor for the number of the last added note.
+        /// </summary>
+        public uint LastNote { get => this._lastNote; }
 
         #endregion
 
@@ -37,7 +46,7 @@ namespace Homework_Theme_07
         public Diary(string Path)
         {
             this._path = Path;
-            this._lastNote = 0;
+            this._lastNote = 1;
             this._notes = new List<Note>();
             Load();
         }
@@ -157,7 +166,7 @@ namespace Homework_Theme_07
                 {
                     string[] args = sr.ReadLine().Split(',');
 
-                    _notes.Add(new Note(int.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
+                    _notes.Add(new Note(uint.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
                 }
             }
         }
