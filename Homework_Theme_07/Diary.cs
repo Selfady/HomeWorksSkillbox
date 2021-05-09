@@ -143,7 +143,7 @@ namespace Homework_Theme_07
             foreach (var note in _notes)
             {
                 pattern = $"{note.Number},{note.Summary},{note.Date},{note.Text},{note.Author},{note.Edited}";
-                File.AppendAllText(_path, $"{pattern}\n");
+                File.WriteAllText(_path, $"{pattern}\n");
             }
         }
 
