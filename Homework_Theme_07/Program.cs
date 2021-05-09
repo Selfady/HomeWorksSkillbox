@@ -12,7 +12,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// Method that returns the next ID for notes.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Note.</returns>
         static Note NewNote(Diary diary)
         {
             Console.WriteLine("\nPlease enter a summary for the note.");
@@ -22,6 +22,10 @@ namespace Homework_Theme_07
             return new Note(diary.LastNote, summary, text);
         }
 
+        /// <summary>
+        /// Add note menu.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
         static void AddNote(Diary diary)
         {
             Console.WriteLine("\nAdd notes:" +
@@ -58,14 +62,122 @@ namespace Homework_Theme_07
             }
         }
 
+        /// <summary>
+        /// Edit note menu.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
+        static void EditNote(Diary diary)
+        {
+            Console.WriteLine("\nNot implemented");
+            string key = Console.ReadLine();
+            switch (key)
+            {
+                default:
+                {
+                    MainMenu(diary);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Remove note menu.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
+        static void RemoveNote(Diary diary)
+        {
+            Console.WriteLine("\nRemove notes:" +
+                              "\n1 - By #." +
+                              "\n2 - Remove modified notes." +
+                              "\n3 - By Date and Time." +
+                              "\n4 - By author." +
+                              "\n5 - By text." +
+                              "\n6 - By summary." +
+                              "\n7 - Return to the Main menu.");
+            Console.WriteLine("\nEnter a number from 1 to 3");
+            string key = Console.ReadLine();
+            //String with user input to tell what he's gonna remove.
+            string toRemove = String.Empty;
+            switch (key)
+            {
+                case "1":
+                {
+                    Console.WriteLine("\nPlease enter # of the note to remove it.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAll(int.Parse(toRemove));
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNothing to remove.");
+                    }
+                    MainMenu(diary);
+                    break;
+                }
+                case "2":
+                {
+                    Console.WriteLine("\nWould you like to remove edited notes? y/n.");
+                    toRemove = Console.ReadLine();
+                    if (toRemove == "y")
+                    {
+                        diary.RemoveAll(true);
+                    }
+                    MainMenu(diary);
+                    break;
+                }
+                case "3":
+                    Console.WriteLine("\nPlease enter Date and Time of notes to remove them.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAll(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                case "4":
+                    Console.WriteLine("\nPlease enter author of the notes to remove them all.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAllByAuthor(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                case "5":
+                    Console.WriteLine("\nPlease enter text of the notes to remove them all.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAllByText(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                case "6":
+                    Console.WriteLine("\nPlease enter summary of the notes to remove them all.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAllBySummary(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                default:
+                {
+                    MainMenu(diary);
+                    break;
+                }
+            }
+        }
+
         static void MainMenu(Diary diary)
         {
             Console.WriteLine("\nNotes of the diary:");
             diary.PrintDiary();
             Console.WriteLine("\nMain menu:" +
-                              "\n1 - Add a note." +
+                              "\n1 - Add notes." +
                               "\n2 - Edit a note." +
-                              "\n3 - Remove a note." +
+                              "\n3 - Remove notes." +
                               "\n4 - Sort notes." +
                               "\n5 - Save changes to the file." +
                               "\n6 - Exit the program.");
@@ -78,11 +190,33 @@ namespace Homework_Theme_07
                     AddNote(diary);
                     break;
                 }
+                case "2":
+                    EditNote(diary);
+                    break;
+                case "3":
+                    RemoveNote(diary);
+                    break;
+                case "4":
+                    SortNotes(diary);
+                    break;
+                case "5":
+                    SaveDiary(diary);
+                    break;
                 default:
                 {
                     break;
                 }
             }
+        }
+
+        private static void SaveDiary(Diary diary)
+        {
+            diary.Save();
+        }
+
+        private static void SortNotes(Diary diary)
+        {
+            throw new NotImplementedException();
         }
 
         static void Main(string[] args)
@@ -144,17 +278,17 @@ namespace Homework_Theme_07
             //diary.Save("first.txt");
             //TODO: make remove method work for loaded diary
             //diary.Remove(page2);
-            diary.PrintDiary();
+            //diary.PrintDiary();
 
 
             //WIll have to Parse DateTime
             //diary.RemoveAll(DateTime.Parse("09/05/2021 01:28:31"));
 
             //will have to escape "\" symbol in entered strings
-            diary.RemoveAllByAuthor("SELFADY-PC\\Selfady");
+            //diary.RemoveAllByAuthor("SELFADY-PC\\Selfady");
 
-            Console.WriteLine("\nSome elements were removed.");
-            diary.PrintDiary();
+            //Console.WriteLine("\nSome elements were removed.");
+            //diary.PrintDiary();
 
             Console.ReadKey();
         }

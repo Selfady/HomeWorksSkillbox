@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace Homework_Theme_07
 {
-    
+    /// <summary>
+    /// Model of struct Diary
+    /// </summary>
     public struct Diary
     {
         #region Fields
@@ -70,7 +72,7 @@ namespace Homework_Theme_07
         /// Remove a note to the diary.
         /// </summary>
         /// <param name="concreteNote">A note.</param>
-        public void Remove(Note concreteNote)
+        private void Remove(Note concreteNote)
         {
             this._notes.Remove(concreteNote);
         }
@@ -97,8 +99,9 @@ namespace Homework_Theme_07
         /// Removed all noted with the given date.
         /// </summary>
         /// <param name="date">The date and time when the note was taken.</param>
-        public void RemoveAll(DateTime date)
+        public void RemoveAll(string date)
         {
+            Console.WriteLine("Date in RemoveAll: " + date);
             this._notes.RemoveAll(p => p.Date == date);
         }
 
@@ -133,14 +136,14 @@ namespace Homework_Theme_07
         /// Saves the diary to a file.
         /// </summary>
         /// <param name="path">Path to the file.</param>
-        public void Save(string path)
+        public void Save()
         {
             string pattern = String.Empty;
-            
+
             foreach (var note in _notes)
             {
                 pattern = $"{note.Number},{note.Summary},{note.Date},{note.Text},{note.Author},{note.Edited}";
-                File.AppendAllText(path, $"{pattern}\n");
+                File.AppendAllText(_path, $"{pattern}\n");
             }
         }
 
@@ -166,7 +169,7 @@ namespace Homework_Theme_07
                 {
                     string[] args = sr.ReadLine().Split(',');
 
-                    _notes.Add(new Note(uint.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
+                    _notes.Add(new Note(uint.Parse(args[0]), args[1], args[2], args[3], args[4], bool.Parse(args[5])));
                 }
             }
         }
