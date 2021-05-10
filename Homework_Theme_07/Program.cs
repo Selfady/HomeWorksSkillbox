@@ -206,6 +206,10 @@ namespace Homework_Theme_07
             }
         }
 
+        /// <summary>
+        /// Method that daved the diary to a file.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
         private static void SaveDiary(Diary diary)
         {
             diary.Save();
@@ -221,6 +225,7 @@ namespace Homework_Theme_07
             //TODO:загрузка записей из файла по диапазону дат,
             //TODO:упорядочивание записей по выбранному полю.
             //TODO:Записи сортируются по выбранному полю.
+            //Bug _lastNote doesn't persists through diary reopening. It should be stored and initialized separately.
 
             const string fileName = "diary.txt";
 

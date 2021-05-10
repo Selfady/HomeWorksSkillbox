@@ -102,8 +102,8 @@ namespace Homework_Theme_07
         /// <param name="date">The date and time when the note was taken.</param>
         public void RemoveAll(DateTime date)
         {
-            Console.WriteLine("Date in RemoveAll: " + date);
-            this._notes.RemoveAll(p => p.Date == date);
+            //TODO: I have no clue how to compare DateTime objects in LINQ, so i remove them as strings... 
+            this._notes.RemoveAll(p => Convert.ToString(p.Date) == Convert.ToString(date));
         }
 
         /// <summary>
