@@ -246,7 +246,19 @@ namespace Homework_Theme_07
         /// <param name="end"></param>
         public void LoadByTimeRange(string start, string end)
         {
-            throw new NotImplementedException();
+            this._notes.Clear();
+            using (StreamReader sr = new StreamReader(this._path))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string[] args = sr.ReadLine().Split(',');
+
+                    if (DateTime.Parse(args[2]) >= DateTime.Parse(start) && DateTime.Parse(args[2]) <= DateTime.Parse(end))
+                    {
+                        _notes.Add(new Note(uint.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
+                    }
+                }
+            }
         }
 
         /// <summary>
