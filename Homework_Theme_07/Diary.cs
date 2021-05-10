@@ -59,6 +59,61 @@ namespace Homework_Theme_07
         #region Methods
 
         /// <summary>
+        /// Method that returns a note with given ID.
+        /// </summary>
+        /// <param name="iD">Property "Number". Sequential identifier of the note to track it.</param>
+        /// <returns>A note with given ID.</returns>
+        public Note GetById(uint iD)
+        {
+            return _notes.Find(n => n.Number == iD);
+        }
+
+        /// <summary>
+        /// Method to edit summary and text of a note with given ID.
+        /// </summary>
+        /// <param name="iD">Property "Number". Sequential identifier of the note to track it.</param>
+        /// <param name="summary">Property "Summary". A summary for the note.</param>
+        /// <param name="text">Property "Text". The main filed of the note that contains its text.</param>
+        public void EditNoteById(uint iD, string summary, string text)
+        {
+            var edited = _notes.Find(n => n.Number == iD);
+            if (edited.Number != iD) return;
+            edited.Summary = summary;
+            edited.Text = text;
+            edited.Edited = true;
+
+        }
+
+        /// <summary>
+        /// Method to edit text of a note with given ID.
+        /// </summary>
+        /// <param name="iD"></param>
+        /// <param name="text"></param>
+        public void EditNoteTextById(uint iD, string text)
+        {
+            var note = _notes.Find(a => a.Number == iD);
+            this._notes.Remove(note);
+            note.Text = text;
+            note.Edited = true;
+            this._notes.Add(note);
+        }
+
+        /// <summary>
+        /// Method to edit summary of a note with given ID.
+        /// </summary>
+        /// <param name="iD"></param>
+        /// <param name="summary"></param>
+        public void EditNoteSummaryById(uint iD, string summary)
+        {
+            var note = _notes.Find(a => a.Number == iD);
+            this._notes.Remove(note);
+            note.Summary = summary;
+            note.Edited = true;
+            this._notes.Add(note);
+
+        }
+
+        /// <summary>
         /// Add a note to the diary.
         /// </summary>
         /// <param name="concreteNote">A note.</param>

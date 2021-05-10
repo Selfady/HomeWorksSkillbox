@@ -68,16 +68,37 @@ namespace Homework_Theme_07
         /// <param name="diary">Struct Diary.</param>
         static void EditNote(Diary diary)
         {
-            Console.WriteLine("\nNot implemented");
-            string key = Console.ReadLine();
-            switch (key)
+            Console.WriteLine("\nPlease enter the # of a note you want to edit.");
+            uint id = 0;
+            while (!uint.TryParse(Console.ReadLine(), out id))
             {
-                default:
-                {
-                    MainMenu(diary);
-                    break;
-                }
+                Console.WriteLine("\nPlease enter the # of note you want to edit.");
             }
+
+            var change = diary.GetById(id);
+            Console.WriteLine(change.Print());
+
+            Console.WriteLine("\nWould you like to change the summary of the note y/n.");
+            string decision = Console.ReadLine();
+            if (decision == "y")
+            {
+                Console.WriteLine("Please enter the new summary.");
+                diary.EditNoteSummaryById(id, Console.ReadLine());
+                change = diary.GetById(id);
+                Console.WriteLine(change.Print());
+            }
+
+            Console.WriteLine("\nWould you like to change the text of the note y/n.");
+            decision = Console.ReadLine();
+            if (decision == "y")
+            {
+                Console.WriteLine("Please enter the new text.");
+                diary.EditNoteTextById(id, Console.ReadLine());
+                change = diary.GetById(id);
+                Console.WriteLine(change.Print());
+            }
+            
+            MainMenu(diary);
         }
 
         /// <summary>
@@ -92,7 +113,7 @@ namespace Homework_Theme_07
                               "\n3 - By Date and Time." +
                               "\n4 - By text." +
                               "\n5 - By author." +
-                              "\n6 - Remove modified notes." +
+                              "\n6 - By modified/unmodified notes." +
                               "\n7 - Return to the Main menu.");
             Console.WriteLine("\nEnter a number from 1 to 3");
             string key = Console.ReadLine();
@@ -224,7 +245,6 @@ namespace Homework_Theme_07
         {
             //TODO:загрузка записей из файла по диапазону дат,
             //TODO:упорядочивание записей по выбранному полю.
-            //TODO:Записи сортируются по выбранному полю.
             //Bug _lastNote doesn't persists through diary reopening. It should be stored and initialized separately.
 
             const string fileName = "diary.txt";
