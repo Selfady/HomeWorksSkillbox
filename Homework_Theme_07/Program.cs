@@ -115,7 +115,7 @@ namespace Homework_Theme_07
                               "\n5 - By author." +
                               "\n6 - By modified/unmodified notes." +
                               "\n7 - Return to the Main menu.");
-            Console.WriteLine("\nEnter a number from 1 to 3");
+            Console.WriteLine("\nEnter a number from 1 to 7");
             string key = Console.ReadLine();
             //String with user input to tell what he's gonna remove.
             string toRemove = String.Empty;
@@ -206,8 +206,8 @@ namespace Homework_Theme_07
                               "\n5 - Save changes to the file." +
                               "\n6 - Exit the program.");
             Console.WriteLine("Enter a number from 1 to 6");
-            string key = Console.ReadLine();
-            switch (key)
+            string sort = Console.ReadLine();
+            switch (sort)
             {
                 case "1":
                     AddNote(diary);
@@ -228,7 +228,7 @@ namespace Homework_Theme_07
         }
 
         /// <summary>
-        /// Method that daved the diary to a file.
+        /// Method that saved the diary to a file.
         /// </summary>
         /// <param name="diary">Struct Diary.</param>
         private static void SaveDiary(Diary diary)
@@ -236,16 +236,75 @@ namespace Homework_Theme_07
             diary.Save();
         }
 
+        /// <summary>
+        /// Menu with sort options.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
         private static void SortNotes(Diary diary)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("\nSort notes:" +
+                              "\n1 - By #." +
+                              "\n2 - By summary." +
+                              "\n3 - By Date and Time." +
+                              "\n4 - By text." +
+                              "\n5 - By author." +
+                              "\n6 - By modified/unmodified notes." +
+                              "\n7 - Return to the Main menu.");
+            Console.WriteLine("\nEnter a number from 1 to 7");
+            string option = Console.ReadLine();
+            //String with user input to tell what he's gonna remove.
+            switch (option)
+            {
+                case "1":
+                    {
+                        diary.SortById();
+                        MainMenu(diary);
+                        break;
+                    }
+                case "2":
+                {
+                    diary.SortBySummary();
+                    MainMenu(diary);
+                    break;
+                }
+                case "3":
+                {
+                    diary.SortByDateTime();
+                    MainMenu(diary);
+                    break;
+                }
+
+                case "4":
+                {
+                    diary.SortByText();
+                    MainMenu(diary);
+                    break;
+                }
+
+                case "5":
+                {
+                    diary.SortByAuthor();
+                    MainMenu(diary);
+                    break;
+                }
+                    
+                case "6":
+                {
+                    diary.SortByModified();
+                    MainMenu(diary);
+                    break;
+                }
+                default:
+                    {
+                        MainMenu(diary);
+                        break;
+                    }
+            }
         }
 
         static void Main(string[] args)
         {
-            //Bug _lastNote doesn't persists through diary reopening. It should be stored and initialized separately.
             //TODO:загрузка записей из файла по диапазону дат,
-            //TODO:упорядочивание записей по выбранному полю.
 
             var idGen = new IdGen();
 

@@ -239,6 +239,60 @@ namespace Homework_Theme_07
             }
         }
 
+        /// <summary>
+        /// Method to sort diary by note ID.
+        /// </summary>
+        public void SortById()
+        {
+            this._notes.Sort((x, y) =>
+                x.Number.CompareTo(y.Number));
+        }
+
+        /// <summary>
+        /// Method to sort diary by note summary.
+        /// </summary>
+        public void SortBySummary()
+        {
+            this._notes.Sort((x, y) =>
+                string.Compare(x.Summary, y.Summary, StringComparison.Ordinal));
+        }
+
+        /// <summary>
+        /// Method to sort diary by note Date and Time.
+        /// </summary>
+        public void SortByDateTime()
+        {
+            this._notes.Sort((x, y) =>
+                x.Date.CompareTo(y.Date));
+        }
+
+        /// <summary>
+        /// Method to sort diary by note text.
+        /// </summary>
+        public void SortByText()
+        {
+            this._notes.Sort((x, y) =>
+                string.Compare(x.Text, y.Text, StringComparison.Ordinal));
+        }
+
+        /// <summary>
+        /// Method to sort diary by author.
+        /// </summary>
+        public void SortByAuthor()
+        {
+            this._notes.Sort((x, y) =>
+                string.Compare(x.Author, y.Author, StringComparison.Ordinal));
+        }
+
+        /// <summary>
+        /// Method to sort diary by flag edited.
+        /// </summary>
+        public void SortByModified()
+        {
+            this._notes.Sort((x, y) =>
+                x.Edited.CompareTo(y.Edited));
+        }
+
         #endregion
     }
 }
