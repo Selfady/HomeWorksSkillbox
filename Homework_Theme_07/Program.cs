@@ -204,8 +204,9 @@ namespace Homework_Theme_07
                               "\n3 - Edit a note." +
                               "\n4 - Sort notes." +
                               "\n5 - Save changes to the file." +
-                              "\n6 - Exit the program.");
-            Console.WriteLine("Enter a number from 1 to 6");
+                              "\n6 - Load note within a time range." +
+                              "\n7 - Exit the program.");
+            Console.WriteLine("Enter a number from 1 to 7");
             string sort = Console.ReadLine();
             switch (sort)
             {
@@ -224,7 +225,23 @@ namespace Homework_Theme_07
                 case "5":
                     SaveDiary(diary);
                     break;
+                case "6":
+                    LoadWithinTimeRange(diary);
+                    break;
             }
+        }
+
+        /// <summary>
+        /// Method that loads note from diary within given time range.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
+        private static void LoadWithinTimeRange(Diary diary)
+        {
+            Console.WriteLine("\nPlease, specify start date to load notes.");
+            string startDate = Console.ReadLine();
+            Console.WriteLine("\nPlease, specify end date to load notes.");
+            string endDate = Console.ReadLine();
+            diary.LoadByTimeRange(startDate, endDate);
         }
 
         /// <summary>
@@ -304,8 +321,6 @@ namespace Homework_Theme_07
 
         static void Main(string[] args)
         {
-            //TODO:загрузка записей из файла по диапазону дат,
-
             var idGen = new IdGen();
 
             const string fileName = "diary.txt";

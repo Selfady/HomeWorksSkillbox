@@ -226,7 +226,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// Loads diary data.
         /// </summary>
-        public void Load()
+        private void Load()
         {
             using (StreamReader sr = new StreamReader(this._path))
             {
@@ -237,6 +237,16 @@ namespace Homework_Theme_07
                     _notes.Add(new Note(uint.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
                 }
             }
+        }
+
+        /// <summary>
+        /// Method to load notes from file that are withoin given timerange.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        public void LoadByTimeRange(string start, string end)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
