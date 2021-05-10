@@ -27,16 +27,16 @@ namespace Homework_Theme_07
         /// <summary>
         /// The number of the last added note.
         /// </summary>
-        private uint _lastNote;
+        private IdGen _lastNote;
 
         #endregion
 
         #region Fields
 
-        /// <summary>
-        /// Accessor for the number of the last added note.
-        /// </summary>
-        public uint LastNote { get => this._lastNote; }
+        ///// <summary>
+        ///// Accessor for the number of the last added note.
+        ///// </summary>
+        public uint LastNote { get => this._lastNote.ID; }
 
         #endregion
 
@@ -46,10 +46,10 @@ namespace Homework_Theme_07
         /// Constructor for a Diary.
         /// </summary>
         /// <param name="Path"></param>
-        public Diary(string Path)
+        public Diary(string Path, IdGen IdGen)
         {
             this._path = Path;
-            this._lastNote = 1;
+            this._lastNote = IdGen;
             this._notes = new List<Note>();
             Load();
         }
@@ -121,7 +121,7 @@ namespace Homework_Theme_07
         {
             this._notes.Add(concreteNote);
             //Increment number of the last note.
-            this._lastNote++;
+            this._lastNote.ID++;
         }
 
         /// <summary>
@@ -209,6 +209,7 @@ namespace Homework_Theme_07
                     sw.WriteLine(pattern);
                 }
             }
+            _lastNote.Save();
         }
 
         /// <summary>

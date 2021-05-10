@@ -243,9 +243,11 @@ namespace Homework_Theme_07
 
         static void Main(string[] args)
         {
+            //Bug _lastNote doesn't persists through diary reopening. It should be stored and initialized separately.
             //TODO:загрузка записей из файла по диапазону дат,
             //TODO:упорядочивание записей по выбранному полю.
-            //Bug _lastNote doesn't persists through diary reopening. It should be stored and initialized separately.
+
+            var idGen = new IdGen();
 
             const string fileName = "diary.txt";
 
@@ -266,7 +268,7 @@ namespace Homework_Theme_07
             }
 
             //Creating a diary
-            var diary = new Diary(fileName);
+            var diary = new Diary(fileName, idGen);
 
             //Main loop of the program 
             do
