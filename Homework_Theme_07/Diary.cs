@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -99,7 +100,7 @@ namespace Homework_Theme_07
         /// Removed all noted with the given date.
         /// </summary>
         /// <param name="date">The date and time when the note was taken.</param>
-        public void RemoveAll(string date)
+        public void RemoveAll(DateTime date)
         {
             Console.WriteLine("Date in RemoveAll: " + date);
             this._notes.RemoveAll(p => p.Date == date);
@@ -121,6 +122,11 @@ namespace Homework_Theme_07
         public void RemoveAllBySummary(string summary)
         {
             this._notes.RemoveAll(p => p.Summary == summary);
+            //Removing notes with empty summary if user enters whitespace.
+            if (string.IsNullOrEmpty(summary) || string.IsNullOrWhiteSpace(summary))
+            {
+                this._notes.RemoveAll(p => p.Summary == "");
+            }
         }
 
         /// <summary>
@@ -172,7 +178,7 @@ namespace Homework_Theme_07
                 {
                     string[] args = sr.ReadLine().Split(',');
 
-                    _notes.Add(new Note(uint.Parse(args[0]), args[1], args[2], args[3], args[4], bool.Parse(args[5])));
+                    _notes.Add(new Note(uint.Parse(args[0]), args[1], DateTime.Parse(args[2]), args[3], args[4], bool.Parse(args[5])));
                 }
             }
         }

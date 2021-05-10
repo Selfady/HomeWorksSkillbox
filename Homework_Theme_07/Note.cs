@@ -24,7 +24,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// Field "Date". The date and time of the note.
         /// </summary>
-        private string _date;
+        private DateTime _date;
 
         /// <summary>
         /// Field "Summary". A summary for the note.
@@ -93,7 +93,7 @@ namespace Homework_Theme_07
         /// <summary>
         /// The date and time when the note was taken.
         /// </summary>
-        public string Date
+        public DateTime Date
         {
             get => this._date;
             set => _date = value;
@@ -130,7 +130,7 @@ namespace Homework_Theme_07
         /// <param name="Text">The text of the note.</param>
         /// <param name="Author">The author of the note.</param>
         /// <param name="Edited">A flag that shows that a note was edited after its creation.</param>
-        public Note(uint Number, string Summary, string Date, string Text, string Author, bool Edited)
+        public Note(uint Number, string Summary, DateTime Date, string Text, string Author, bool Edited)
         {
             this._number = Number;
             this._summary = Summary;
@@ -145,7 +145,7 @@ namespace Homework_Theme_07
         /// </summary>
         /// <param name="Number">Number of the note.</param>
         /// <param name="Text">Text of the note.</param>
-        public Note(uint Number, string Text) : this(Number, String.Empty, DateTime.Now.ToString(), Text, WindowsIdentity.GetCurrent().Name,false)
+        public Note(uint Number, string Text) : this(Number, String.Empty, DateTime.Now, Text, WindowsIdentity.GetCurrent().Name,false)
         {
         }
 
@@ -155,7 +155,7 @@ namespace Homework_Theme_07
         /// <param name="Number"></param>
         /// <param name="Text"></param>
         /// <param name="Summary"></param>
-        public Note(uint Number, string Text, string Summary) : this(Number,Summary, DateTime.Now.ToString(), Text, WindowsIdentity.GetCurrent().Name, false)
+        public Note(uint Number, string Text, string Summary) : this(Number,Summary, DateTime.Now, Text, WindowsIdentity.GetCurrent().Name, false)
         {
         }
 

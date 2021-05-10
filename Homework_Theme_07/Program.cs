@@ -19,7 +19,7 @@ namespace Homework_Theme_07
             string summary = Console.ReadLine();
             Console.WriteLine("\nPlease enter text for the note.");
             string text = Console.ReadLine();
-            return new Note(diary.LastNote, summary, text);
+            return new Note(diary.LastNote, text, summary);
         }
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace Homework_Theme_07
         {
             Console.WriteLine("\nRemove notes:" +
                               "\n1 - By #." +
-                              "\n2 - Remove modified notes." +
+                              "\n2 - By summary." +
                               "\n3 - By Date and Time." +
-                              "\n4 - By author." +
-                              "\n5 - By text." +
-                              "\n6 - By summary." +
+                              "\n4 - By text." +
+                              "\n5 - By author." +
+                              "\n6 - Remove modified notes." +
                               "\n7 - Return to the Main menu.");
             Console.WriteLine("\nEnter a number from 1 to 3");
             string key = Console.ReadLine();
@@ -116,44 +116,6 @@ namespace Homework_Theme_07
                     break;
                 }
                 case "2":
-                {
-                    Console.WriteLine("\nWould you like to remove edited notes? y/n.");
-                    toRemove = Console.ReadLine();
-                    if (toRemove == "y")
-                    {
-                        diary.RemoveAll(true);
-                    }
-                    MainMenu(diary);
-                    break;
-                }
-                case "3":
-                    Console.WriteLine("\nPlease enter Date and Time of notes to remove them.");
-                    toRemove = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(toRemove))
-                    {
-                        diary.RemoveAll(toRemove);
-                    }
-                    MainMenu(diary);
-                    break;
-                case "4":
-                    Console.WriteLine("\nPlease enter author of the notes to remove them all.");
-                    toRemove = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(toRemove))
-                    {
-                        diary.RemoveAllByAuthor(toRemove);
-                    }
-                    MainMenu(diary);
-                    break;
-                case "5":
-                    Console.WriteLine("\nPlease enter text of the notes to remove them all.");
-                    toRemove = Console.ReadLine();
-                    if (!String.IsNullOrEmpty(toRemove))
-                    {
-                        diary.RemoveAllByText(toRemove);
-                    }
-                    MainMenu(diary);
-                    break;
-                case "6":
                     Console.WriteLine("\nPlease enter summary of the notes to remove them all.");
                     toRemove = Console.ReadLine();
                     if (!String.IsNullOrEmpty(toRemove))
@@ -162,6 +124,41 @@ namespace Homework_Theme_07
                     }
                     MainMenu(diary);
                     break;
+                case "3":
+                    Console.WriteLine("\nPlease enter Date and Time of notes to remove them.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAll(DateTime.Parse(toRemove));
+                    }
+                    MainMenu(diary);
+                    break;
+                case "4":
+                    Console.WriteLine("\nPlease enter text of the notes to remove them all.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAllByText(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                case "5":
+                    Console.WriteLine("\nPlease enter author of the notes to remove them all.");
+                    toRemove = Console.ReadLine();
+                    if (!String.IsNullOrEmpty(toRemove))
+                    {
+                        diary.RemoveAllByAuthor(toRemove);
+                    }
+                    MainMenu(diary);
+                    break;
+                case "6":
+                {
+                    Console.WriteLine("\nWould you like to remove modified (true) or unmodified (false) notes? true/false.");
+                    toRemove = Console.ReadLine();
+                    diary.RemoveAll(toRemove == "true");
+                    MainMenu(diary);
+                    break;
+                }
                 default:
                 {
                     MainMenu(diary);
@@ -170,15 +167,20 @@ namespace Homework_Theme_07
             }
         }
 
+        /// <summary>
+        /// Main menu of the program.
+        /// </summary>
+        /// <param name="diary">Struct Diary.</param>
         static void MainMenu(Diary diary)
         {
             Console.Clear();
+            Console.WriteLine("This is a batch of solutions for \"Homework_Theme_07 7.8 Homework\"");
             Console.WriteLine("\nNotes of the diary:");
             diary.PrintDiary();
             Console.WriteLine("\nMain menu:" +
                               "\n1 - Add notes." +
-                              "\n2 - Edit a note." +
-                              "\n3 - Remove notes." +
+                              "\n2 - Remove notes." +
+                              "\n3 - Edit a note." +
                               "\n4 - Sort notes." +
                               "\n5 - Save changes to the file." +
                               "\n6 - Exit the program.");
@@ -187,15 +189,13 @@ namespace Homework_Theme_07
             switch (key)
             {
                 case "1":
-                {
                     AddNote(diary);
                     break;
-                }
                 case "2":
-                    EditNote(diary);
+                    RemoveNote(diary);
                     break;
                 case "3":
-                    RemoveNote(diary);
+                    EditNote(diary);
                     break;
                 case "4":
                     SortNotes(diary);
@@ -203,10 +203,6 @@ namespace Homework_Theme_07
                 case "5":
                     SaveDiary(diary);
                     break;
-                default:
-                {
-                    break;
-                }
             }
         }
 
@@ -222,12 +218,9 @@ namespace Homework_Theme_07
 
         static void Main(string[] args)
         {
-            Console.WriteLine("This is a batch of solutions for \"Homework_Theme_07 7.8 Homework\"");
-
             //TODO:загрузка записей из файла по диапазону дат,
             //TODO:упорядочивание записей по выбранному полю.
             //TODO:Записи сортируются по выбранному полю.
-            //TODO remove the last note in the file.
 
             const string fileName = "diary.txt";
 
@@ -264,35 +257,6 @@ namespace Homework_Theme_07
                 }
 
             } while (true);
-            
-
-            //var page2 = new Note(2, "bla?") { Edited = true };
-            //var page3 = new Note(3, "mwahaha!");
-
-            //var diary = new Diary("first.txt");
-            //diary.Add(page1);
-            //diary.Add(page2);
-            //diary.Add(page3);
-            ////diary.Remove(page2);
-
-
-            //diary.PrintDiary();
-            //diary.Save("first.txt");
-            //TODO: make remove method work for loaded diary
-            //diary.Remove(page2);
-            //diary.PrintDiary();
-
-
-            //WIll have to Parse DateTime
-            //diary.RemoveAll(DateTime.Parse("09/05/2021 01:28:31"));
-
-            //will have to escape "\" symbol in entered strings
-            //diary.RemoveAllByAuthor("SELFADY-PC\\Selfady");
-
-            //Console.WriteLine("\nSome elements were removed.");
-            //diary.PrintDiary();
-
-            Console.ReadKey();
         }
     }
 }
