@@ -172,6 +172,7 @@ namespace Homework_Theme_07
 
         static void MainMenu(Diary diary)
         {
+            Console.Clear();
             Console.WriteLine("\nNotes of the diary:");
             diary.PrintDiary();
             Console.WriteLine("\nMain menu:" +
@@ -226,6 +227,7 @@ namespace Homework_Theme_07
             //TODO:загрузка записей из файла по диапазону дат,
             //TODO:упорядочивание записей по выбранному полю.
             //TODO:Записи сортируются по выбранному полю.
+            //TODO remove the last note in the file.
 
             const string fileName = "diary.txt";
 

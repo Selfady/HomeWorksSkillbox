@@ -140,10 +140,13 @@ namespace Homework_Theme_07
         {
             string pattern = String.Empty;
 
-            foreach (var note in _notes)
+            using (StreamWriter sw = new StreamWriter(this._path))
             {
-                pattern = $"{note.Number},{note.Summary},{note.Date},{note.Text},{note.Author},{note.Edited}";
-                File.WriteAllText(_path, $"{pattern}\n");
+                foreach (var note in _notes)
+                {
+                    pattern = $"{note.Number},{note.Summary},{note.Date},{note.Text},{note.Author},{note.Edited}";
+                    sw.WriteLine(pattern);
+                }
             }
         }
 
