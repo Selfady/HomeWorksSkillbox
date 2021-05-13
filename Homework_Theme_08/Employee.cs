@@ -111,9 +111,10 @@ namespace Homework_Theme_08
         /// Puts all properties of the employee to a string.
         /// </summary>
         /// <returns>All properties in a string.</returns>
-        public string ToString()
+        public override string ToString()
         {
-            var pattern = $"\nID: {this.Id} Full Name: {this.Name} {this.Surname}" +
+            var pattern = $"\nID: {this.Id}" +
+                          $"\nFull Name: {this.Name} {this.Surname}" +
                           $"\nAge: {this.Age}" +
                           $"\nSalary: {this.Salary}" +
                           $"\nDepartment: {this.Department}";

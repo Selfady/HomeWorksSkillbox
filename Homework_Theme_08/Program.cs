@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Common;
+using System.Net.Sockets;
 
 namespace Homework_Theme_08
 {
@@ -80,7 +82,21 @@ namespace Homework_Theme_08
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("This is a batch of solutions for \"Homework_Theme_08 8.6 Homework\"");
+            var company = new Company("Test");
+            company.Add(new Department("First Dep"));
+            foreach (var d in company.Departments)  
+            {
+                Console.WriteLine(d.ToString());
+            }
+            
+            Console.WriteLine(company.IdGen.ID);
+
+
+            
+            
+            //Console.WriteLine((new Employee(1,"Sasha","Saprykin",35,0,"freelance").ToString()));
+            Console.ReadKey();
         }
     }
 }
