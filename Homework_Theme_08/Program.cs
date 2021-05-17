@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.Common;
-using System.Net.Sockets;
 
 namespace Homework_Theme_08
 {
@@ -82,19 +80,78 @@ namespace Homework_Theme_08
     {
         static void Main(string[] args)
         {
+            //TODO get only date portion of creation date and time.
             Console.WriteLine("This is a batch of solutions for \"Homework_Theme_08 8.6 Homework\"");
+
+            //Create new company.
             var company = new Company("Test");
-            company.Add(new Department("First Dep"));
-            foreach (var d in company.Departments)  
-            {
-                Console.WriteLine(d.ToString());
-            }
-            
-            Console.WriteLine(company.IdGen.ID);
+
+            //Add first 3 departments to the company
+            company.AddDepartment("First Dep");
+            company.AddDepartment("Second Dep");
+            company.AddDepartment("Third Dep");
+            company.AddDepartment("To test deletion");
+
+            //Add a sub-department to the first department
+            company.FindDepartment("First Dep").AddSubDepartment("sub-dep for first dep");
+
+            //add sub-department to the sub-department.
+            company.FindDepartment("First Dep").FindSubDepartment("sub-dep for first dep").AddSubDepartment("sub-sub-sub for 1st");
+
+            //Remove a department works this way
+            //company.RemoveDepartment("First Dep");
+            //company.RemoveDepartment("Second Dep");
+            //company.RemoveDepartment("Third Dep");
+            company.RemoveDepartment("To test deletion");
+
+            //This is how assignment of new fields works
+            company.ChangeDepartmentName("Second Dep","Pretty name for second department");
+            company.ChangeDepartmentSize("Pretty name for second department", 256);
 
 
-            
-            
+
+            //changingSomething.Name = "i have changed the name";
+
+
+            //var weapon = something.currentWeapon; weapon.maxWeaponAmmo = 5; something.currentWeapon = weapon;
+
+
+
+
+            //company.Departments.Remove(company.FindDepartment("First Dep"));
+
+            //company.AddSubDepartment(company.FindDepartment("First Dep"),new Department("subdepartment for first"));
+
+            //var parent = company.FindSubDepartment("sub-department for first", company.FindDepartment("First Dep"));
+            //Console.WriteLine(parent.ToString());
+
+
+            //company.AddSubDepartment(parent,new Department("GrandSon of 1st"));
+            //company.ToString();
+
+
+            //department.AddEmployee(new Employee(company.IdGen.ID, "Name", "Surname", 100, 10000, "no clue"));
+
+            //department.AddSubDepartment(new Department("Subdep for first"));
+            //var subDepartment = department.SubDepartments.Find(sd => sd.Name == "subdep for first");
+            //subDepartment.AddEmployee(new Employee(company.IdGen.ID, "NameSD", "SurnameSD", 200, 20000, "no clue"));
+            //subDepartment.AddSubDepartment(new Department("subsubdep"));
+
+
+
+
+
+            Console.WriteLine(company.ToString());
+
+
+
+
+
+            //Console.WriteLine(company.IdGen.ID);
+
+
+
+
             //Console.WriteLine((new Employee(1,"Sasha","Saprykin",35,0,"freelance").ToString()));
             Console.ReadKey();
         }

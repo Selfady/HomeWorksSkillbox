@@ -113,7 +113,7 @@ namespace Homework_Theme_08
         /// <returns>All properties in a string.</returns>
         public override string ToString()
         {
-            var pattern = $"\nID: {this.Id}" +
+            var pattern = $"\nEmployee ID: {this.Id}" +
                           $"\nFull Name: {this.Name} {this.Surname}" +
                           $"\nAge: {this.Age}" +
                           $"\nSalary: {this.Salary}" +
