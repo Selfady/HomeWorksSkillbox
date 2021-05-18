@@ -75,10 +75,19 @@ namespace Homework_Theme_08
         /// <param name="name">A name for sub-department.</param>
         public void AddDepartment(string parentName, string subDepartmentName)
         {
-            var Parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
+            var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
 
             //Adding new parent with constructor that allows setting the name of the parent department.
-            Parent.Departments.Add(new Department(subDepartmentName,Parent.Name));
+            if (parent.Name != null)
+            {
+                parent.Departments.Add(new Department(subDepartmentName, parent.Name));
+            }
+            else
+            {
+                Console.WriteLine("We did not find a department with name {0}", parentName);
+                throw new Exception("AddDepartment cannot add to null");
+            }
+            
         }
 
         /// <summary>
@@ -96,13 +105,14 @@ namespace Homework_Theme_08
             {
                 var parentName = extra.Parent;
                 var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
-                try
+                if (parent.Name != null)
                 {
                     parent.Departments.Remove(extra);
                 }
-                catch
+                else
                 {
                     Console.WriteLine("We did not find a department with name {0}",name);
+                    throw new Exception("RemoveDepartment cannot remove null");
                 }
             }
         }
@@ -159,6 +169,7 @@ namespace Homework_Theme_08
                 else
                 {
                     Console.WriteLine("We did not find a department with name {0}", name);
+                    throw new Exception("ChangeDepartmentName cannot update null");
                 }
 
             }
@@ -194,6 +205,7 @@ namespace Homework_Theme_08
                 else
                 {
                     Console.WriteLine("We did not find a department with name {0}", name);
+                    throw new Exception("ChangeDepartment cannot update null");
                 }
                 
             }
