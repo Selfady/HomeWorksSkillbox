@@ -90,35 +90,41 @@ namespace Homework_Theme_08
             var company = new Company("Test");
 
             //Add first 3 departments to the company
-            company.AddDepartment("First Dep");
-            company.AddDepartment("Second Dep");
-            company.AddDepartment("Third Dep");
-            company.AddDepartment("To test deletion");
+            string first = "First Dep";
+            string second = "Second Dep";
+            string third = "Third Dep";
+            string toDelete = "To test deletion";
+
+            company.AddDepartment(first);
+            company.AddDepartment(second);
+            company.AddDepartment(third);
+            company.AddDepartment(toDelete);
             
 
             //Add a sub-department to the first department
-            company.AddDepartment("First Dep", "sub-dep for first dep");
+            company.AddDepartment(first, "sub-dep for first dep");
 
             ////add sub-department to the sub-department.
             company.AddDepartment("sub-dep for first dep", "sub-sub-sub for 1st");
             company.AddDepartment("sub-sub-sub for 1st", "DNO");
             company.AddDepartment("DNO", "DNO2");
-            company.AddDepartment("Second Dep","Second sub-dep");
             company.AddDepartment("Third Dep", "Sub-dep for Third Dep");
 
+            //This is how assignment of new fields works
+            string secSubDep = "Second sub-dep";
+            company.AddDepartment(second, secSubDep);
+
+            //string newSecond = "Pretty name for second sub-department";
+            string newValue = "Changed name";
+            company.ChangeDepartmentName(second, newValue);
+            company.ChangeDepartment(newValue, 256);
+
             //Departments to test deletion
-            company.AddDepartment("To test deletion", "subtree to test deletion");
+            company.AddDepartment(toDelete, "subtree to test deletion");
 
-            ////Remove a department works this way
-            company.RemoveDepartment("To test deletion");
-
-            ////This is how assignment of new fields works
-            company.ChangeDepartmentName("Second Dep","Pretty name for second department");
-            company.ChangeDepartmentSize("Pretty name for second department", 256);
-
-            ////Test for add sub-department method
+            //Remove a department works this way
+            company.RemoveDepartment(toDelete);
             
-
             Console.WriteLine(company.ToString());
 
             //department.AddEmployee(new Employee(company.IdGen.ID, "Name", "Surname", 100, 10000, "no clue"));

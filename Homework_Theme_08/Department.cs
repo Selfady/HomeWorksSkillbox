@@ -29,7 +29,7 @@ namespace Homework_Theme_08
         /// <summary>
         /// Field "SubDepartments". A list of sub-departments of the department.
         /// </summary>
-        private List<Department> _subDepartments;
+        private List<Department> _departments;
 
         /// <summary>
         /// Field "Name" of the Parent department.
@@ -75,10 +75,10 @@ namespace Homework_Theme_08
         /// <summary>
         /// List of sub-departments.
         /// </summary>
-        public List<Department> SubDepartments
+        public List<Department> Departments
         {
-            get => this._subDepartments;
-            set => this._subDepartments = value;
+            get => this._departments;
+            set => this._departments = value;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Homework_Theme_08
                 pattern += $"\n{e.ToString()}";
             }
 
-            foreach (var sd in SubDepartments)
+            foreach (var sd in Departments)
             {
                 pattern += $"\n{sd.ToStringSubDepartment(sd)}";
             }
@@ -154,7 +154,7 @@ namespace Homework_Theme_08
                 pattern += $"\n{e.ToString()}";
             }
 
-            foreach (var sd in SubDepartments)
+            foreach (var sd in Departments)
             {
                 pattern += $"\n{sd.ToStringSubDepartment(sd)}";
             }
@@ -176,7 +176,7 @@ namespace Homework_Theme_08
             this._name = name;
             this._date = DateTime.Now;
             this._employees = new List<Employee>();
-            this._subDepartments = new List<Department>();
+            this._departments = new List<Department>();
             this._parent = null;
             this._size = default;
 
@@ -192,7 +192,7 @@ namespace Homework_Theme_08
             this._name = name;
             this._date = DateTime.Now;
             this._employees = new List<Employee>();
-            this._subDepartments = new List<Department>();
+            this._departments = new List<Department>();
             this._parent = parent;
             this._size = default;
         }

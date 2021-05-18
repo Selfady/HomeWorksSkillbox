@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO.Enumeration;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,7 +78,7 @@ namespace Homework_Theme_08
             var Parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
 
             //Adding new parent with constructor that allows setting the name of the parent department.
-            Parent.SubDepartments.Add(new Department(subDepartmentName,Parent.Name));
+            Parent.Departments.Add(new Department(subDepartmentName,Parent.Name));
         }
 
         /// <summary>
@@ -97,9 +98,9 @@ namespace Homework_Theme_08
                 var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
                 try
                 {
-                    parent.SubDepartments.Remove(extra);
+                    parent.Departments.Remove(extra);
                 }
-                catch 
+                catch
                 {
                     Console.WriteLine("We did not find a department with name {0}",name);
                 }
@@ -123,7 +124,7 @@ namespace Homework_Theme_08
             {
                 Department node = nodes.Pop();
                 yield return node;
-                foreach (var n in node.SubDepartments) nodes.Push(n);
+                foreach (var n in node.Departments) nodes.Push(n);
             }
         }
 
@@ -134,10 +135,33 @@ namespace Homework_Theme_08
         /// <param name="newName">New name for the department.</param>
         public void ChangeDepartmentName(string name, string newName)
         {
-            var edit = Departments.Find(d => d.Name == name);
-            int index = Departments.FindIndex(a => a.Name == edit.Name);
-            edit.Name = newName;
-            Departments[index] = edit;
+            var edit = Company.Descendants(Departments).FirstOrDefault(d => d.Name == name);
+            int indexOfEdit = default;
+
+            //check if the department within company.
+            if (this.Departments.Contains(edit))
+            {
+                indexOfEdit = Departments.FindIndex(a => a.Name == edit.Name);
+                edit.Name = newName;
+                Departments[indexOfEdit] = edit;
+            }
+            //check if the department is a sub-department.
+            else
+            {
+                var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == edit.Parent);
+
+                if (parent.Name != null && parent.Departments.Any())
+                {
+                    indexOfEdit = parent.Departments.FindIndex(a => a.Name == edit.Name);
+                    edit.Name = newName;
+                    parent.Departments[indexOfEdit] = edit;
+                }
+                else
+                {
+                    Console.WriteLine("We did not find a department with name {0}", name);
+                }
+
+            }
         }
 
         /// <summary>
@@ -145,12 +169,34 @@ namespace Homework_Theme_08
         /// </summary>
         /// <param name="name">Name of a department to edit.</param>
         /// <param name="newSize">New size for the department.</param>
-        public void ChangeDepartmentSize(string name, uint newSize)
+        public void ChangeDepartment(string name, uint newSize)
         {
-            var edit = Departments.Find(d => d.Name == name);
-            int index = Departments.FindIndex(a => a.Name == edit.Name);
-            edit.Size = newSize;
-            Departments[index] = edit;
+            var edit = Company.Descendants(Departments).FirstOrDefault(d => d.Name == name);
+            int indexOfEdit = default;
+
+            //check if the department within company.
+            if (this.Departments.Contains(edit))
+            {
+                indexOfEdit = Departments.FindIndex(a => a.Name == edit.Name);
+                edit.Size = newSize;
+                Departments[indexOfEdit] = edit;
+            }
+            //check if the department is a sub-department.
+            else
+            {
+                var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == edit.Parent);
+                if (parent.Name != null && parent.Departments.Any())
+                {
+                    indexOfEdit = parent.Departments.FindIndex(a => a.Name == edit.Name);
+                    edit.Size = newSize;
+                    parent.Departments[indexOfEdit] = edit;
+                }
+                else
+                {
+                    Console.WriteLine("We did not find a department with name {0}", name);
+                }
+                
+            }
         }
 
         /// <summary>
