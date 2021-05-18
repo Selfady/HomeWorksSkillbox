@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Homework_Theme_08
 {
@@ -91,44 +94,32 @@ namespace Homework_Theme_08
             company.AddDepartment("Second Dep");
             company.AddDepartment("Third Dep");
             company.AddDepartment("To test deletion");
+            
 
             //Add a sub-department to the first department
-            company.FindDepartment("First Dep").AddSubDepartment("sub-dep for first dep");
+            company.AddDepartment("First Dep", "sub-dep for first dep");
 
-            //add sub-department to the sub-department.
-            company.FindDepartment("First Dep").FindSubDepartment("sub-dep for first dep").AddSubDepartment("sub-sub-sub for 1st");
+            ////add sub-department to the sub-department.
+            company.AddDepartment("sub-dep for first dep", "sub-sub-sub for 1st");
+            company.AddDepartment("sub-sub-sub for 1st", "DNO");
+            company.AddDepartment("DNO", "DNO2");
+            company.AddDepartment("Second Dep","Second sub-dep");
+            company.AddDepartment("Third Dep", "Sub-dep for Third Dep");
 
-            //Remove a department works this way
-            //company.RemoveDepartment("First Dep");
-            //company.RemoveDepartment("Second Dep");
-            //company.RemoveDepartment("Third Dep");
+            //Departments to test deletion
+            company.AddDepartment("To test deletion", "subtree to test deletion");
+
+            ////Remove a department works this way
             company.RemoveDepartment("To test deletion");
 
-            //This is how assignment of new fields works
+            ////This is how assignment of new fields works
             company.ChangeDepartmentName("Second Dep","Pretty name for second department");
             company.ChangeDepartmentSize("Pretty name for second department", 256);
 
+            ////Test for add sub-department method
+            
 
-
-            //changingSomething.Name = "i have changed the name";
-
-
-            //var weapon = something.currentWeapon; weapon.maxWeaponAmmo = 5; something.currentWeapon = weapon;
-
-
-
-
-            //company.Departments.Remove(company.FindDepartment("First Dep"));
-
-            //company.AddSubDepartment(company.FindDepartment("First Dep"),new Department("subdepartment for first"));
-
-            //var parent = company.FindSubDepartment("sub-department for first", company.FindDepartment("First Dep"));
-            //Console.WriteLine(parent.ToString());
-
-
-            //company.AddSubDepartment(parent,new Department("GrandSon of 1st"));
-            //company.ToString();
-
+            Console.WriteLine(company.ToString());
 
             //department.AddEmployee(new Employee(company.IdGen.ID, "Name", "Surname", 100, 10000, "no clue"));
 
@@ -141,7 +132,7 @@ namespace Homework_Theme_08
 
 
 
-            Console.WriteLine(company.ToString());
+
 
 
 

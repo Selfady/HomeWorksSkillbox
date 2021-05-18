@@ -111,37 +111,7 @@ namespace Homework_Theme_08
         {
             this._employees.Add(employee);
         }
-
-        /// <summary>
-        /// Add concrete sub-department to the department.
-        /// </summary>
-        /// <param name="subDepartment">Department struct to add.</param>
-        public void AddSubDepartment(Department subDepartment)
-        {
-            this._subDepartments.Add(subDepartment);
-        }
-
-        /// <summary>
-        /// Add a sub-department with given name.
-        /// </summary>
-        /// <param name="name">A name for sub-department.</param>
-        public void AddSubDepartment(string name)
-        {
-            AddSubDepartment(new Department(name, Name));
-        }
-
-        /// <summary>
-        /// Finds a subdepartment by department name.
-        /// </summary>
-        /// <param name="departmentName">The name of the department.</param>
-        /// <returns>Department.</returns>
-        public Department FindSubDepartment(string departmentName)
-        {
-            var department = this.SubDepartments.Find(sd => sd.Name == departmentName);
-            return department;
-        }
-
-
+        
         /// <summary>
         /// String representation of the Department.
         /// </summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO.Enumeration;
 using System.Linq;
 using System.Text;
@@ -63,7 +64,20 @@ namespace Homework_Theme_08
         /// <param name="name">Name of the new department.</param>
         public void AddDepartment(string name)
         {
+            //Adding new parent with constructor that allows setting the name of the parent department.
             AddDepartment(new Department(name, Name));
+        }
+
+        /// <summary>
+        /// Add a sub-department with given name.
+        /// </summary>
+        /// <param name="name">A name for sub-department.</param>
+        public void AddDepartment(string parentName, string subDepartmentName)
+        {
+            var Parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
+
+            //Adding new parent with constructor that allows setting the name of the parent department.
+            Parent.SubDepartments.Add(new Department(subDepartmentName,Parent.Name));
         }
 
         /// <summary>
@@ -72,32 +86,45 @@ namespace Homework_Theme_08
         /// <param name="name">Name of a department to remove.</param>
         public void RemoveDepartment(string name)
         {
-            Departments.Remove(FindDepartment(name));
-        }
-        
-        /// <summary>
-        /// Finds a department in company by department name.
-        /// </summary>
-        /// <param name="departmentName">The name of the department.</param>
-        /// <returns>Department.</returns>
-        public Department FindDepartment(string departmentName)
-        {
-            var department = this.Departments.Find(d => d.Name == departmentName);
-            return department;
+            var extra = Company.Descendants(Departments).FirstOrDefault(d => d.Name == name);
+            if (Departments.Contains(extra))
+            {
+                Departments.Remove(extra);
+            }
+            else
+            {
+                var parentName = extra.Parent;
+                var parent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == parentName);
+                try
+                {
+                    parent.SubDepartments.Remove(extra);
+                }
+                catch 
+                {
+                    Console.WriteLine("We did not find a department with name {0}",name);
+                }
+            }
         }
 
         /// <summary>
-        /// Finds sub-department in the given department by sub-department name.
+        /// Returns sub-tree of departments under given root.
+        /// Magic from stack overflow no one explained and was not even going to any soon.
         /// </summary>
-        /// <param name="subDepartmentName">The name of the sub-department.</param>
-        /// <param name="parentDepartment">Department we are searching in.</param>
-        /// <returns>Department.</returns>
-        public Department FindSubDepartment(string subDepartmentName, Department parentDepartment)
+        /// <param name="root">Department to find descendants of.</param>
+        /// <returns>Departments.</returns>
+        public static IEnumerable<Department> Descendants(List<Department> root)
         {
-            var parent = this.Departments.Find(d => d
-                .Name == parentDepartment.Name);
-            var target = parent.SubDepartments.Find(t => t.Name == subDepartmentName);
-            return target;
+            var nodes = new Stack<Department>();
+            foreach (var d in root)
+            {
+                nodes.Push(d);
+            }
+            while (nodes.Any())
+            {
+                Department node = nodes.Pop();
+                yield return node;
+                foreach (var n in node.SubDepartments) nodes.Push(n);
+            }
         }
 
         /// <summary>
