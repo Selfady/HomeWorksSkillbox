@@ -57,6 +57,9 @@ namespace Homework_Theme_08
             }
         }
 
+        /// <summary>
+        /// Saved the last ID into a file.
+        /// </summary>
         public void Save()
         {
             using (StreamWriter sw = new StreamWriter(_fileName))

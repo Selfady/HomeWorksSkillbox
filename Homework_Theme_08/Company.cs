@@ -11,6 +11,8 @@ namespace Homework_Theme_08
 {
     class Company
     {
+        #region Fields
+
         /// <summary>
         /// Unique employee generator for a company.
         /// </summary>
@@ -25,6 +27,10 @@ namespace Homework_Theme_08
         /// Field "Departments". A list of departments for the company.
         /// </summary>
         private List<Department> _departments;
+
+        #endregion Fields
+
+        #region Propeties
 
         /// <summary>
         /// Company name.
@@ -48,6 +54,31 @@ namespace Homework_Theme_08
         {
             get => this._idGen;
             set => this._idGen = value;
+        }
+
+        #endregion Propeties
+
+        #region Methods
+
+        /// <summary>
+        /// Returns sub-tree of departments under given root.
+        /// Magic from stack overflow no one explained and was not even going to any soon.
+        /// </summary>
+        /// <param name="root">Department to find descendants of.</param>
+        /// <returns>Departments.</returns>
+        public static IEnumerable<Department> Descendants(List<Department> root)
+        {
+            var nodes = new Stack<Department>();
+            foreach (var d in root)
+            {
+                nodes.Push(d);
+            }
+            while (nodes.Any())
+            {
+                Department node = nodes.Pop();
+                yield return node;
+                foreach (var n in node.Departments) nodes.Push(n);
+            }
         }
 
         /// <summary>
@@ -87,7 +118,6 @@ namespace Homework_Theme_08
                 Console.WriteLine("We did not find a department with name {0}", parentName);
                 throw new Exception("AddDepartment cannot add to null");
             }
-            
         }
 
         /// <summary>
@@ -114,27 +144,6 @@ namespace Homework_Theme_08
                     Console.WriteLine("We did not find a department with name {0}",name);
                     throw new Exception("RemoveDepartment cannot remove null");
                 }
-            }
-        }
-
-        /// <summary>
-        /// Returns sub-tree of departments under given root.
-        /// Magic from stack overflow no one explained and was not even going to any soon.
-        /// </summary>
-        /// <param name="root">Department to find descendants of.</param>
-        /// <returns>Departments.</returns>
-        public static IEnumerable<Department> Descendants(List<Department> root)
-        {
-            var nodes = new Stack<Department>();
-            foreach (var d in root)
-            {
-                nodes.Push(d);
-            }
-            while (nodes.Any())
-            {
-                Department node = nodes.Pop();
-                yield return node;
-                foreach (var n in node.Departments) nodes.Push(n);
             }
         }
 
@@ -243,6 +252,55 @@ namespace Homework_Theme_08
         }
 
         /// <summary>
+        /// Method to add employee into a department with given name
+        /// </summary>
+        /// <param name="toDepartmentName">Department name.</param>
+        /// <param name="employee">Struct employee.</param>
+        public void AddEmployee(string toDepartmentName, Employee employee)
+        {
+            Department addInTo = Company.Descendants(Departments).FirstOrDefault(d => d.Name == toDepartmentName);
+            addInTo.Employees.Add(employee);
+            IdGen.ID++;
+        }
+
+        /// <summary>
+        /// Method to add employee into a department with given name
+        /// </summary>
+        /// <param name="toDepartmentName">Department name.</param>
+        /// <param name="employeeName">Employee name.</param>
+        public void AddEmployee(string toDepartmentName, string employeeName)
+        {
+            Department addInTo = Company.Descendants(Departments).FirstOrDefault(d => d.Name == toDepartmentName);
+            addInTo.Employees.Add(new Employee(IdGen.ID, employeeName, String.Empty, 0, 0, addInTo.Name));
+            IdGen.ID++;
+        }
+
+        /// <summary>
+        /// Method to edit properties of an employee.
+        /// </summary>
+        /// <param name="id">ID of the employee.</param>
+        /// <param name="newName">New name for the employee.</param>
+        public void EditEmployee(uint id, string newName)
+        {
+            var parentDepartment = Company.Descendants(Departments).FirstOrDefault(d => d.GetEmployeeById(id).Id == id);
+            var employeeToEdit = parentDepartment.GetEmployeeById(id);
+
+            var indexOfEmployeeToEdit = parentDepartment.Employees.IndexOf(employeeToEdit);
+            employeeToEdit.Name = newName;
+            parentDepartment.Employees[indexOfEmployeeToEdit] = employeeToEdit;
+        }
+
+        /// <summary>
+        /// Method to remove an employee with given ID.
+        /// </summary>
+        /// <param name="id">ID of the an employee.</param>
+        public void RemoveEmployee(uint id)
+        {
+            var parentDepartment = Company.Descendants(Departments).FirstOrDefault(d => d.GetEmployeeById(id).Id == id);
+            parentDepartment.Employees.Remove(parentDepartment.GetEmployeeById(id));
+        }
+
+        /// <summary>
         /// String representation of a company.
         /// </summary>
         /// <returns></returns>
@@ -259,6 +317,10 @@ namespace Homework_Theme_08
             return pattern;
         }
 
+        #endregion Methods
+
+        #region Constructor
+
         /// <summary>
         /// Constructor for company.
         /// </summary>
@@ -269,6 +331,8 @@ namespace Homework_Theme_08
             this._idGen = new IdGen();
             this._departments = new List<Department>();
         }
+
+        #endregion Constructor
 
     }
 }

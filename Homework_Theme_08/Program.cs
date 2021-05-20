@@ -83,7 +83,7 @@ namespace Homework_Theme_08
     {
         static void Main(string[] args)
         {
-            //
+            //TODO do not let the user add more than 1_000_000 employees to a department.
             //TODO get only date portion of creation date and time.
             Console.WriteLine("This is a batch of solutions for \"Homework_Theme_08 8.6 Homework\"");
 
@@ -126,32 +126,30 @@ namespace Homework_Theme_08
 
             //Remove a department works this way
             company.RemoveDepartment(toDelete);
+
+            //Add an employee
+            var firstEmployeeName = "fiest employee Name";
+            var secondEmployeeName = "second employee 2Name";
+            var firstEmployee = new Employee(company.IdGen.ID, firstEmployeeName, "Surname", 100, 10000, "no clue");
+            var secondEmployee = new Employee(company.IdGen.ID, secondEmployeeName, "2Surname", 200, 20000, "no clue");
             
+
+            company.AddEmployee(first, firstEmployeeName);
+            company.AddEmployee(secSubDep, secondEmployeeName);
+
+            var thirdEmployee = new Employee(company.IdGen.ID++, "third employee", "3Surname", 250, 30000, "no clue");
+            company.AddEmployee("DNO2", thirdEmployee);
+
+            //Edit employee
+            company.EditEmployee(1,"ChangedNameofSecond Employeee");
+
+            //Remove employee
+            var removedEmployeeName = "Will be removed";
+            company.AddEmployee(first, removedEmployeeName);
+            company.RemoveEmployee(5);
+
+
             Console.WriteLine(company.ToString());
-
-            //department.AddEmployee(new Employee(company.IdGen.ID, "Name", "Surname", 100, 10000, "no clue"));
-
-            //department.AddSubDepartment(new Department("Subdep for first"));
-            //var subDepartment = department.SubDepartments.Find(sd => sd.Name == "subdep for first");
-            //subDepartment.AddEmployee(new Employee(company.IdGen.ID, "NameSD", "SurnameSD", 200, 20000, "no clue"));
-            //subDepartment.AddSubDepartment(new Department("subsubdep"));
-
-
-
-
-
-
-
-
-
-
-
-            //Console.WriteLine(company.IdGen.ID);
-
-
-
-
-            //Console.WriteLine((new Employee(1,"Sasha","Saprykin",35,0,"freelance").ToString()));
             Console.ReadKey();
         }
     }

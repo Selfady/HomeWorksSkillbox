@@ -40,6 +40,12 @@ namespace Homework_Theme_08
         /// Field "Size". The size of the department.
         /// </summary>
         private uint _size;
+
+        /// <summary>
+        /// Field "NumberOfEmployees". The number of employees in the department.
+        /// </summary>
+        private uint _numberOfEmployees;
+
         
         #endregion Fields
 
@@ -99,6 +105,15 @@ namespace Homework_Theme_08
             set => this._size = value;
         }
 
+        /// <summary>
+        /// Current number of employees in the department.
+        /// </summary>
+        public uint NumberOfEmployees
+        {
+            get => this._numberOfEmployees;
+            set => this._numberOfEmployees = value;
+        }
+
         #endregion Propeties
 
         #region Methods
@@ -110,6 +125,17 @@ namespace Homework_Theme_08
         public void AddEmployee(Employee employee)
         {
             this._employees.Add(employee);
+        }
+
+        /// <summary>
+        /// Returns an enployee with given ID.
+        /// </summary>
+        /// <param name="id">ID of an employee.</param>
+        /// <returns></returns>
+        public Employee GetEmployeeById(uint id)
+        {
+            var employee = this.Employees.Find(e => e.Id == id);
+            return employee;
         }
         
         /// <summary>
@@ -179,6 +205,7 @@ namespace Homework_Theme_08
             this._departments = new List<Department>();
             this._parent = null;
             this._size = default;
+            this._numberOfEmployees = default;
 
         }
 
@@ -195,6 +222,7 @@ namespace Homework_Theme_08
             this._departments = new List<Department>();
             this._parent = parent;
             this._size = default;
+            this._numberOfEmployees = default;
         }
 
         #endregion Constructor
