@@ -147,7 +147,8 @@ namespace Homework_Theme_08
             var pattern = $"\nDepartment name: {this.Name}" + 
                           $"\nCreation date: {this.Date}" +
                           $"\nParent: {this.Parent}" +
-                          $"\nWork positions: {this.Size}";
+                          $"\nWork positions: {this.Size}" + 
+                          $"\nNumber of employees: {this.NumberOfEmployees}";
 
             foreach (var e in Employees)
             {
@@ -172,7 +173,8 @@ namespace Homework_Theme_08
             var pattern = $"\nSub-department Name: {this.Name}" +
                           $"\nCreation date: {this.Date}" +
                           $"\nParent: {this.Parent}" +
-                          $"\nWork positions: {this.Size}";
+                          $"\nWork positions: {this.Size}" +
+                          $"\nNumber of employees: {this.NumberOfEmployees}";
 
 
             foreach (var e in Employees)

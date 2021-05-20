@@ -83,6 +83,11 @@ namespace Homework_Theme_08
     {
         static void Main(string[] args)
         {
+            
+            //TODO implement sort for employees in given department by chosen fields.
+            //TODO импорта и экспорта всей информации в xml и json
+            //BUG when an employee is addded department property number of employees is not updated.
+            //TODO iplement error handling for add/edit and remove employee methods.
             //TODO do not let the user add more than 1_000_000 employees to a department.
             //TODO get only date portion of creation date and time.
             Console.WriteLine("This is a batch of solutions for \"Homework_Theme_08 8.6 Homework\"");
@@ -148,6 +153,28 @@ namespace Homework_Theme_08
             company.AddEmployee(first, removedEmployeeName);
             company.RemoveEmployee(5);
 
+            //Sort list od employees
+            string sortestingDepName = "To Test Sort";
+            company.AddDepartment(sortestingDepName);
+            var employee1 = new Employee(11, "Zame", "1Surname", 33, 10, "xz");
+            var employee2 = new Employee(12, "Aame", "2Surname", 50, 120, "xz");
+            var employee3 = new Employee(13, "Name", "3Surname", 13, 300, "xz");
+            var employee4 = new Employee(14, "Fame", "4Surname", 24, 40, "xz");
+            var employee5 = new Employee(15, "Fame", "5Surname", 14, 40, "xz");
+
+
+            company.AddEmployee(sortestingDepName, employee1);
+            company.AddEmployee(sortestingDepName, employee2);
+            company.AddEmployee(sortestingDepName, employee3);
+            company.AddEmployee(sortestingDepName, employee4);
+            company.AddEmployee(sortestingDepName, employee5);
+
+            //Department sortedDepartment = company.SortEmployees(sortestingDepName);
+            //Console.WriteLine("Test department sorted by Name by Age");
+            //foreach (var employee in sortedDepartment.Employees)
+            //{
+            //    Console.WriteLine(employee.ToString());
+            //}
 
             Console.WriteLine(company.ToString());
             Console.ReadKey();

@@ -272,7 +272,16 @@ namespace Homework_Theme_08
         {
             Department addInTo = Company.Descendants(Departments).FirstOrDefault(d => d.Name == toDepartmentName);
             addInTo.Employees.Add(new Employee(IdGen.ID, employeeName, String.Empty, 0, 0, addInTo.Name));
+            addInTo.NumberOfEmployees++;
             IdGen.ID++;
+
+            //TODO Update the department to display number of employees correctly
+            //var updated = addInTo;
+            //updated.NumberOfEmployees++;
+
+            //var departmentParent = Company.Descendants(Departments).FirstOrDefault(d => d.Name == updated.Parent);
+            //var index = departmentParent.Departments.IndexOf(addInTo);
+            //departmentParent.Departments[index] = updated;
         }
 
         /// <summary>
@@ -298,6 +307,21 @@ namespace Homework_Theme_08
         {
             var parentDepartment = Company.Descendants(Departments).FirstOrDefault(d => d.GetEmployeeById(id).Id == id);
             parentDepartment.Employees.Remove(parentDepartment.GetEmployeeById(id));
+        }
+
+        /// <summary>
+        /// Method to sort employees in a department by hardcoded field
+        /// </summary>
+        /// <param name="departmentName">Name of the department to sort employees in.</param>
+        public Department SortEmployees(string departmentName)
+        {
+            var departmentToSort = Company.Descendants(Departments).FirstOrDefault(d => d.Name == departmentName);
+            var employeesToSort = departmentToSort.Employees;
+
+            List<Employee> listByAge = employeesToSort.OrderBy(o => o.Name).ThenBy(c => c.Age).ToList();
+            departmentToSort.Employees = listByAge;
+
+            return departmentToSort;
         }
 
         /// <summary>
