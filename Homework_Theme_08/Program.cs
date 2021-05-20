@@ -83,6 +83,7 @@ namespace Homework_Theme_08
     {
         static void Main(string[] args)
         {
+            //
             //TODO get only date portion of creation date and time.
             Console.WriteLine("This is a batch of solutions for \"Homework_Theme_08 8.6 Homework\"");
 
@@ -106,6 +107,7 @@ namespace Homework_Theme_08
 
             ////add sub-department to the sub-department.
             company.AddDepartment("sub-dep for first dep", "sub-sub-sub for 1st");
+            company.AddDepartment("sub-dep for first dep", "2nd sub-sub-sub for 1st");
             company.AddDepartment("sub-sub-sub for 1st", "DNO");
             company.AddDepartment("DNO", "DNO2");
             company.AddDepartment("Third Dep", "Sub-dep for Third Dep");
@@ -116,7 +118,7 @@ namespace Homework_Theme_08
 
             //string newSecond = "Pretty name for second sub-department";
             string newValue = "Changed name";
-            company.ChangeDepartmentName(second, newValue);
+            company.ChangeDepartmentName("sub-dep for first dep", newValue);
             company.ChangeDepartment(newValue, 256);
 
             //Departments to test deletion

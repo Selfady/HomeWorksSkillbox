@@ -141,17 +141,33 @@ namespace Homework_Theme_08
         /// <summary>
         /// Method to edit department property Name.
         /// </summary>
-        /// <param name="name">Name of a department to edit.</param>
+        /// <param name="currentName">Name of a department to edit.</param>
         /// <param name="newName">New name for the department.</param>
-        public void ChangeDepartmentName(string name, string newName)
+        public void ChangeDepartmentName(string currentName, string newName)
         {
-            var edit = Company.Descendants(Departments).FirstOrDefault(d => d.Name == name);
+            var edit = Company.Descendants(Departments).FirstOrDefault(d => d.Name == currentName);
             int indexOfEdit = default;
 
             //check if the department within company.
             if (this.Departments.Contains(edit))
             {
-                indexOfEdit = Departments.FindIndex(a => a.Name == edit.Name);
+                indexOfEdit = this.Departments.FindIndex(a => a.Name == edit.Name);
+
+                #region Updating parent field of children
+
+                var children = new Queue<Department>(Company.Descendants(edit.Departments));
+                while (children.Any())
+                {
+                    var child = children.Dequeue();
+                    if (child.Parent != edit.Name) continue;
+                    var indexOfChild = edit.Departments.IndexOf(child);
+                    child.Parent = newName;
+                    edit.Departments[indexOfChild] = child;
+                }
+
+                #endregion Updating parent field of children
+                
+                //Renamed the root department
                 edit.Name = newName;
                 Departments[indexOfEdit] = edit;
             }
@@ -163,12 +179,27 @@ namespace Homework_Theme_08
                 if (parent.Name != null && parent.Departments.Any())
                 {
                     indexOfEdit = parent.Departments.FindIndex(a => a.Name == edit.Name);
+
+                    #region Updating parent field of children
+
+                    var children = new Queue<Department>(Company.Descendants(edit.Departments));
+                    while (children.Any())
+                    {
+                        var child = children.Dequeue();
+                        if (child.Parent != edit.Name) continue;
+                        var indexOfChild = edit.Departments.IndexOf(child);
+                        child.Parent = newName;
+                        edit.Departments[indexOfChild] = child;
+                    }
+
+                    #endregion Updating parent field of children
+
                     edit.Name = newName;
                     parent.Departments[indexOfEdit] = edit;
                 }
                 else
                 {
-                    Console.WriteLine("We did not find a department with name {0}", name);
+                    Console.WriteLine("We did not find a department with name {0}", currentName);
                     throw new Exception("ChangeDepartmentName cannot update null");
                 }
 
