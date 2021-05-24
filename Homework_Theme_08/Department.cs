@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Win32.SafeHandles;
 
 namespace Homework_Theme_08
 {
@@ -224,6 +220,23 @@ namespace Homework_Theme_08
             this._departments = new List<Department>();
             this._parent = parent;
             this._size = default;
+            this._numberOfEmployees = default;
+        }
+
+        /// <summary>
+        /// Constructor for a department the sets parent and size.
+        /// </summary>
+        /// <param name="name">Field "Name" of the department.</param>
+        /// <param name="parent">Field "Name" of the Parent department.</param>
+        /// <param name="size">Field "Size" of the department.</param>
+        public Department(string name, string parent, uint size)
+        {
+            this._name = name;
+            this._date = DateTime.Now;
+            this._employees = new List<Employee>();
+            this._departments = new List<Department>();
+            this._parent = parent;
+            this._size = size;
             this._numberOfEmployees = default;
         }
 

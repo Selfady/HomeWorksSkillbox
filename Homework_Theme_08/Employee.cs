@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Homework_Theme_08
+﻿namespace Homework_Theme_08
 {
     /// <summary>
     /// Structure for an employee.
@@ -134,6 +126,7 @@ namespace Homework_Theme_08
         /// <param name="age">The age of the employee.</param>
         /// <param name="salary">The salary of the employee.</param>
         /// <param name="department">A department the employee works for at the moment.</param>
+        
         public Employee(uint id, string name, string surname, byte age, uint salary, string department)
         {
             this._id = id;
