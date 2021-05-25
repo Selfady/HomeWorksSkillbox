@@ -268,13 +268,40 @@ namespace Homework_Theme_08
         /// <param name="departmentName">name property of a department.</param>
         /// <param name="company">A company.</param>
         /// <returns>True if a department exists and false if not.</returns>
-        private static bool Exists(string departmentName, Company company)
+        private static bool DepartmentExists(string departmentName, Company company)
         {
             var test = Company.Descendants(company.Departments).FirstOrDefault(d => d.Name == departmentName);
 
             if (!Object.Equals(test.Name, null))
             {
                 return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Method to check that an employee with given ID already exists.
+        /// </summary>
+        /// <param name="iD">ID property of an employee.</param>
+        /// <param name="company">A company.</param>
+        /// <returns>True if an employee exists and false if not.</returns>
+        private static bool EmployeeExists(uint iD, Company company)
+        {
+            var allDepartments = new Queue<Department>(Company.Descendants(company.Departments));
+
+            //process all departments to find if there is an employee with given ID there.
+            while (allDepartments.Any())
+            {
+                var child = allDepartments.Dequeue();
+                if (!child.Employees.Any()) continue;
+                foreach (var e in child.Employees)
+                {
+                    if (e.Id == iD)
+                    {
+                        return true;
+                    }
+                }
             }
 
             return false;
@@ -380,7 +407,66 @@ namespace Homework_Theme_08
 
         private static void MenuEditEmployee(Company company)
         {
-            throw new NotImplementedException();
+            var options = new Dictionary<int, string>
+            {
+                {1, "Change employee name."},
+                {2, "Return to the main menu."}
+            };
+
+            //Display the menu.
+            Console.WriteLine("\nEdit employee:");
+            foreach (var option in options)
+            {
+                Console.WriteLine($"{option.Key} - {option.Value}");
+            }
+
+            //Requesting and proceeding user action.
+            switch (MakeHimChoose(options.Keys.Min(), options.Keys.Max()))
+            {
+                case 1:
+                    //Make sure a department exists in the company.
+                    if (company.Departments.Count == 0)
+                    {
+                        Console.WriteLine("The company has no departments, please add one first.");
+                        MainMenu(company);
+                        break;
+                    }
+
+                    uint iD = default;
+
+                    //Requesting employee to edit.
+                    while (true)
+                    {
+                        Console.WriteLine("Please enter ID of the employee.");
+
+                        if (!uint.TryParse(Console.ReadLine(), out iD) || !EmployeeExists(iD, company))
+                        {
+                            Console.WriteLine("Either ID is wrong or an employee with given ID doesn't exist.");
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    var newName = string.Empty;
+
+                    //Requesting new employee name.
+                    while (string.IsNullOrEmpty(newName))
+                    {
+                        Console.WriteLine("Please enter new name for the employee.");
+                        newName = Console.ReadLine().Trim();
+                    }
+
+                    company.EditEmployee(iD, newName);
+                    MainMenu(company);
+                    break;
+                case 2:
+                    MainMenu(company);
+                    break;
+                default:
+                    Console.WriteLine("Such an option doesn't exist");
+                    break;
+            }
         }
 
         /// <summary>
@@ -424,7 +510,7 @@ namespace Homework_Theme_08
                         Console.WriteLine("Please enter the name of the department.");
                         currentName = Console.ReadLine().Trim();
 
-                        if (!Exists(currentName, company))
+                        if (!DepartmentExists(currentName, company))
                         {
                             currentName = null;
                             Console.WriteLine("Company does not have a department with given name." +
@@ -444,7 +530,7 @@ namespace Homework_Theme_08
                         newName = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(newName, company))
+                        if (DepartmentExists(newName, company))
                         {
                             newName = null;
                             Console.WriteLine("Company already has a department with given name.");
@@ -471,7 +557,7 @@ namespace Homework_Theme_08
                         Console.WriteLine("Please enter the name of the department.");
                         currentName = Console.ReadLine().Trim();
 
-                        if (!Exists(currentName, company))
+                        if (!DepartmentExists(currentName, company))
                         {
                             currentName = null;
                             Console.WriteLine("Company does not have a department with given name." +
@@ -543,7 +629,7 @@ namespace Homework_Theme_08
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(name, company))
+                        if (DepartmentExists(name, company))
                         {
                             name = null;
                             Console.WriteLine("Company already has a department with given name.");
@@ -571,7 +657,7 @@ namespace Homework_Theme_08
                         Console.WriteLine("Please enter the name of the Parent department.");
                         parent = Console.ReadLine().Trim();
 
-                        if (!Exists(parent, company))
+                        if (!DepartmentExists(parent, company))
                         {
                             parent = null;
                             Console.WriteLine("Company does not have a department with given name." +
@@ -591,7 +677,7 @@ namespace Homework_Theme_08
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(name, company))
+                        if (DepartmentExists(name, company))
                         {
                             name = null;
                             Console.WriteLine("Company has a department with given name.");
@@ -609,7 +695,7 @@ namespace Homework_Theme_08
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(name, company))
+                        if (DepartmentExists(name, company))
                         {
                             name = null;
                             Console.WriteLine("Company already has a department with the given name.");
@@ -653,7 +739,7 @@ namespace Homework_Theme_08
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(name, company))
+                        if (DepartmentExists(name, company))
                         {
                             name = null;
                             Console.WriteLine("Company already has a department with the given name.");
@@ -669,7 +755,7 @@ namespace Homework_Theme_08
                         Console.WriteLine("Please enter the name of the Parent department.");
                         parent = Console.ReadLine().Trim();
 
-                        if (!Exists(parent, company))
+                        if (!DepartmentExists(parent, company))
                         {
                             parent = null;
                             Console.WriteLine("Company does not have a department with given name." +
@@ -750,7 +836,7 @@ namespace Homework_Theme_08
                             Console.WriteLine("Please enter the name of a department to add an employee into.");
                             department = Console.ReadLine().Trim();
 
-                            if (!Exists(department, company))
+                            if (!DepartmentExists(department, company))
                             {
                                 department = null;
                                 Console.WriteLine("Company does not have a department with given name." +
@@ -790,7 +876,7 @@ namespace Homework_Theme_08
                             Console.WriteLine("Please enter the name of a department to add an employee into.");
                             department = Console.ReadLine().Trim();
 
-                            if (!Exists(department, company))
+                            if (!DepartmentExists(department, company))
                             {
                                 department = null;
                                 Console.WriteLine("Company does not have a department with given name." +
