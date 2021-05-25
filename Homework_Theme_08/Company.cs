@@ -83,6 +83,10 @@ namespace Homework_Theme_08
         /// <param name="department"></param>
         public void AddDepartment(Department department)
         {
+            if (string.IsNullOrEmpty(department.Parent))
+            {
+                department.Parent = this._name;
+            }
             this.Departments.Add(department);
         }
 
@@ -111,7 +115,6 @@ namespace Homework_Theme_08
             }
             else
             {
-                Console.WriteLine("We did not find a department with name {0}", parentName);
                 throw new Exception("AddDepartment cannot add to null");
             }
         }
@@ -137,7 +140,6 @@ namespace Homework_Theme_08
                 }
                 else
                 {
-                    Console.WriteLine("We did not find a department with name {0}",name);
                     throw new Exception("RemoveDepartment cannot remove null");
                 }
             }

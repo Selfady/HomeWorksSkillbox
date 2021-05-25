@@ -444,23 +444,105 @@ namespace Homework_Theme_08
                     name = string.Empty;
                     while (string.IsNullOrEmpty(name))
                     {
-                        Console.WriteLine("Please enter the name of the New Department.");
+                        Console.WriteLine("Please enter a name for the New department.");
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
                         if (Exists(name, company))
                         {
                             name = null;
-                            Console.WriteLine("Company already has a department with given name.");
+                            Console.WriteLine("Company already has a department with the given name.");
                         }
                     }
 
+                    //Requesting department size.
+                    uint size;
+                    do
+                    {
+                        Console.WriteLine("Please enter the size for the new department.");
+                        if (uint.TryParse(Console.ReadLine(), out size))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Department size is a number.");
+                        }
+                    } 
+                    while (true);
 
-                    //var dep = new Department(name,parent,size);
-                    company.AddDepartment(name);
+                    var dep = new Department(name,size);
+                    company.AddDepartment(dep);
                     MainMenu(company);
                     break;
                 case 4:
+                    name = string.Empty;
+
+                    //Make sure a department exists in the company.
+                    if (company.Departments.Count == 0)
+                    {
+                        Console.WriteLine("The company has no departments, please add one first.");
+                        MainMenu(company);
+                        break;
+                    }
+
+                    //Requesting a name for the new department.
+                    while (string.IsNullOrEmpty(name))
+                    {
+                        Console.WriteLine("Please enter a name for the New department.");
+                        name = Console.ReadLine().Trim();
+
+                        //Make sure the department will be unique.
+                        if (Exists(name, company))
+                        {
+                            name = null;
+                            Console.WriteLine("Company already has a department with the given name.");
+                        }
+                    }
+
+                    parent = string.Empty;
+
+                    //If a department exists start adding a sub-department.
+                    //Requesting parent department name.
+                    while (string.IsNullOrEmpty(parent))
+                    {
+                        Console.WriteLine("Please enter the name of the Parent department.");
+                        parent = Console.ReadLine().Trim();
+
+                        if (!Exists(parent, company))
+                        {
+                            parent = null;
+                            Console.WriteLine("Company does not have a department with given name." +
+                                              "\nCompany has the following department(s):");
+                            foreach (var d in company.Departments)
+                            {
+                                Console.WriteLine(d.ToString());
+                            }
+
+                        }
+                    }
+
+                    //Requesting department size.
+                    size = default;
+                    do
+                    {
+                        Console.WriteLine("Please enter the size for the new department.");
+                        if (uint.TryParse(Console.ReadLine(), out size))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Department size is a number.");
+                        }
+                    }
+                    while (true);
+
+                    dep = new Department(name, parent, size);
+                    company.AddDepartment(dep);
+                    MainMenu(company);
+                    break;
+                case 5:
                     MainMenu(company);
                     break;
                 default:

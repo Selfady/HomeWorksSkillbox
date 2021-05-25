@@ -240,6 +240,17 @@ namespace Homework_Theme_08
             this._numberOfEmployees = default;
         }
 
+        public Department(string name, uint size)
+        {
+            this._name = name;
+            this._date = DateTime.Now;
+            this._employees = new List<Employee>();
+            this._departments = new List<Department>();
+            this._parent = null;
+            this._size = size;
+            this._numberOfEmployees = default;
+        }
+
         #endregion Constructor
 
     }
