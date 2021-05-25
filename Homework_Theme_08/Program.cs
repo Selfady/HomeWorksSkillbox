@@ -390,21 +390,111 @@ namespace Homework_Theme_08
             }
         }
 
+        /// <summary>
+        /// Menu to sort employees by name by age.
+        /// </summary>
+        /// <param name="company">Company object.</param>
         private static void MenuSorEmployees(Company company)
         {
-            throw new NotImplementedException();
+            //Make sure a department exists in the company.
+            if (company.Departments.Count == 0)
+            {
+                Console.WriteLine("The company has no departments, please add one first.");
+                MainMenu(company);
+            }
+
+            var currentName = string.Empty;
+
+            //Requesting department to edit.
+            while (string.IsNullOrEmpty(currentName))
+            {
+                Console.WriteLine("Please enter name of the department.");
+                currentName = Console.ReadLine().Trim();
+
+                if (!DepartmentExists(currentName, company))
+                {
+                    currentName = null;
+                    Console.WriteLine("Company does not have a department with given name." +
+                                      "\nCompany has the following department(s):");
+                    foreach (var d in company.Departments)
+                    {
+                        Console.WriteLine(d.ToString());
+                    }
+
+                }
+            }
+
+            company.SortEmployees(currentName);
+            MainMenu(company);
         }
 
+        /// <summary>
+        /// Menu to remove a department.
+        /// </summary>
+        /// <param name="company">Company object.</param>
         private static void MenuRemoveDepartment(Company company)
         {
-            throw new NotImplementedException();
+            //Make sure a department exists in the company.
+            if (company.Departments.Count == 0)
+            {
+                Console.WriteLine("The company has no departments, please add one first.");
+                MainMenu(company);
+            }
+
+            var currentName = string.Empty;
+
+            //Requesting department to edit.
+            while (string.IsNullOrEmpty(currentName))
+            {
+                Console.WriteLine("Please enter name of the department.");
+                currentName = Console.ReadLine().Trim();
+
+                if (!DepartmentExists(currentName, company))
+                {
+                    currentName = null;
+                    Console.WriteLine("Company does not have a department with given name." +
+                                      "\nCompany has the following department(s):");
+                    foreach (var d in company.Departments)
+                    {
+                        Console.WriteLine(d.ToString());
+                    }
+
+                }
+            }
+
+            company.RemoveDepartment(currentName);
+            MainMenu(company);
         }
 
+        /// <summary>
+        /// Menu to let the user remove an employee.
+        /// </summary>
+        /// <param name="company">Company object.</param>
         private static void MenuRemoveEmployee(Company company)
         {
-            throw new NotImplementedException();
+            uint iD = default;
+            //Requesting employee to remove.
+            while (true)
+            {
+                Console.WriteLine("Please enter ID of the employee.");
+
+                if (!uint.TryParse(Console.ReadLine(), out iD) || !EmployeeExists(iD, company))
+                {
+                    Console.WriteLine("Either ID is wrong or an employee with given ID doesn't exist.");
+                    continue;
+                }
+
+                break;
+            }
+
+            company.RemoveEmployee(iD);
+            MainMenu(company);
         }
 
+        /// <summary>
+        /// Menu to let the user remove an employee.
+        /// </summary>
+        /// <param name="company">Company object.</param>
         private static void MenuEditEmployee(Company company)
         {
             var options = new Dictionary<int, string>
