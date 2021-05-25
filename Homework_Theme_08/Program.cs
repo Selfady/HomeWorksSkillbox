@@ -145,6 +145,8 @@ namespace Homework_Theme_08
                     company.ChangeDepartmentName("sub-dep for first dep", newValue);
                     company.ChangeDepartment(newValue, 256);
 
+
+
                     //Departments to test deletion
                     company.AddDepartment(toDelete, "subtree to test deletion");
 
@@ -299,10 +301,10 @@ namespace Homework_Theme_08
                 {
                     {1, "Add a department."},
                     {2, "Add an employee."},
-                    {3, "Edit a department."},
-                    {4, "Edit an employee."},
-                    {5, "Remove a department."},
-                    {6, "Remove an employee."},
+                    {3, "Edit department."},
+                    {4, "Edit employee."},
+                    {5, "Remove department."},
+                    {6, "Remove employee."},
                     {7, "Sort employees in a department."},
                     {8, "Save the company."},
                     {9, "Exit the program."}
@@ -320,19 +322,31 @@ namespace Homework_Theme_08
                 {
                     case 1:
                         MenuAddDepartment(company);
+                        MainMenu(company);
                         break;
                     case 2:
                         MenuAddEmployee(company);
+                        MainMenu(company);
                         break;
                     case 3:
+                        MenuEditDepartment(company);
+                        MainMenu(company);
                         break;
                     case 4:
+                        MenuEditEmployee(company);
+                        MainMenu(company);
                         break;
                     case 5:
+                        MenuRemoveDepartment(company);
+                        MainMenu(company);
                         break;
                     case 6:
+                        MenuRemoveEmployee(company);
+                        MainMenu(company);
                         break;
                     case 7:
+                        MenuSorEmployees(company);
+                        MainMenu(company);
                         break;
                     case 8:
                         SaveJson(company);
@@ -346,6 +360,153 @@ namespace Homework_Theme_08
                 }
 
                 break;
+            }
+        }
+
+        private static void MenuSorEmployees(Company company)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MenuRemoveDepartment(Company company)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MenuRemoveEmployee(Company company)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MenuEditEmployee(Company company)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Edit department menu functionality.
+        /// </summary>
+        /// <param name="company">Object company.</param>
+        private static void MenuEditDepartment(Company company)
+        {
+            var options = new Dictionary<int, string>
+            {
+                {1, "Change department name."},
+                {2, "Change department size."},
+                {3, "Return to the main menu."}
+            };
+
+            //Display the menu.
+            Console.WriteLine("\nEdit department:");
+            foreach (var option in options)
+            {
+                Console.WriteLine($"{option.Key} - {option.Value}");
+            }
+
+            //Requesting and proceeding user action.
+            switch (MakeHimChoose(options.Keys.Min(), options.Keys.Max()))
+            {
+                case 1:
+                    var newName = string.Empty;
+                    //Make sure a department exists in the company.
+                    if (company.Departments.Count == 0)
+                    {
+                        Console.WriteLine("The company has no departments, please add one first.");
+                        MainMenu(company);
+                        break;
+                    }
+
+                    var currentName = string.Empty;
+
+                    //Requesting department to edit.
+                    while (string.IsNullOrEmpty(currentName))
+                    {
+                        Console.WriteLine("Please enter the name of the department.");
+                        currentName = Console.ReadLine().Trim();
+
+                        if (!Exists(currentName, company))
+                        {
+                            currentName = null;
+                            Console.WriteLine("Company does not have a department with given name." +
+                                              "\nCompany has the following department(s):");
+                            foreach (var d in company.Departments)
+                            {
+                                Console.WriteLine(d.ToString());
+                            }
+
+                        }
+                    }
+
+                    //Requesting new department name.
+                    while (string.IsNullOrEmpty(newName))
+                    {
+                        Console.WriteLine("Please enter new name for the department.");
+                        newName = Console.ReadLine().Trim();
+
+                        //Make sure the department will be unique.
+                        if (Exists(newName, company))
+                        {
+                            newName = null;
+                            Console.WriteLine("Company already has a department with given name.");
+                        }
+                    }
+
+                    company.ChangeDepartmentName(currentName, newName);
+                    MainMenu(company);
+                    break;
+                case 2:
+                    //Make sure a department exists in the company.
+                    if (company.Departments.Count == 0)
+                    {
+                        Console.WriteLine("The company has no departments, please add one first.");
+                        MainMenu(company);
+                        break;
+                    }
+
+                    currentName = string.Empty;
+
+                    //Requesting department to edit.
+                    while (string.IsNullOrEmpty(currentName))
+                    {
+                        Console.WriteLine("Please enter the name of the department.");
+                        currentName = Console.ReadLine().Trim();
+
+                        if (!Exists(currentName, company))
+                        {
+                            currentName = null;
+                            Console.WriteLine("Company does not have a department with given name." +
+                                              "\nCompany has the following department(s):");
+                            foreach (var d in company.Departments)
+                            {
+                                Console.WriteLine(d.ToString());
+                            }
+                        }
+                    }
+
+                    uint newSize;
+                    //Requesting new department size.
+                    while (true)
+                    {
+                        Console.WriteLine("Please enter new size for the department.");
+
+                        if (!uint.TryParse(Console.ReadLine(), out newSize))
+                        {
+                            Console.WriteLine("Please enter new size for the department. It is supposed to be a number.");
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    company.ChangeDepartment(currentName, newSize);
+                    MainMenu(company);
+                    break;
+                case 3:
+                    MainMenu(company);
+                    break;
+                default:
+                    Console.WriteLine("Such an option doesn't exist");
+                    break;
             }
         }
 
@@ -548,6 +709,10 @@ namespace Homework_Theme_08
             }
         }
 
+        /// <summary>
+        /// Add employee menu functionality.
+        /// </summary>
+        /// <param name="company">Company object.</param>
         private static void MenuAddEmployee(Company company)
             {
                 var options = new Dictionary<int, string>
@@ -694,19 +859,6 @@ namespace Homework_Theme_08
                         MainMenu(company);
                         break;
                 }
-
-                //Add an employee 
-                //var firstEmployeeName = "fiest employee Name";
-                //var secondEmployeeName = "second employee 2Name";
-                //var firstEmployee = new Employee(company.IdGen.ID, firstEmployeeName, "Surname", 100, 10000, "no clue");
-                //var secondEmployee = new Employee(company.IdGen.ID, secondEmployeeName, "2Surname", 200, 20000, "no clue");
-
-
-                //company.AddEmployee(first, firstEmployeeName);
-                //company.AddEmployee(secSubDep, secondEmployeeName);
-
-                //var thirdEmployee = new Employee(company.IdGen.ID++, "third employee", "3Surname", 250, 30000, "no clue");
-                //company.AddEmployee("DNO2", thirdEmployee);
         }
-        }
+    }
 }

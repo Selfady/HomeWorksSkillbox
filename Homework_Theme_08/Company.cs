@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualBasic.CompilerServices;
 
 
 namespace Homework_Theme_08
@@ -160,7 +161,7 @@ namespace Homework_Theme_08
             {
                 indexOfEdit = this.Departments.FindIndex(a => a.Name == edit.Name);
 
-                #region Updating parent field of children
+                #region Updating parent field of children departments and employees
 
                 var children = new Queue<Department>(Company.Descendants(edit.Departments));
                 while (children.Any())
@@ -172,8 +173,18 @@ namespace Homework_Theme_08
                     edit.Departments[indexOfChild] = child;
                 }
 
-                #endregion Updating parent field of children
-                
+                var depEmployees = new Queue<Employee>(edit.Employees);
+
+                while (depEmployees.Any())
+                {
+                    var employee = depEmployees.Dequeue();
+                    var indexOfChild = edit.Employees.IndexOf(employee);
+                    employee.Department = newName;
+                    edit.Employees[indexOfChild] = employee;
+                }
+
+                #endregion Updating parent field of children departments and employees
+
                 //Renamed the root department
                 edit.Name = newName;
                 Departments[indexOfEdit] = edit;
@@ -197,6 +208,16 @@ namespace Homework_Theme_08
                         var indexOfChild = edit.Departments.IndexOf(child);
                         child.Parent = newName;
                         edit.Departments[indexOfChild] = child;
+                    }
+
+                    var depEmployees = new Queue<Employee>(edit.Employees);
+
+                    while (depEmployees.Any())
+                    {
+                        var employee = depEmployees.Dequeue();
+                        var indexOfChild = edit.Employees.IndexOf(employee);
+                        employee.Department = newName;
+                        edit.Employees[indexOfChild] = employee;
                     }
 
                     #endregion Updating parent field of children
