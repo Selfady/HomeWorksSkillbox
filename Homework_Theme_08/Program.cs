@@ -199,7 +199,7 @@ namespace Homework_Theme_08
        /// Saves company data to a file.
        /// </summary>
        /// <param name="company">Object company.</param>
-        static void SaveJson(Company company)
+        private static void SaveJson(Company company)
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize<Company>(company, options);
@@ -212,7 +212,7 @@ namespace Homework_Theme_08
         /// Loads company date from a file.
         /// </summary>
         /// <returns>Object company.</returns>
-        static Company LoadJson()
+        private static Company LoadJson()
         {
            if (!File.Exists("company.json"))
            {
@@ -305,8 +305,7 @@ namespace Homework_Theme_08
                     {6, "Remove an employee."},
                     {7, "Sort employees in a department."},
                     {8, "Save the company."},
-                    {9, "Load the company."},
-                    {10, "Exit the program."}
+                    {9, "Exit the program."}
                 };
 
                 //Display the menu.
@@ -323,6 +322,7 @@ namespace Homework_Theme_08
                         MenuAddDepartment(company);
                         break;
                     case 2:
+                        MenuAddEmployee(company);
                         break;
                     case 3:
                         break;
@@ -336,10 +336,9 @@ namespace Homework_Theme_08
                         break;
                     case 8:
                         SaveJson(company);
-                        continue;
-                    case 9:
+                        MainMenu(company);
                         break;
-                    case 10:
+                    case 9:
                         break;
                     default:
                         Console.WriteLine("Such an option doesn't exist");
@@ -383,12 +382,13 @@ namespace Homework_Theme_08
                         name = Console.ReadLine().Trim();
 
                         //Make sure the department will be unique.
-                        if (Exists(name,company))
+                        if (Exists(name, company))
                         {
                             name = null;
                             Console.WriteLine("Company already has a department with given name.");
                         }
                     }
+
                     company.AddDepartment(name);
                     MainMenu(company);
                     break;
@@ -468,10 +468,9 @@ namespace Homework_Theme_08
                         {
                             Console.WriteLine("Department size is a number.");
                         }
-                    } 
-                    while (true);
+                    } while (true);
 
-                    var dep = new Department(name,size);
+                    var dep = new Department(name, size);
                     company.AddDepartment(dep);
                     MainMenu(company);
                     break;
@@ -518,7 +517,6 @@ namespace Homework_Theme_08
                             {
                                 Console.WriteLine(d.ToString());
                             }
-
                         }
                     }
 
@@ -535,8 +533,7 @@ namespace Homework_Theme_08
                         {
                             Console.WriteLine("Department size is a number.");
                         }
-                    }
-                    while (true);
+                    } while (true);
 
                     dep = new Department(name, parent, size);
                     company.AddDepartment(dep);
@@ -550,5 +547,166 @@ namespace Homework_Theme_08
                     break;
             }
         }
-    }
+
+        private static void MenuAddEmployee(Company company)
+            {
+                var options = new Dictionary<int, string>
+                {
+                    {1, "Quickly add an employee by name."},
+                    {2, "Create a new employee."},
+                    {3, "Return to the main menu."}
+                };
+
+                //Display the menu.
+                Console.WriteLine("\nAdd an employee:");
+                foreach (var option in options)
+                {
+                    Console.WriteLine($"{option.Key} - {option.Value}");
+                }
+
+                //Requesting and proceeding user action.
+                switch (MakeHimChoose(options.Keys.Min(), options.Keys.Max()))
+                {
+                    case 1:
+                        var name = string.Empty;
+                        var department = string.Empty;
+                        //Make sure a department exists in the company.
+                        if (company.Departments.Count == 0)
+                        {
+                            Console.WriteLine("The company has no departments, please add one first.");
+                            MainMenu(company);
+                            break;
+                        }
+
+                        //If a department exists start adding an employee.
+                        //Requesting department name.
+                        while (string.IsNullOrEmpty(department))
+                        {
+                            Console.WriteLine("Please enter the name of a department to add an employee into.");
+                            department = Console.ReadLine().Trim();
+
+                            if (!Exists(department, company))
+                            {
+                                department = null;
+                                Console.WriteLine("Company does not have a department with given name." +
+                                                  "\nCompany has the following department(s):");
+                                foreach (var d in company.Departments)
+                                {
+                                    Console.WriteLine(d.ToString());
+                                }
+                            }
+                        }
+
+                        //Requesting the name of the new employee.
+                        while (string.IsNullOrEmpty(name))
+                        {
+                            Console.WriteLine("Please enter the name of the New employee.");
+                            name = Console.ReadLine().Trim();
+                        }
+
+                        company.AddEmployee(department, name);
+                        MainMenu(company);
+                        break;
+                    case 2:
+                        //Make sure a department exists in the company.
+                        if (company.Departments.Count == 0)
+                        {
+                            Console.WriteLine("The company has no departments, please add one first.");
+                            MainMenu(company);
+                            break;
+                        }
+
+                        
+                        department = string.Empty;
+                        //If a department exists start adding an employee.
+                        //Requesting department name.
+                        while (string.IsNullOrEmpty(department))
+                        {
+                            Console.WriteLine("Please enter the name of a department to add an employee into.");
+                            department = Console.ReadLine().Trim();
+
+                            if (!Exists(department, company))
+                            {
+                                department = null;
+                                Console.WriteLine("Company does not have a department with given name." +
+                                                  "\nCompany has the following department(s):");
+                                foreach (var d in company.Departments)
+                                {
+                                    Console.WriteLine(d.ToString());
+                                }
+                            }
+                        }
+
+                        name = string.Empty;
+
+                        //Requesting the name of the new employee.
+                        while (string.IsNullOrEmpty(name))
+                        {
+                            Console.WriteLine("Please enter the name of the New employee.");
+                            name = Console.ReadLine().Trim();
+                        }
+
+                        var surname = string.Empty;
+
+                        //Requesting the surname of the new employee.
+                        while (string.IsNullOrEmpty(surname))
+                        {
+                            Console.WriteLine("Please enter the surname of the New employee.");
+                            surname = Console.ReadLine().Trim();
+                        }
+
+                        var age = byte.MinValue;
+
+                        //Requesting the age of the new employee.
+                        while (age == byte.MinValue)
+                        {
+                            Console.WriteLine("Please enter the age of the New employee.");
+
+                            if (!byte.TryParse(Console.ReadLine(),out age) || age == 0)
+                            {
+                                Console.WriteLine($"Please enter the number of full years of the New employee, more than {byte.MinValue} and less than {byte.MaxValue+1}.");
+                                age = byte.MinValue;
+                            }
+                        }
+
+                        var salary = uint.MinValue;
+
+                        //Requesting the salary of the new employee.
+                        while (salary == uint.MinValue)
+                        {
+                            Console.WriteLine("Please enter the salary of the New employee.");
+
+                            if (!uint.TryParse(Console.ReadLine(), out salary) || salary == 0)
+                            {
+                                Console.WriteLine($"Please enter the salary of the New employee, more than {uint.MinValue} and less than {uint.MaxValue}.");
+                                salary = uint.MinValue;
+                            }
+                        }
+
+                        Employee emp = new Employee(company.IdGen.ID, name, surname, age, salary, department);
+                        company.AddEmployee(department, emp);
+                        MainMenu(company);
+                        break;
+                    case 3:
+                        MainMenu(company);
+                        break;
+                    default:
+                        MainMenu(company);
+                        break;
+                }
+
+                //Add an employee 
+                //var firstEmployeeName = "fiest employee Name";
+                //var secondEmployeeName = "second employee 2Name";
+                //var firstEmployee = new Employee(company.IdGen.ID, firstEmployeeName, "Surname", 100, 10000, "no clue");
+                //var secondEmployee = new Employee(company.IdGen.ID, secondEmployeeName, "2Surname", 200, 20000, "no clue");
+
+
+                //company.AddEmployee(first, firstEmployeeName);
+                //company.AddEmployee(secSubDep, secondEmployeeName);
+
+                //var thirdEmployee = new Employee(company.IdGen.ID++, "third employee", "3Surname", 250, 30000, "no clue");
+                //company.AddEmployee("DNO2", thirdEmployee);
+        }
+        }
 }
