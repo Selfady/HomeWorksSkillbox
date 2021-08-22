@@ -1,19 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
-using System.Threading;
-using Newtonsoft.Json.Linq;
 using Telegram.Bot;
-using Telegram.Bot.Exceptions;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using File = System.IO.File;
 
 namespace TODO_Bot
 {
@@ -23,7 +10,6 @@ namespace TODO_Bot
 
         static void Main(string[] args)
         {
-
             //token to access the bot
             string token = File.ReadAllText(@"D:\Source\My\Private\Token");
 
@@ -35,10 +21,12 @@ namespace TODO_Bot
 
         private static void MessageListener(object sender, Telegram.Bot.Args.MessageEventArgs e)
         {
+
             string text = $"{DateTime.Now.ToLongTimeString()}: {e.Message.Chat.FirstName} {e.Message.Chat.Id} {e.Message.Text}";
 
             Console.WriteLine($"{text} TypeMessage: {e.Message.Type.ToString()}");
 
+            string downloadPath = @".\Download\";
 
             if (e.Message.Type == Telegram.Bot.Types.Enums.MessageType.Document)
             {
@@ -46,23 +34,59 @@ namespace TODO_Bot
                 Console.WriteLine(e.Message.Document.FileName);
                 Console.WriteLine(e.Message.Document.FileSize);
 
-                DownLoad(e.Message.Document.FileId, e.Message.Document.FileName);
+                DownLoad(e.Message.Document.FileId, e.Message.Document.FileName, downloadPath);
             }
-
-            if (e.Message.Text == null) return;
 
             var messageText = e.Message.Text;
 
+            if (e.Message.Text == null) return;
 
-            bot.SendTextMessageAsync(e.Message.Chat.Id,
-                $"{messageText}"
-                );
+
+            #region ParseText
+
+            if (!String.IsNullOrEmpty(e.Message.Text))
+            {
+                if (e.Message.Text == "/start")
+                {
+                    bot.SendTextMessageAsync(e.Message.Chat.Id,
+                        "Недобот забивает жесткий диск компьютера файлами, что втыкают в чатик и знает две команды:");
+                    bot.SendTextMessageAsync(e.Message.Chat.Id,
+                        "/list - должен вернуть пронумерованный список всех файлов, что уже накидали.");
+                    bot.SendTextMessageAsync(e.Message.Chat.Id,
+                        "/gimme n - n это номер файла в списке");
+                }
+
+                if (e.Message.Text == "/list")
+                {
+                    string[] fileEntries = Directory.GetFiles(downloadPath);
+
+                    foreach (var fileName in fileEntries)
+                    {
+                        bot.SendTextMessageAsync(e.Message.Chat.Id,
+                        $"{fileName}");
+                    }
+                    
+                }
+
+                if (e.Message.Text.Contains("/gimme"))
+                {
+                    bot.SendTextMessageAsync(e.Message.Chat.Id,
+                        "Как только так сразу.");
+                }
+            }
+
+            #endregion ParseText
         }
 
-        static async void DownLoad(string fileId, string path)
-        {
+        static async void DownLoad(string fileId, string fileName, string path)
+        {                        
+            if (!Directory.Exists(path))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(path);
+            }
+
             var file = await bot.GetFileAsync(fileId);
-            FileStream fs = new FileStream("_" + path, FileMode.Create);
+            FileStream fs = new FileStream(path + fileName, FileMode.Create);
             await bot.DownloadFileAsync(file.FilePath, fs);
             fs.Close();
 
