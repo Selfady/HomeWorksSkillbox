@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Telegram.Bot;
+using Telegram.Bot.Types.InputFiles;
 
 namespace TODO_Bot
 {
@@ -70,8 +71,8 @@ namespace TODO_Bot
 
                 if (e.Message.Text.Contains("/gimme"))
                 {
-                    bot.SendTextMessageAsync(e.Message.Chat.Id,
-                        "Как только так сразу.");
+                    var whatToGive = e.Message.Text.Substring(7);
+                    Upload(whatToGive, e.Message.Chat.Id);
                 }
             }
 
@@ -91,6 +92,15 @@ namespace TODO_Bot
             fs.Close();
 
             fs.Dispose();
+        }
+
+        static async void Upload(string fileName, long id)
+        {
+            using(FileStream fs = System.IO.File.OpenRead(fileName))
+            {
+                InputOnlineFile inputOnlineFile = new InputOnlineFile(fs, fileName);
+                await bot.SendDocumentAsync(id, inputOnlineFile);
+            }
         }
     }
 }
